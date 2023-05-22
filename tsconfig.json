@@ -1,0 +1,21 @@
+{
+    "compilerOptions": {
+      "target": "es2019",
+      "module": "commonjs",
+      "strict": true,
+      "removeComments": true,
+      "esModuleInterop": true,
+      "forceConsistentCasingInFileNames": true,
+      "emitDecoratorMetadata": true,
+      "experimentalDecorators": true,
+      "allowSyntheticDefaultImports": true,
+      "outDir": "dist",
+      "sourceMap": true,
+      "declaration": true,
+      "resolveJsonModule": true,
+    },
+    "include": [
+      "./src/**/*",
+    ],
+  }
+  

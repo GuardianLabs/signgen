@@ -1,0 +1,29 @@
+{
+  "name": "signgen",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/index.ts",
+  "scripts": {
+    "build": "tsc && pnpm format:fix",
+    "build:dev": "tsc",
+    "watch": "nodemon ./src/index.ts",
+    "clean": "pnpm remove:dist",
+    "remove:dist": "rm -rf dist",
+    "test": "pnpm build:dev && pnpm cli",
+    "cli": "ts-node src/index.ts",
+    "version": "pnpm version"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "commander": "^10.0.1",
+    "path": "^0.12.7"
+  },
+  "devDependencies": {
+    "@types/node": "^20.2.3",
+    "nodemon": "^2.0.22",
+    "ts-node": "^10.9.1",
+    "typescript": "^5.0.4"
+  }
+}
