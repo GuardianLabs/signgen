@@ -8,6 +8,7 @@ program
   .name('eip712_codegen')
   .description('EIP712 artifacts generator')
   .option("-f, --file  <path>", "Data to sign type definitions file path")
+  .option("-d, --dist  <path>", "Destination folder")
   .option("-c, --contract", "Generate contract artifacts")
   .option("-s, --script", "Generate scripts artifacts")
   .version(version);

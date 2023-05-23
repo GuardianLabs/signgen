@@ -1,7 +1,9 @@
-import { formatCapitalSnake } from "../../../utils/string.format";
+import { IDefinition } from "../../../types";
+import { formatCapitalSnake } from "../../../utils";
+import { BR } from "../terminals";
 
-export const buildTypeHash = () => `
-bytes32 constant ${formatCapitalSnake("UpdateDb")}_TYPEHASH = keccak256(
-    "UnstakeAsset(bytes32 internalAssetId,uint256 nonce,string operationType,uint256 timestamp)"
-);
-`
+export const buildTypeHash = (def: IDefinition): string => def.struct
+    .map(el => `
+    bytes32 constant ${formatCapitalSnake(el.name)}_TYPEHASH = keccak256(
+        "${el.name}(${el.props.map(prop => `${prop.type} ${prop.name}`).join(',')})");`)
+    .join(BR);

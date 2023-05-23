@@ -1,5 +1,5 @@
 import { IDefinition } from "../codegen/types";
 
-export function generateScriptArtifacts(def: IDefinition) {
+export async function generateScriptArtifacts(def: IDefinition, targetFolder: string) {
     console.log("script")
 }
