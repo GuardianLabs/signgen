@@ -10,6 +10,6 @@ export const buildVerifyFunctions = (def: IDefinition): string => def.struct
         address addr
     ) internal pure returns (bool) {
 
-        return recover${el.name}(${el.name}Signed, domainSeparator) == addr;
+        return recover${el.name}(params, domainSeparator) == addr;
     }`)
     .join(BR);

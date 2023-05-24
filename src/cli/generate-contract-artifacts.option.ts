@@ -1,17 +1,30 @@
 import { build } from "../codegen/contracts";
 import { IDefinition } from "../codegen/types";
-import { prettier, save } from "./utils";
+import { OUTPUT_PATH } from "../config";
+import { compile, prettier, save, setEnv } from "./utils";
+import * as shortid from 'shortid';
+import * as path from 'path';
 
 export async function generateContractArtifacts(def: IDefinition, targetFolder: string): Promise<string> {
-    const raw = build(def);
+    const version = shortid.generate();
+    version.replace('_', '');
+    version.replace('-', '');
 
-    const path = save({
+    const raw = build(def, version);
+
+    const filePath = save({
         dirPath: targetFolder,
         content: raw,
-        prefix: def.struct.map(el=>el.name).join('_')
+        name: `${def.struct.map(el=>el.name).join('_')}_${version}`
     })
+
+    await setEnv(OUTPUT_PATH, path.relative(path.resolve(), targetFolder));
+
+    console.log(process.env.OUTPUT_PATH)
 
     await prettier();
 
-    return path;
+    await compile();
+
+    return filePath;
 }

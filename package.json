@@ -12,13 +12,17 @@
     "test": "pnpm build:dev && pnpm cli",
     "cli": "ts-node src/index.ts",
     "prettier": "prettier --write */**/*.sol --plugin-search-dir=.",
+    "compile": "npx hardhat compile",
     "version": "pnpm version"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@openzeppelin/contracts": "^4.9.0",
     "commander": "^10.0.1",
+    "cross-env": "^7.0.3",
+    "dotenv": "^16.0.3",
     "hardhat": "^2.14.0",
     "path": "^0.12.7",
     "prettier": "^2.8.8",
