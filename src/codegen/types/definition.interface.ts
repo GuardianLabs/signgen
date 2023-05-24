@@ -5,10 +5,13 @@ export interface IDefinition {
 
 export interface IEntity {
     name: string,
-    props: {
-        name: string,
-        type: string
-    } []
+    props: IProperty[],
+    external: IProperty[]
+}
+
+export interface IProperty {
+    name: string,
+    type: string
 }
 
 export interface IDomain {

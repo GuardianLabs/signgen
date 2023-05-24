@@ -17,6 +17,9 @@ export default {
                 { name: 'logicsList', type: 'address[]' },
                 { name: 'constantsList', type: 'bytes' },
                 { name: 'nonce', type: 'bytes32' },
+            ],
+            external: [
+                { name: "operationId", type: "string" },
             ]
         },
         {
