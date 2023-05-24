@@ -2,6 +2,7 @@ import * as fs from 'fs';
 import * as path from 'path';
 import { exec } from 'child_process';
 import * as util from "util";
+import { OUTPUT_PATH } from '../../config';
 
 const execPromise = util.promisify(exec);
 
@@ -30,8 +31,8 @@ export async function prettier() {
     console.log(stdout, stderr);
 }
 
-export async function compile() {
-    const {stdout, stderr} = await execPromise("pnpm compile");
+export async function compile(targetFolder: string) {
+    const {stdout, stderr} = await execPromise(`cross-env ${OUTPUT_PATH}=${targetFolder} pnpm compile`);
 
     console.log(stdout, stderr);
 }

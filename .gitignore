@@ -8,5 +8,7 @@ dist
 cache
 artifacts
 
+output
+
 .idea
 .deps

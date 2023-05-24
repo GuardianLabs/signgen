@@ -18,13 +18,9 @@ export async function generateContractArtifacts(def: IDefinition, targetFolder: 
         name: `${def.struct.map(el=>el.name).join('_')}_${version}`
     })
 
-    await setEnv(OUTPUT_PATH, path.relative(path.resolve(), targetFolder));
+    await prettier();
 
-    console.log(process.env.OUTPUT_PATH)
-
-    // await prettier();
-
-    // await compile();
+    await compile(`./${path.relative(path.resolve(), targetFolder)}`);
 
     return filePath;
 }
