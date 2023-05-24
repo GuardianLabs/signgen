@@ -22,9 +22,9 @@ export async function generateContractArtifacts(def: IDefinition, targetFolder: 
 
     console.log(process.env.OUTPUT_PATH)
 
-    await prettier();
+    // await prettier();
 
-    await compile();
+    // await compile();
 
     return filePath;
 }
