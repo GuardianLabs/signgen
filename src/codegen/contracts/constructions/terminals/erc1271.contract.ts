@@ -16,5 +16,5 @@ abstract contract ERC1271Contract {
       view 
       virtual
       returns (bytes4 magicValue);
-  }
+    }
 `;

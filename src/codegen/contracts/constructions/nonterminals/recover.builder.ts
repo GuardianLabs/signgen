@@ -12,7 +12,7 @@ export const buildRecoverFunctions = (def: IDefinition): string => def.struct
         bytes32 structHash = keccak256(
             abi.encode(
                 ${formatCapitalSnake(el.name)}_TYPEHASH,
-                ${el.props.map(prop => `params.${prop.name}`).join(`,${BR}${TAB.repeat(2)}`)}
+                ${el.props.map(prop => `params.message.${prop.name}`).join(`,${BR}${TAB.repeat(2)}`)}
             )
         );
 

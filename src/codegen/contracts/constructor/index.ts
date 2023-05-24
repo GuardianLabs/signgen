@@ -19,17 +19,20 @@ export function build(def: IDefinition): string {
 
     ${ERC1271}
 
-    ${HASH_TYPED_DATA_V4}
-    ${HASH_AND_RECOVER}
+    contract ${def.struct.map(el=>el.name).join('_')} {
 
-    ${buildTypeHash(def)}
+        ${HASH_TYPED_DATA_V4}
+        ${HASH_AND_RECOVER}
 
-    ${buildStruct(def)}
+        ${buildTypeHash(def)}
 
-    ${buildSignedStruct(def)}
+        ${buildStruct(def)}
 
-    ${buildRecoverFunctions(def)}
+        ${buildSignedStruct(def)}
 
-    ${buildVerifyFunctions(def)}
+        ${buildRecoverFunctions(def)}
+
+        ${buildVerifyFunctions(def)}
+    }
     `;
 }

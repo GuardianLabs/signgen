@@ -11,7 +11,7 @@ export const buildStruct = (def: IDefinition): string => def.struct
 export const buildSignedStruct = (def: IDefinition): string => def.struct
     .map(el => `
     struct ${el.name}Signed {
-        ${el.props.map(prop => `${prop.type} ${prop.name};`).join(BR + TAB)}
+        ${el.name} message;
         bytes signature;
     }`)
     .join(BR);
