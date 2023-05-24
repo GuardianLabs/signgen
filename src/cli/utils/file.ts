@@ -36,9 +36,3 @@ export async function compile(targetFolder: string) {
 
     console.log(stdout, stderr);
 }
-
-export async function setEnv(key: string, value: string) {
-    const {stdout, stderr} = await execPromise(`pnpm cross-env ${key}=${value}`);
-
-    console.log(stdout, stderr);
-}
