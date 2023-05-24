@@ -20,6 +20,7 @@ export default {
             ],
             external: [
                 { name: "operationId", type: "string" },
+                { name: "structure", type: "TypeTwo", struct: true },
             ]
         },
         {

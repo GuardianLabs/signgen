@@ -1,12 +1,13 @@
 import { IDefinition } from "../../../types";
-import { formatCapitalSnake } from "../../../utils";
+import { formatCapitalSnake, formatSolidityParameters } from "../../../utils";
 import { BR, TAB } from "../terminals";
 
+// todo: pre-encode custom types separately like keccak256(bytes(operationType))
 export const buildRecoverFunctions = (def: IDefinition): string => def.struct
     .map(el => `
     function recover${el.name} (
         ${el.name}Signed calldata params,
-        ${el.external?.map(prop => `${prop.type} ${prop.name},`).join(TAB) || ''}
+        ${el.external ? formatSolidityParameters(el.external) : ''}
         bytes32 domainSeparator
     ) internal pure returns (address) {
 

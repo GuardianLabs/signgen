@@ -11,7 +11,8 @@ export interface IEntity {
 
 export interface IProperty {
     name: string,
-    type: string
+    type: string,
+    struct?: boolean
 }
 
 export interface IDomain {
