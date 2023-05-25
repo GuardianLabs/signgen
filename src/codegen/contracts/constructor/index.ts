@@ -1,4 +1,5 @@
-import { IDefinition } from "../../types";
+import { STRUCTS_FILENAME, TYPEHASH_DEFINITIONS_FILENAME } from "../../../cli/config";
+import { IContractsOutput, IDefinition } from "../../types";
 import {
     buildRecoverFunctions,
     buildSignedStruct,
@@ -15,29 +16,58 @@ import {
     UNLICENSED_LICENSE
 } from "../constructions/terminals";
 
-export function build(def: IDefinition, version: string): string {
-    return `
+export function build(def: IDefinition, name: string): IContractsOutput {
+
+    const recoveryLib = `
+
     ${UNLICENSED_LICENSE}
     ${SOLIDITY_19}
-    
+
     ${ECDSA_OZ}
+    import "./${STRUCTS_FILENAME}.sol";
+    import "./${TYPEHASH_DEFINITIONS_FILENAME}.sol";
 
-    ${ERC1271}
-
-    contract ${def.struct.map(el=>el.name).join('_')}_${version} {
+    library LibSignatureVerification_${name} {
 
         ${HASH_TYPED_DATA_V4}
         ${HASH_AND_RECOVER}
-
-        ${buildTypeHash(def)}
-
-        ${buildStruct(def)}
-
-        ${buildSignedStruct(def)}
 
         ${buildRecoverFunctions(def)}
 
         ${buildVerifyFunctions(def)}
     }
     `;
+
+    const typeHashDefinitions = `
+    
+    ${UNLICENSED_LICENSE}
+    ${SOLIDITY_19}
+
+    ${buildTypeHash(def)}
+    `;
+
+    const params = `
+    
+    ${UNLICENSED_LICENSE}
+    ${SOLIDITY_19}
+    
+    ${buildStruct(def)}
+
+    ${buildSignedStruct(def)}
+    `;
+
+    const mayNeed = `
+
+    ${UNLICENSED_LICENSE}
+    ${SOLIDITY_19}
+    
+    ${ERC1271}
+    `;
+
+    return {
+        recoveryLib,
+        typeHashDefinitions,
+        params,
+        mayNeed
+    };
 }

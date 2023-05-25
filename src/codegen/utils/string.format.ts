@@ -7,13 +7,12 @@ export const formatCapitalSnake = (str: string) =>
     .map(el => el.toUpperCase())
     .join("_");
 
-export const formatSolidityParameters = (props: IProperty[]): string => {
-    return props
-        .map(prop => 
-            dynamicAllocTypes.some(el => prop.type.includes(el)) || prop.struct ?
-            `${prop.type} memory ${prop.name},` : `${prop.type} ${prop.name},`
-        )
-        .join(BR + TAB);
-}
+export const formatSolidityParameters = (props: IProperty[]): string => 
+    props
+    .map(prop => 
+        dynamicAllocTypes.some(el => prop.type.includes(el)) || prop.type == "bytes" || prop.struct ?
+        `${prop.type} memory ${prop.name},` : `${prop.type} ${prop.name},`
+    )
+    .join(BR + TAB);
 
-const dynamicAllocTypes = ["string", "bytes ", "[]"];
+const dynamicAllocTypes = ["string", "[]"]; // bytes vs bytesX

@@ -17,7 +17,7 @@ export function save({ dirPath, content, name }: ISaveConfig): string {
     const filePath = path.join(dirPath, `${name}.sol`);
 
     if (!fs.existsSync(dirPath)){
-        fs.mkdirSync(dirPath);
+        fs.mkdirSync(dirPath, { recursive: true });
     }
 
     fs.writeFileSync(filePath, content, 'utf8');
@@ -25,8 +25,8 @@ export function save({ dirPath, content, name }: ISaveConfig): string {
     return filePath;
 }
 
-export async function prettier() {
-    const {stdout, stderr} = await execPromise("pnpm prettier");
+export async function prettier(targetFolder: string) {
+    const {stdout, stderr} = await execPromise(`pnpm prettier "${targetFolder}/**/*.sol"`);
 
     console.log(stdout, stderr);
 }
