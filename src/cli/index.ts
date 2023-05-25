@@ -1,15 +1,15 @@
 import { OptionValues } from 'commander';
 import * as path from 'path';
+import * as shortid from 'shortid';
 import { generateContractArtifacts } from './generate-contract-artifacts.option';
 import { generateScriptArtifacts } from './generate-script-artifacts.option';
-import { IContractsSignature, IDefinition } from '../codegen/types';
+import { IDefinition } from '../codegen/types';
 
 const cwd: string = path.resolve();
 
 let definitionSourcePath: string;
 let destinationFolder: string;
 
-let contractsParams:IContractsSignature;
 let testPath: string;
 
 export default async function (opts: OptionValues) {
@@ -19,11 +19,17 @@ export default async function (opts: OptionValues) {
 
     const definition: IDefinition = (await import(definitionSourcePath)).default;
 
+    const version = shortid.generate()
+    .replace('-', '')
+    .replace('_', '');
+
     if(opts.contract) {
-        contractsParams = await generateContractArtifacts(definition, path.join(destinationFolder, "contracts"));
+        await generateContractArtifacts(definition, path.join(destinationFolder, "contracts"), version);
     }
 
     if(opts.script) {
-        await generateScriptArtifacts(definition, path.join(destinationFolder, "tests"));
+        await generateScriptArtifacts(definition, path.join(destinationFolder, "tests"), version);
     }
+
+    // if (-c && -s) console.log("start tests");
 }

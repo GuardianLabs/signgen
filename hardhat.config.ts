@@ -4,7 +4,7 @@ const config: HardhatUserConfig = {
   solidity: "0.8.19",
   paths: {
     sources: process.env.OUTPUT_PATH,
-    tests: "./test",
+    tests: process.env.OUTPUT_PATH,
     cache: "./cache",
     artifacts: "./artifacts"
   },

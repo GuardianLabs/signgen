@@ -9,7 +9,7 @@
     "watch": "nodemon ./src/index.ts",
     "clean": "pnpm remove:dist",
     "remove:dist": "rm -rf dist",
-    "test": "pnpm build:dev && pnpm cli",
+    "test": "npx hardhat test",
     "cli": "ts-node src/index.ts",
     "prettier": "prettier --write */**/*.sol --plugin-search-dir=.",
     "compile": "npx hardhat compile",

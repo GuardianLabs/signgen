@@ -3,18 +3,20 @@ import * as path from 'path';
 import { exec } from 'child_process';
 import * as util from "util";
 import { OUTPUT_PATH } from '../../config';
+import { Extension } from '../config';
 
 const execPromise = util.promisify(exec);
 
 interface ISaveConfig {
     dirPath: string,
     content: string,
-    name: string
+    name: string,
+    ext: Extension
 }
 
-export function save({ dirPath, content, name }: ISaveConfig): string {
+export function save({ dirPath, content, name, ext }: ISaveConfig): string {
 
-    const filePath = path.join(dirPath, `${name}.sol`);
+    const filePath = path.join(dirPath, `${name}${ext}`);
 
     if (!fs.existsSync(dirPath)){
         fs.mkdirSync(dirPath, { recursive: true });
@@ -25,14 +27,32 @@ export function save({ dirPath, content, name }: ISaveConfig): string {
     return filePath;
 }
 
-export async function prettier(targetFolder: string) {
+export async function prettifySolidity(targetFolder: string) {
     const {stdout, stderr} = await execPromise(`pnpm prettier "${targetFolder}/**/*.sol"`);
+
+    console.log(stdout, stderr);
+}
+
+export async function prettifyTypescript(targetFolder: string) {
+    const {stdout, stderr} = await execPromise(`pnpm prettier "${targetFolder}/**/*.ts"`);
 
     console.log(stdout, stderr);
 }
 
 export async function compile(targetFolder: string) {
     const {stdout, stderr} = await execPromise(`cross-env ${OUTPUT_PATH}=${targetFolder} pnpm compile`);
+
+    console.log(stdout, stderr);
+}
+
+export async function transpile(targetFolder: string) {
+    const {stdout, stderr} = await execPromise(`tsc ${targetFolder}/**/*.ts`);
+
+    console.log(stdout, stderr);
+}
+
+export async function test(targetFolder: string) {
+    const {stdout, stderr} = await execPromise(`cross-env ${OUTPUT_PATH}=${targetFolder} pnpm test`);
 
     console.log(stdout, stderr);
 }
