@@ -9,7 +9,7 @@ export default {
             name: "TypeOne", 
             props: [
                 { name: 'operation', type: 'uint8' },
-                { name: 'verifyingContract', type: 'address' },
+                { name: 'contractAddress', type: 'address' },
                 { name: 'rules', type: 'uint256[]' },
                 { name: 'approvers', type: 'address[]' },
                 { name: 'approversGiven', type: 'uint8[]' },

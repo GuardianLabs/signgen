@@ -28,13 +28,13 @@ export function save({ dirPath, content, name, ext }: ISaveConfig): string {
 }
 
 export async function prettifySolidity(targetFolder: string) {
-    const {stdout, stderr} = await execPromise(`pnpm prettier "${targetFolder}/**/*.sol"`);
+    const {stdout, stderr} = await execPromise(`prettier --write ${targetFolder}/**/*.sol --plugin-search-dir=.`);
 
     console.log(stdout, stderr);
 }
 
 export async function prettifyTypescript(targetFolder: string) {
-    const {stdout, stderr} = await execPromise(`pnpm prettier "${targetFolder}/**/*.ts"`);
+    const {stdout, stderr} = await execPromise(`prettier --write ${targetFolder}/**/*.ts --plugin-search-dir=.`);
 
     console.log(stdout, stderr);
 }

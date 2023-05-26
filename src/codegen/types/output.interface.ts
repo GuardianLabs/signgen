@@ -4,3 +4,9 @@ export interface IContractsOutput {
     params: string,
     mayNeed: string
 }
+
+export interface IScriptsOutput {
+    tests: string,
+    utils: string,
+    types: string
+}
