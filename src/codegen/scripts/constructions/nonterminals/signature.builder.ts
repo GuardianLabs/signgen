@@ -1,17 +1,29 @@
 import { IDefinition } from "../../../types";
+import { inferType } from "../../parser";
 import { BR } from "../terminals";
 
-export const buildSignature = (def: IDefinition) => def.struct
+export const buildSignedMessage = (def: IDefinition) => def.struct
     .map(el => `
-    export const make${el.name}Signature = async (
-        rawMessage: ${el.name}Message,
-        signer: SignerWithAddress,
-      ): Promise<string> => {
-        const chainId = await signer.getChainId();
-        const { domain, types, message, primaryType } = build${el.name}Message(
-          rawMessage,
-          chainId,
-        );
-        return signer.signTypedDataV4(domain, types, message, primaryType);
-      };`)
-    .join(BR);
+    export const prepare${el.name}SignedMessage = async (
+      struct: ${el.name}Message,
+      ${el.external.map(ext => `${ext.name}: ${inferType(ext.type)},`).join(BR)}
+      verifyingContract: string,
+      signer: SignerWithAddress
+    ) => {
+    
+      const chainId = await signer.getChainId();
+      const { domain, types, message, primaryType } = build${el.name}Message(
+        struct,
+        ${el.external.map(ext => `${ext.name},`).join(BR)}
+        chainId,
+        verifyingContract,
+      );
+    
+      const signature = await signer._signTypedData(domain, types, message, primaryType);
+    
+      return {
+        struct,
+        signature,
+      };
+    }`)
+  .join(BR);

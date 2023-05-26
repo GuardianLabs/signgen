@@ -1,8 +1,7 @@
 import { IDefinition } from "../../types";
 import {
     buildMessageType,
-    buildEIP712MessageTypes,
-    buildAdditionalTypes
+    buildEIP712MessageTypes
 } from "../constructions/nonterminals";
 import { EIP712DomainType, ParamType } from "../constructions/terminals";
 
@@ -18,7 +17,5 @@ export const composeTypes = (def: IDefinition) => {
     ${ParamType}
 
     ${EIP712DomainType}
-
-    ${buildAdditionalTypes(def)}
     `;
 }
