@@ -8,7 +8,7 @@ export default {
         {
             name: "TypeOne", 
             props: [
-                { name: 'contractAddress', type: 'address' }
+                { name: 'addr', type: 'address' }
             ],
             external: [
                 // { name: "operationId", type: "string" },

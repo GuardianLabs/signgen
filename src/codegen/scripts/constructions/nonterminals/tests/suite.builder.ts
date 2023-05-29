@@ -28,8 +28,8 @@ export const buildTestSuite = (def: IDefinition) => {
               
               domainSeparator = await recoverLibInstance.buildDomainSeparator(
                 "${def.domain.name}",
-                ${def.domain.version},
-                recoverLibInstance.address,
+                "${def.domain.version}",
+                recoverLibInstance.address.toString(),
                 );
         });
 
