@@ -8,18 +8,10 @@ export default {
         {
             name: "TypeOne", 
             props: [
-                { name: 'operation', type: 'uint8' },
-                { name: 'contractAddress', type: 'address' },
-                { name: 'rules', type: 'uint256[]' },
-                { name: 'approvers', type: 'address[]' },
-                { name: 'approversGiven', type: 'uint8[]' },
-                { name: 'approvalsRequired', type: 'uint8[]' },
-                { name: 'logicsList', type: 'address[]' },
-                { name: 'constantsList', type: 'bytes' },
-                { name: 'nonce', type: 'bytes32' }
+                { name: 'contractAddress', type: 'address' }
             ],
             external: [
-                { name: "operationId", type: "string" },
+                // { name: "operationId", type: "string" },
                 //{ name: "structure", type: "TypeTwo", struct: true },
             ]
         },

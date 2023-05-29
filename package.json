@@ -8,7 +8,7 @@
     "build:dev": "tsc",
     "watch": "nodemon ./src/index.ts",
     "clear": "pnpm remove:output",
-    "remove:output": "rd /s /q output",
+    "remove:output": "rd /s /q output cache artifacts",
     "test:trace": "npx hardhat test --trace",
     "test:internal": "cross-env OUTPUT_TESTS_PATH=output/tests pnpm test:trace",
     "cli": "ts-node src/index.ts",

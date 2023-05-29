@@ -36,7 +36,7 @@ export const pasteDefaultStub = (type: string) => {
 }
 
 const Default = {
-    "string" : "string",
+    "string" : "str",
     bytes: "0x6c00000000000000000000000000000000000000000000000000000000000000",
     address: `0x${"0".repeat(40)}`,
     uint: "1",

@@ -6,7 +6,7 @@ export const buildVerifyFunctions = (def: IDefinition): string => def.struct
     .map(el => `
     function verify${el.name} (
         ${el.name}Signed calldata params,
-        ${el.external ? formatSolidityParameters(el.external) : ''}
+        ${el.external.length != 0 ? formatSolidityParameters(el.external) : ''}
         bytes32 domainSeparator,
         address addr
     ) public pure returns (bool) {
