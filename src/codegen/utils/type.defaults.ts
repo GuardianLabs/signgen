@@ -1,5 +1,6 @@
 import { inferType } from "../scripts/parser";
 
+// todo: stub params by type
 export const getDefaultStub = (type: string) => {
     let baseType: any;
 
@@ -36,7 +37,7 @@ export const pasteDefaultStub = (type: string) => {
 
 const Default = {
     "string" : "string",
-    bytes: "0xFF",
+    bytes: "0x6c00000000000000000000000000000000000000000000000000000000000000",
     address: `0x${"0".repeat(40)}`,
     uint: "1",
     int: "1"

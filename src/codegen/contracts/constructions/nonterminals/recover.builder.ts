@@ -9,12 +9,14 @@ export const buildRecoverFunctions = (def: IDefinition): string => def.struct
         ${el.name}Signed calldata params,
         ${el.external ? formatSolidityParameters(el.external) : ''}
         bytes32 domainSeparator
-    ) internal pure returns (address) {
+    ) public pure returns (address) {
+
+        ${el.name} memory message = params.message;
 
         bytes32 structHash = keccak256(
             abi.encode(
                 ${formatCapitalSnake(el.name)}_TYPEHASH,
-                ${el.props.map(prop => `params.message.${prop.name}`).join(`,${BR}${TAB.repeat(2)}`)} ${el.external ? ',' : ''}
+                ${el.props.map(prop => `message.${prop.name}`).join(`,${BR}${TAB.repeat(2)}`)} ${el.external ? ',' : ''}
                 ${el.external?.map(prop => prop.name).join(`,${BR}${TAB.repeat(2)}`) || ''}
             )
         );

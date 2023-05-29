@@ -9,8 +9,8 @@
     "watch": "nodemon ./src/index.ts",
     "clear": "pnpm remove:output",
     "remove:output": "rd /s /q output",
-    "test": "npx hardhat test",
-    "test:internal": "cross-env OUTPUT_TESTS_PATH=output/tests pnpm test",
+    "test:trace": "npx hardhat test --trace",
+    "test:internal": "cross-env OUTPUT_TESTS_PATH=output/tests pnpm test:trace",
     "cli": "ts-node src/index.ts",
     "compile": "npx hardhat compile",
     "version": "pnpm version"
@@ -26,6 +26,7 @@
     "dotenv": "^16.0.3",
     "ethers": "5.7.2",
     "hardhat": "^2.14.0",
+    "hardhat-tracer": "^2.3.2",
     "lodash": "^4.17.21",
     "path": "^0.12.7",
     "prettier": "^2.8.8",

@@ -26,8 +26,7 @@ export const buildMessage = (def: IDefinition) => def.struct
             message,
             primaryType: "${el.name}",
             types: {
-              TypeOne: ${el.name}Type,
-              EIP712Domain: EIP712DomainType,
+              ${el.name}: ${el.name}Type
             },
           };
         };

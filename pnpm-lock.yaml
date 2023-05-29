@@ -22,6 +22,9 @@ dependencies:
   hardhat:
     specifier: ^2.14.0
     version: 2.14.0(ts-node@10.9.1)(typescript@5.0.4)
+  hardhat-tracer:
+    specifier: ^2.3.2
+    version: 2.3.2(chai@4.3.7)(hardhat@2.14.0)
   lodash:
     specifier: ^4.17.21
     version: 4.17.21
@@ -1483,6 +1486,21 @@ packages:
 
   /graceful-fs@4.2.11:
     resolution: {integrity: sha512-RbJ5/jmFcNNCcDV5o9eTnBLJ/HszWV0P73bc+Ff4nS/rJj+YaS6IGyiOL0VoBYX+l1Wrl3k63h/KrH+nhJ0XvQ==}
+
+  /hardhat-tracer@2.3.2(chai@4.3.7)(hardhat@2.14.0):
+    resolution: {integrity: sha512-Sw//tVU/Qyng5rKULONIuYpr4yEobjfh5seIaRT8gYXKDo22eUllTMlJEV2ejsZ92X2x+PSWy1/H27aejV31/w==}
+    peerDependencies:
+      chai: 4.x
+      hardhat: 2.x
+    dependencies:
+      chai: 4.3.7
+      chalk: 4.1.2
+      ethers: 5.7.2
+      hardhat: 2.14.0(ts-node@10.9.1)(typescript@5.0.4)
+    transitivePeerDependencies:
+      - bufferutil
+      - utf-8-validate
+    dev: false
 
   /hardhat@2.14.0(ts-node@10.9.1)(typescript@5.0.4):
     resolution: {integrity: sha512-73jsInY4zZahMSVFurSK+5TNCJTXMv+vemvGia0Ac34Mm19fYp6vEPVGF3sucbumszsYxiTT2TbS8Ii2dsDSoQ==}

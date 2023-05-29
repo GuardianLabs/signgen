@@ -1,5 +1,6 @@
 import { HardhatUserConfig } from "hardhat/config";
 import '@nomiclabs/hardhat-ethers'
+import "hardhat-tracer";
 
 const config: HardhatUserConfig = {
   defaultNetwork: "hardhat",

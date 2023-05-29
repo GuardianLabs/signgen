@@ -2,7 +2,6 @@ import { IDefinition } from "../../../../types";
 import { pasteDefaultStub } from "../../../../utils";
 import { BR } from "../../terminals";
 
-// todo: stub params by type
 export const buildRecoverTestCase = (def: IDefinition) => def.struct
     .map(el => `
     it("should recover ${el.name} signer", async () => {

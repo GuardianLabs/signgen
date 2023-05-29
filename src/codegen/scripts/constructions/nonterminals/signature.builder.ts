@@ -22,7 +22,7 @@ export const buildSignedMessage = (def: IDefinition) => def.struct
       const signature = await signer._signTypedData(domain, types, message);
     
       return {
-        ...struct,
+        message: struct,
         signature,
       };
     }`)

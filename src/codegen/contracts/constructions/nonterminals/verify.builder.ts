@@ -9,7 +9,7 @@ export const buildVerifyFunctions = (def: IDefinition): string => def.struct
         ${el.external ? formatSolidityParameters(el.external) : ''}
         bytes32 domainSeparator,
         address addr
-    ) internal pure returns (bool) {
+    ) public pure returns (bool) {
 
         return recover${el.name}(params, ${el.external?.map(prop => `${prop.name},`).join(SPACE) || ''} domainSeparator) == addr;
     }`)
