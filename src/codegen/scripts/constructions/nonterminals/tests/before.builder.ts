@@ -7,6 +7,8 @@ export const buildBeforeStatement = (def: IDefinition) => {
         const [
           signer
         ] = await ethers.getSigners();
+
+        const VaultContract = await ethers.getContractFactory("Vault");
     
         
         domainSeparator = await recoverableInstance.buildDomainSeparator(

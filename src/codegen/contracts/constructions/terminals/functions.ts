@@ -16,3 +16,20 @@ function hashTypedDataV4(
     return ECDSA.toTypedDataHash(domainSeparator, structHash);
 }`;
 
+export const BUILD_DOMAIN_SEPARATOR = `
+function buildDomainSeparator(
+    bytes32 nameHash,
+    bytes32 versionHash,
+    address verifyingContract
+) internal view returns (bytes32) {
+    return
+        keccak256(
+            abi.encode(
+                DOMAIN_TYPE_HASH,
+                nameHash,
+                versionHash,
+                block.chainid,
+                verifyingContract
+            )
+        );
+}`;
