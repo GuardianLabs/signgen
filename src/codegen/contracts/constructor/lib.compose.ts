@@ -23,7 +23,7 @@ export const composeLib = (def: IDefinition, name: string) => {
 
         ${buildRecoverFunctions(def)}
 
-        ${/*buildVerifyFunctions(def)*/ ''}
+        ${buildVerifyFunctions(def)}
     }
     `;
 }

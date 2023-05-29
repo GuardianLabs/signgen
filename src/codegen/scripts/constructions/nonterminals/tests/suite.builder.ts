@@ -34,6 +34,6 @@ export const buildTestSuite = (def: IDefinition) => {
         });
 
         ${buildRecoverTestCase(def)}
-        ${/*buildVerifyTestCase(def)*/''}
+        ${buildVerifyTestCase(def)}
     });`;
 }
