@@ -21,7 +21,7 @@ export const buildMessage = (def: IDefinition) => def.struct
               chainId,
               name: "${def.domain.name}",
               verifyingContract,
-              version: ${def.domain.version},
+              version: "${def.domain.version}",
             },
             message,
             primaryType: "${el.name}",

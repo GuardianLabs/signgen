@@ -19,10 +19,10 @@ export const buildSignedMessage = (def: IDefinition) => def.struct
         verifyingContract,
       );
     
-      const signature = await signer._signTypedData(domain, types, message, primaryType);
+      const signature = await signer._signTypedData(domain, types, message);
     
       return {
-        struct,
+        ...struct,
         signature,
       };
     }`)

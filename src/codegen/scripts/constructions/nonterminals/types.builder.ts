@@ -13,7 +13,8 @@ export const buildMessageType = (def: IDefinition) => def.struct
 export const buildEIP712MessageTypes = (def: IDefinition) => def.struct
       .map(el => `
       export const ${el.name}Type = [
-        ${el.props.map(prop => `{ name: '${prop.name}', type: '${prop.type}' }`).join(',' + BR)}
+        ${el.props.map(prop => `{ name: '${prop.name}', type: '${prop.type}' }`).join(',' + BR)} ${el.external ? "," : ''}
+        ${el.external.map(ext => `{ name: '${ext.name}', type: '${ext.type}' }`).join(',' + BR)}
       ];
       `)
     .join(BR);

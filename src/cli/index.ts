@@ -24,11 +24,11 @@ export default async function (opts: OptionValues) {
     .replace('_', '');
 
     if(opts.contract) {
-        await generateContractArtifacts(definition, path.join(destinationFolder, "contracts"), version);
+        await generateContractArtifacts(definition, destinationFolder, version);
     }
 
     if(opts.script) {
-        await generateScriptArtifacts(definition, path.join(destinationFolder, "tests"), version);
+        await generateScriptArtifacts(definition, destinationFolder, version);
     }
 
     // if (-c && -s) console.log("start tests");

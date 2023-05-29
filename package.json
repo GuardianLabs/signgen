@@ -7,9 +7,10 @@
     "build": "tsc && pnpm format:fix",
     "build:dev": "tsc",
     "watch": "nodemon ./src/index.ts",
-    "clean": "pnpm remove:dist",
-    "remove:dist": "rm -rf dist",
+    "clear": "pnpm remove:output",
+    "remove:output": "rd /s /q output",
     "test": "npx hardhat test",
+    "test:internal": "cross-env OUTPUT_TESTS_PATH=output/tests pnpm test",
     "cli": "ts-node src/index.ts",
     "compile": "npx hardhat compile",
     "version": "pnpm version"
@@ -18,12 +19,12 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@nomiclabs/hardhat-ethers": "^2.2.3",
     "@openzeppelin/contracts": "^4.9.0",
+    "chai": "^4.3.7",
     "commander": "^10.0.1",
     "cross-env": "^7.0.3",
     "dotenv": "^16.0.3",
-    "ethers": "^6.4.0",
+    "ethers": "5.7.2",
     "hardhat": "^2.14.0",
     "lodash": "^4.17.21",
     "path": "^0.12.7",
@@ -32,7 +33,9 @@
     "shortid": "^2.2.16"
   },
   "devDependencies": {
+    "@nomiclabs/hardhat-ethers": "^2.2.3",
     "@types/lodash": "^4.14.195",
+    "@types/mocha": "^10.0.1",
     "@types/node": "^20.2.3",
     "@types/shortid": "^0.0.29",
     "nodemon": "^2.0.22",

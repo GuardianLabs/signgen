@@ -1,15 +1,25 @@
 import { IDefinition } from "../../../../types";
+import { pasteDefaultStub } from "../../../../utils";
 import { BR } from "../../terminals";
 
 // todo: stub params by type
 export const buildRecoverTestCase = (def: IDefinition) => def.struct
     .map(el => `
     it("should recover ${el.name} signer", async () => {
-        const params = await prepare${el.name}Params(
-          ${el.props.map(prop => `${prop.name}`).join(',' + BR)}
+      const args: ${el.name}Message = {
+        ${el.props.map(prop => `${prop.name}: ${pasteDefaultStub(prop.type)}`).join(',' + BR)}
+      }
+
+      ${el.external ? el.external.map(ext => `const ${ext.name} = ${pasteDefaultStub(ext.type)};`).join(',' + BR) : ''}
+
+        const params = await prepare${el.name}SignedMessage(
+          args,
+          ${el.external ? el.external.map(ext => `${ext.name}`).join(',' + BR) : ''},
+          recoverLibInstance.address,
+          signer
         );
         const recoveredAddress =
-          await LIB.recover${el.name}(
+          await recoverLibInstance.recover${el.name}(
             params,
             ${el.external ? el.external.map(ext => `${ext.name}`).join(',' + BR) : ''} ${el.external ? ',' : ''}
             domainSeparator
@@ -21,11 +31,11 @@ export const buildRecoverTestCase = (def: IDefinition) => def.struct
 export const buildVerifyTestCase = (def: IDefinition) => def.struct
     .map(el => `
     it("should verify ${el.name} signer", async () => {
-        const params = await prepare${el.name}Params(
+        const params = await prepare${el.name}SignedMessage(
         ${el.props.map(prop => `${prop.name}`).join(',' + BR)}
         );
         const recoveryResult =
-        await LIB.recover${el.name}(
+        await recoverLibInstance.recover${el.name}(
             params,
             ${el.external ? el.external.map(ext => `${ext.name}`).join(',' + BR) : ''} ${el.external ? ',' : ''}
             domainSeparator,

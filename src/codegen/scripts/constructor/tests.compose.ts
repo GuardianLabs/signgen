@@ -1,6 +1,5 @@
 import { IDefinition } from "../../types";
 import {
-    buildBeforeStatement, 
     buildRecoverTestCase,
     buildTestSuite,
     buildVerifyTestCase
@@ -9,10 +8,7 @@ import {
 export const composeTests = (def: IDefinition) => {
 
     return `
-    describe('Signatures tests', () => {
 
-    ${buildBeforeStatement(def)}
     ${buildTestSuite(def)}
-    });
     `;
 }

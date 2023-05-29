@@ -17,17 +17,21 @@ function hashTypedDataV4(
 }`;
 
 export const BUILD_DOMAIN_SEPARATOR = `
+
 function buildDomainSeparator(
-    bytes32 nameHash,
-    bytes32 versionHash,
+    string memory domainName,
+    string memory version,
     address verifyingContract
-) internal view returns (bytes32) {
+) external  view returns (bytes32) {
+    bytes32 hashedDomainName = keccak256(bytes(domainName));
+    bytes32 hashedVersion = keccak256(bytes(version));
+
     return
         keccak256(
             abi.encode(
                 DOMAIN_TYPE_HASH,
-                nameHash,
-                versionHash,
+                hashedDomainName,
+                hashedVersion,
                 block.chainid,
                 verifyingContract
             )

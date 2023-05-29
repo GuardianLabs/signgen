@@ -2,7 +2,7 @@ import * as fs from 'fs';
 import * as path from 'path';
 import { exec } from 'child_process';
 import * as util from "util";
-import { OUTPUT_PATH } from '../../config';
+import { OUTPUT_CONTRACTS_PATH, OUTPUT_TESTS_PATH} from '../../config';
 import { Extension } from '../config';
 
 const execPromise = util.promisify(exec);
@@ -39,8 +39,8 @@ export async function prettifyTypescript(targetFolder: string) {
     console.log(stdout, stderr);
 }
 
-export async function compile(targetFolder: string) {
-    const {stdout, stderr} = await execPromise(`cross-env ${OUTPUT_PATH}=${targetFolder} pnpm compile`);
+export async function compile(targetFolder: string, version: string) {
+    const {stdout, stderr} = await execPromise(`cross-env ${OUTPUT_CONTRACTS_PATH}=${path.join(targetFolder, path.join("contracts", version))} ${OUTPUT_TESTS_PATH}=${path.join(targetFolder, path.join("tests", version))} pnpm compile`);
 
     console.log(stdout, stderr);
 }
@@ -51,8 +51,8 @@ export async function transpile(targetFolder: string) {
     console.log(stdout, stderr);
 }
 
-export async function test(targetFolder: string) {
-    const {stdout, stderr} = await execPromise(`cross-env ${OUTPUT_PATH}=${targetFolder} pnpm test`);
+export async function test(targetFolder: string, version: string) {
+    const {stdout, stderr} = await execPromise(`cross-env ${OUTPUT_CONTRACTS_PATH}=${path.join(targetFolder, path.join("contracts", version))} ${OUTPUT_TESTS_PATH}=${path.join(targetFolder, path.join("tests", version))}  pnpm test`);
 
     console.log(stdout, stderr);
 }
