@@ -11,7 +11,7 @@ export const formatSolidityParameters = (props: IProperty[]): string =>
     props
     .map(prop => 
         dynamicAllocTypes.some(el => prop.type.includes(el)) || prop.type == "bytes" || prop.struct ?
-        `${prop.type} memory ${prop.name},` : `${prop.type} ${prop.name},`
+        `${prop.type} calldata ${prop.name},` : `${prop.type} ${prop.name},`
     )
     .join(BR + TAB);
 

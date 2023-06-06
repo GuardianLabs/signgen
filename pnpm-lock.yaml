@@ -40,6 +40,9 @@ dependencies:
   shortid:
     specifier: ^2.2.16
     version: 2.2.16
+  signtypeddata-v5:
+    specifier: ^5.0.1
+    version: 5.0.1
 
 devDependencies:
   '@nomiclabs/hardhat-ethers':
@@ -2231,6 +2234,17 @@ packages:
       call-bind: 1.0.2
       get-intrinsic: 1.2.1
       object-inspect: 1.12.3
+
+  /signtypeddata-v5@5.0.1:
+    resolution: {integrity: sha512-0vSt2YRyKj7Ywmt9PiOE9Dsmo5n/hysO1gaP4VX1Qu6J9KalItIfq//47uVgmXDeNVzfbRBjou+awwUgC2a/uw==}
+    engines: {node: '>=12.0.0'}
+    dependencies:
+      ethereumjs-abi: 0.6.8
+      ethereumjs-util: 6.2.1
+      ethjs-util: 0.1.6
+      tweetnacl: 1.0.3
+      tweetnacl-util: 0.15.1
+    dev: false
 
   /simple-update-notifier@1.1.0:
     resolution: {integrity: sha512-VpsrsJSUcJEseSbMHkrsrAVSdvVS5I96Qo1QAQ4FxQ9wXFcB+pjj7FB7/us9+GcgfW4ziHtYMc1J0PLczb55mg==}

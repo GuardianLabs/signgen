@@ -19,14 +19,9 @@ export const buildRecoverTestCase = (def: IDefinition) => def.struct
           signer
         );
 
-        const structData = ethers.utils.AbiCoder.prototype.encode(
-          [${el.props.map(prop => `'${prop.type}'`).join(',')}],
-          [${el.props.map(prop => `args['${prop.name}']`).join(',')}]
-        );
-
         const recoveredAddress =
           await recoverLibInstance.recover${el.name}(
-            structData,
+            ${el.props.length != 0 ? el.props.map(prop => `args["${prop.name}"]`).join(',' + BR) : ''} ${el.props.length != 0 ? ',' : ''}
             params.signature,
             ${el.external.length != 0 ? el.external.map(ext => `${ext.name}`).join(',' + BR) : ''} ${el.external.length != 0 ? ',' : ''}
             domainSeparator
@@ -51,14 +46,9 @@ export const buildVerifyTestCase = (def: IDefinition) => def.struct
           signer
         );
 
-        const structData = ethers.utils.AbiCoder.prototype.encode(
-          [${el.props.map(prop => `'${prop.type}'`).join(',')}],
-          [${el.props.map(prop => `args['${prop.name}']`).join(',')}]
-        );
-
         const recoveryResult =
           await recoverLibInstance.verify${el.name}(
-            structData,
+            ${el.props.length != 0 ? el.props.map(prop => `args["${prop.name}"]`).join(',' + BR) : ''} ${el.props.length != 0 ? ',' : ''}
             params.signature,
             ${el.external.length != 0 ? el.external.map(ext => `${ext.name}`).join(',' + BR) : ''} ${el.external.length != 0 ? ',' : ''}
             domainSeparator,
