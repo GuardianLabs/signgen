@@ -10,7 +10,7 @@ export const buildRecoverTestCase = (def: IDefinition) => def.struct
         ${el.props.map(prop => `${prop.name}: ${pasteDefaultStub(prop.type)}`).join(',' + BR)}
       }
 
-      ${el.external.length != 0 ? el.external.map(ext => `const ${ext.name} = ${pasteDefaultStub(ext.type)};`).join(',' + BR) : ''}
+      ${el.external.length != 0 ? el.external.map(ext => `const ${ext.name} = ${pasteDefaultStub(ext.type)};`).join(BR) : ''}
 
         const params = await prepare${el.name}SignedMessage(
           args,
@@ -37,7 +37,7 @@ export const buildVerifyTestCase = (def: IDefinition) => def.struct
         ${el.props.map(prop => `${prop.name}: ${pasteDefaultStub(prop.type)}`).join(',' + BR)}
       }
 
-      ${el.external.length != 0 ? el.external.map(ext => `const ${ext.name} = ${pasteDefaultStub(ext.type)};`).join(',' + BR) : ''}
+      ${el.external.length != 0 ? el.external.map(ext => `const ${ext.name} = ${pasteDefaultStub(ext.type)};`).join(BR) : ''}
 
         const params = await prepare${el.name}SignedMessage(
           args,

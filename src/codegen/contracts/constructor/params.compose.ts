@@ -1,5 +1,5 @@
 import { IDefinition } from "../../types";
-import { buildStruct, buildSignedStruct } from "../constructions/nonterminals";
+import { buildStruct, buildSignedStruct, buildStructStubs } from "../constructions/nonterminals";
 import { UNLICENSED_LICENSE, SOLIDITY_19 } from "../constructions/terminals";
 
 export const composeParams = (def: IDefinition) => {
@@ -12,5 +12,7 @@ export const composeParams = (def: IDefinition) => {
     ${buildStruct(def)}
 
     ${buildSignedStruct(def)}
+
+    ${buildStructStubs(def)}
     `;
 }

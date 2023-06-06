@@ -15,3 +15,14 @@ export const buildSignedStruct = (def: IDefinition): string => def.struct
         bytes signature;
     }`)
     .join(BR);
+
+export const buildStructStubs = (def: IDefinition): string => def.struct
+.flatMap(el => el.props.concat(el.external))
+.filter(el => el.struct)
+.filter(el => !def.struct.map(el => el.name).includes(el.type))
+.filter((value, index, array) => array.indexOf(value) === index)
+.map(el => `
+struct ${el.type} {
+    bool exists;
+}`)
+.join(BR);
