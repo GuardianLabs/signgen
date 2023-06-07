@@ -26,6 +26,7 @@ export const buildRecoverTestCase = (def: IDefinition) => def.struct
             ${el.external.length != 0 ? el.external.map(ext => `${ext.name}`).join(',' + BR) : ''} ${el.external.length != 0 ? ',' : ''}
             domainSeparator
           );
+          
         expect(recoveredAddress).to.be.equal(signer.address);
       });`)
     .join(BR);

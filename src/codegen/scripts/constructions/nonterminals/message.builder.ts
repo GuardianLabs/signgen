@@ -1,4 +1,5 @@
 import { IDefinition } from "../../../types";
+import { stubUndefinedStruct } from "../../../utils";
 import { inferType } from "../../parser";
 import { BR } from "../terminals";
 
@@ -34,7 +35,7 @@ export const buildMessage = (def: IDefinition) => def.struct
                 .filter(el => !def.struct.map(el => el.name).includes(el.type))
                 .filter((value, index, array) => array.indexOf(value) === index)
                 .map(el => `
-                ${el.type}: [{ name: "exists", type: "bool" }],`)
+                ${el.type}: ${JSON.stringify(stubUndefinedStruct())},`)
                 .join(BR)
               }
 

@@ -14,18 +14,29 @@ You need to create definition.ts file that exports your needed types with the fo
             props: [
                 { name: 'sample1', type: 'sample' },
                 { name: 'sample2', type: 'sample' },
+                { name: 'struct1', type: 'Struct', struct: true },
+            ],
+            external: [
+                { name: 'sample1', type: 'sample' },
             ]
         },
         {
             name: "TypeTwo",
             props: [
                 { name: 'sample1', type: 'sample' },
-            ]
+                { name: 'sample2', type: 'TypeOne' },
+            ],
+            external: []
         }
     ]
 }; 
 
 Use explicit types! (uint => uint256/128/64...)
+If parameter is a struct, use "struct: true" flag
+
+All the undefined structs will be mocked with { exists: true }
+
+cli -c -s will automatically launch generated tests
 
 EIP712 artifacts generator
 

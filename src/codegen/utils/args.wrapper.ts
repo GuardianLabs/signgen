@@ -1,5 +1,6 @@
 import { IDefinition } from "../types";
 import { formatCapitalSnake } from "./string.format";
+import { stubUndefinedStruct } from "./type.defaults";
 
 // todo: pre-encode enums
 export const wrapArgument = (arg: string, type: string, def: IDefinition, isStruct: boolean = false): string => {
@@ -18,11 +19,9 @@ export const wrapArgument = (arg: string, type: string, def: IDefinition, isStru
     if(isStruct) {
         const target = def.struct.find(el => el.name == type);
 
-        if(target) {
-            return `keccak256(abi.encode(${formatCapitalSnake(type)}_TYPEHASH, ${target.props.map(el => wrapArgument(`${arg}.${el.name}`, el.type, def, el.struct)).join(', ')}))`;
-        } else {
-            return `keccak256(abi.encode(${formatCapitalSnake(type)}_TYPEHASH, ${arg}.exists))`;
-        }
+        let targetProps = target ? target.props : stubUndefinedStruct();
+        return `keccak256(abi.encode(${formatCapitalSnake(type)}_TYPEHASH, ${targetProps.map(el => wrapArgument(`${arg}.${el.name}`, el.type, def, el.struct)).join(', ')}))`;
+
     }
 
     return arg;

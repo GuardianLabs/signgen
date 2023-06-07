@@ -1,4 +1,5 @@
 import { IDefinition } from "../../../types";
+import { stubUndefinedStruct } from "../../../utils";
 import { BR, TAB } from "../terminals";
 
 export const buildStruct = (def: IDefinition): string => def.struct
@@ -23,6 +24,6 @@ export const buildStructStubs = (def: IDefinition): string => def.struct
 .filter((value, index, array) => array.indexOf(value) === index)
 .map(el => `
 struct ${el.type} {
-    bool exists;
+    ${stubUndefinedStruct().map(prop => `${prop.type} ${prop.name};`).join(BR + TAB)}
 }`)
 .join(BR);

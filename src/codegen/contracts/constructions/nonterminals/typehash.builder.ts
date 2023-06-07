@@ -1,5 +1,5 @@
 import { IDefinition, IEntity, IProperty } from "../../../types";
-import { formatCapitalSnake } from "../../../utils";
+import { formatCapitalSnake, stubUndefinedStruct } from "../../../utils";
 import { BR, DOMAIN_TYPEHASH } from "../terminals";
 import { TypedDataUtils } from 'signtypeddata-v5';
 
@@ -19,7 +19,7 @@ const buildTypeHashRecursively = (el: IEntity, def: IDefinition, includedStructs
             } else {
                 includedStructs.push({
                     name: prop.type,
-                    props: [{name: "exists", type: "bool"}],
+                    props: stubUndefinedStruct(),
                     external: []
                 });
             }
@@ -53,6 +53,6 @@ export const buildStubTypeHash = (def: IDefinition): string => def.struct
     .filter(el => !def.struct.map(el => el.name).includes(el.type))
     .filter((value, index, array) => array.indexOf(value) === index)
     .map(el => `
-    bytes32 constant ${formatCapitalSnake(el.type)}_TYPEHASH = keccak256("${el.type}(bool exists)");
+    bytes32 constant ${formatCapitalSnake(el.type)}_TYPEHASH = keccak256("${el.type}(${stubUndefinedStruct().map(prop => `${prop.type} ${prop.name}`).join(',')})");
     `)
     .join(BR);

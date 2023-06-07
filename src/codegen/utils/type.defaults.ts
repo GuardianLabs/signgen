@@ -1,8 +1,6 @@
 import { inferType } from "../scripts/parser";
-import { IDefinition } from "../types";
+import { IDefinition, IProperty } from "../types";
 
-// todo: stub params by type correctly
-// todo: refactor to encapsulate "exists: true" in a stub singleton
 export const getDefaultStub = (type: string, def: IDefinition, isStruct: boolean) => {
     let baseType: any;
 
@@ -16,15 +14,10 @@ export const getDefaultStub = (type: string, def: IDefinition, isStruct: boolean
             if(isStruct) {
                 const target = def.struct.find(el => el.name == type);
 
-                if (target) {
-                    baseType = `{
-                        ${target.props.map(el => `${el.name}: ${pasteDefaultStub(el.type, def, el.struct)},`)}
-                    }`;
-                } else {
-                    baseType = `{
-                        exists: true,
-                    }`;
-                }
+                let targetProps = target ? target.props : stubUndefinedStruct();
+                baseType = `{
+                    ${targetProps.map(el => `${el.name}: ${pasteDefaultStub(el.type, def, el.struct)},`)}
+                }`;
             } else {
                 baseType = undefined;
             }
@@ -40,7 +33,7 @@ export const pasteDefaultStub = (type: string, def: IDefinition, isStruct: boole
 
     let outTypeStub;
 
-    if(!tsType.includes("BigNumberish") && !tsType.includes("number") && !isStruct) {
+    if(!tsType.includes("BigNumberish") && !tsType.includes("number") && !tsType.includes("boolean") && !isStruct && stub != undefined) {
         outTypeStub = `"${stub}"`;
     } else {
         outTypeStub = stub;
@@ -53,8 +46,11 @@ export const pasteDefaultStub = (type: string, def: IDefinition, isStruct: boole
 
 const Default = {
     "string" : "str",
-    bytes: "0x0000000000000000000000000000000000000000000000000000000000000000",
+    bytes: `0x${"0".repeat(64)}`,
     address: `0x${"0".repeat(40)}`,
+    bool: "true",
     uint: "1",
     int: "1"
 }
+
+export const stubUndefinedStruct = (): IProperty[] => ([{name: "exists", type: "bool"}]);
