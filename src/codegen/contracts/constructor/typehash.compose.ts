@@ -1,5 +1,5 @@
 import { IDefinition } from "../../types";
-import { buildTypeHash } from "../constructions/nonterminals";
+import { buildStubTypeHash, buildTypeHash } from "../constructions/nonterminals";
 import { UNLICENSED_LICENSE, SOLIDITY_19 } from "../constructions/terminals";
 
 export const composeTypehash = (def: IDefinition) => {
@@ -10,5 +10,7 @@ export const composeTypehash = (def: IDefinition) => {
     ${SOLIDITY_19}
 
     ${buildTypeHash(def)}
+
+    ${buildStubTypeHash(def)}
     `;
 }

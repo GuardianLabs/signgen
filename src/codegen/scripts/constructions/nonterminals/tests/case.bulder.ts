@@ -7,10 +7,10 @@ export const buildRecoverTestCase = (def: IDefinition) => def.struct
     .map(el => `
     it("should recover ${el.name} signer", async () => {
       const args: ${el.name}Message = {
-        ${el.props.map(prop => `${prop.name}: ${pasteDefaultStub(prop.type)}`).join(',' + BR)}
+        ${el.props.map(prop => `${prop.name}: ${pasteDefaultStub(prop.type, def, prop.struct)}`).join(',' + BR)}
       }
 
-      ${el.external.length != 0 ? el.external.map(ext => `const ${ext.name} = ${pasteDefaultStub(ext.type)};`).join(BR) : ''}
+      ${el.external.length != 0 ? el.external.map(ext => `const ${ext.name} = ${pasteDefaultStub(ext.type, def, ext.struct)};`).join(BR) : ''}
 
         const params = await prepare${el.name}SignedMessage(
           args,
@@ -34,10 +34,10 @@ export const buildVerifyTestCase = (def: IDefinition) => def.struct
     .map(el => `
     it("should verify ${el.name} signer", async () => {
       const args: ${el.name}Message = {
-        ${el.props.map(prop => `${prop.name}: ${pasteDefaultStub(prop.type)}`).join(',' + BR)}
+        ${el.props.map(prop => `${prop.name}: ${pasteDefaultStub(prop.type, def, prop.struct)}`).join(',' + BR)}
       }
 
-      ${el.external.length != 0 ? el.external.map(ext => `const ${ext.name} = ${pasteDefaultStub(ext.type)};`).join(BR) : ''}
+      ${el.external.length != 0 ? el.external.map(ext => `const ${ext.name} = ${pasteDefaultStub(ext.type, def, ext.struct)};`).join(BR) : ''}
 
         const params = await prepare${el.name}SignedMessage(
           args,

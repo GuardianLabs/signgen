@@ -19,7 +19,7 @@ const buildTypeHashRecursively = (el: IEntity, def: IDefinition, includedStructs
             } else {
                 includedStructs.push({
                     name: prop.type,
-                    props: [],
+                    props: [{name: "exists", type: "bool"}],
                     external: []
                 });
             }
@@ -46,3 +46,13 @@ export const buildTypeHash = (def: IDefinition): string => def.struct
     }) 
     .join(BR)
     .concat(DOMAIN_TYPEHASH + BR);
+
+export const buildStubTypeHash = (def: IDefinition): string => def.struct
+    .flatMap(el => el.props.concat(el.external))
+    .filter(el => el.struct)
+    .filter(el => !def.struct.map(el => el.name).includes(el.type))
+    .filter((value, index, array) => array.indexOf(value) === index)
+    .map(el => `
+    bytes32 constant ${formatCapitalSnake(el.type)}_TYPEHASH = keccak256("${el.type}(bool exists)");
+    `)
+    .join(BR);

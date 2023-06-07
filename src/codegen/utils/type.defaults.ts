@@ -1,7 +1,9 @@
 import { inferType } from "../scripts/parser";
+import { IDefinition } from "../types";
 
 // todo: stub params by type correctly
-export const getDefaultStub = (type: string) => {
+// todo: refactor to encapsulate "exists: true" in a stub singleton
+export const getDefaultStub = (type: string, def: IDefinition, isStruct: boolean) => {
     let baseType: any;
 
     type DefaultKey = keyof typeof Default;
@@ -11,20 +13,34 @@ export const getDefaultStub = (type: string) => {
             baseType = Default[key as DefaultKey];
             break;
         } else {
-            baseType = undefined;
+            if(isStruct) {
+                const target = def.struct.find(el => el.name == type);
+
+                if (target) {
+                    baseType = `{
+                        ${target.props.map(el => `${el.name}: ${pasteDefaultStub(el.type, def, el.struct)},`)}
+                    }`;
+                } else {
+                    baseType = `{
+                        exists: true,
+                    }`;
+                }
+            } else {
+                baseType = undefined;
+            }
         }
     }
 
     return baseType;
 }
 
-export const pasteDefaultStub = (type: string) => {
-    const stub = getDefaultStub(type);
+export const pasteDefaultStub = (type: string, def: IDefinition, isStruct: boolean = false) => {
+    const stub = getDefaultStub(type, def, isStruct);
     const tsType = inferType(type);
 
     let outTypeStub;
 
-    if(!tsType.includes("BigNumberish") && !tsType.includes("number")) {
+    if(!tsType.includes("BigNumberish") && !tsType.includes("number") && !isStruct) {
         outTypeStub = `"${stub}"`;
     } else {
         outTypeStub = stub;

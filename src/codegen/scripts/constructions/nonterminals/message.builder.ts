@@ -26,7 +26,27 @@ export const buildMessage = (def: IDefinition) => def.struct
             message,
             primaryType: "${el.name}",
             types: {
-              ${el.name}: ${el.name}Type
+              ${el.name}: ${el.name}Type,
+
+              ${
+                el.props.concat(el.external)
+                .filter(el => el.struct)
+                .filter(el => !def.struct.map(el => el.name).includes(el.type))
+                .filter((value, index, array) => array.indexOf(value) === index)
+                .map(el => `
+                ${el.type}: [{ name: "exists", type: "bool" }],`)
+                .join(BR)
+              }
+
+              ${
+                el.props.concat(el.external)
+                .filter(el => el.struct)
+                .filter(el => def.struct.map(el => el.name).includes(el.type))
+                .filter((value, index, array) => array.indexOf(value) === index)
+                .map(el => `
+                ${el.type}: ${el.type}Type,`)
+                .join(BR)
+              }
             },
           };
         };
