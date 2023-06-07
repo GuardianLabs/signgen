@@ -16,8 +16,8 @@ const config: HardhatUserConfig = {
   paths: {
     sources: process.env.OUTPUT_CONTRACTS_PATH,
     tests: process.env.OUTPUT_TESTS_PATH,
-    cache: "./cache",
-    artifacts: "./artifacts"
+    cache: process.env.OUTPUT_CACHE_PATH,
+    artifacts: process.env.OUTPUT_ARTIFACTS_PATH
   },
 };
 

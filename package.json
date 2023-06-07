@@ -8,10 +8,11 @@
     "build:dev": "tsc",
     "watch": "nodemon ./src/index.ts",
     "clear": "pnpm remove:output",
-    "remove:output": "rd /s /q output cache artifacts",
+    "remove:output": "rd /s /q output",
+    "test": "npx hardhat test",
     "test:trace": "npx hardhat test --trace",
-    "test:internal": "cross-env OUTPUT_TESTS_PATH=output/tests pnpm test:trace",
-    "test:prune": "pnpm clear && pnpm cli -c -s && pnpm test:internal",
+    "test:internal": "cross-env OUTPUT_TESTS_PATH=output/tests OUTPUT_ARTIFACTS_PATH=output/artifacts OUTPUT_CACHE_PATH=output/cache pnpm test:trace",
+    "test:prune": "pnpm clear && pnpm cli -c -s",
     "cli": "ts-node src/index.ts",
     "compile": "npx hardhat compile",
     "version": "pnpm version"
@@ -20,6 +21,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@nomicfoundation/hardhat-network-helpers": "^1.0.8",
+    "@nomicfoundation/hardhat-toolbox": "^2.0.2",
     "@openzeppelin/contracts": "^4.9.0",
     "chai": "^4.3.7",
     "commander": "^10.0.1",

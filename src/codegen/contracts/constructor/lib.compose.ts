@@ -14,7 +14,7 @@ export const composeLib = (def: IDefinition, name: string) => {
     import "./${STRUCTS_FILENAME}.sol";
     import "./${TYPEHASH_DEFINITIONS_FILENAME}.sol";
 
-    library LibSignatureVerification_${name} {
+    contract LibSignatureVerification_${name} {
 
         ${HASH_TYPED_DATA_V4}
         ${HASH_AND_RECOVER}
