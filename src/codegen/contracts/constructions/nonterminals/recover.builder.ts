@@ -13,11 +13,7 @@ export const buildRecoverFunctions = (def: IDefinition): string => def.struct
     ) public pure returns (address) {
 
         bytes32 structHash = keccak256(
-            abi.encode(
-                ${formatCapitalSnake(el.name)}_TYPEHASH,
-                ${el.props.map(prop => wrapArgument(`message.${prop.name}`, prop.type, def, prop.struct)).join(`,${BR}${TAB.repeat(2)}`)} ${el.external.length != 0 ? ',' : ''}
-                ${el.external?.map(prop => wrapArgument(prop.name, prop.type, def, prop.struct)).join(`,${BR}${TAB.repeat(2)}`) || ''}
-            )
+            encode${el.name}Parameters(message ${el.external?.length != 0 ? "," : ''} ${el.external?.map(ext => `${ext.name}`).join(',' + SPACE) || ''})
         );
     
         return hashAndRecover(structHash, signature, domainSeparator);

@@ -24,6 +24,8 @@ export default async function (opts: OptionValues) {
     .replace('-', '')
     .replace('_', '');
 
+    console.info(`Version: ${version}`);
+
     if(opts.contract) {
         await generateContractArtifacts(definition, destinationFolder, version);
     }

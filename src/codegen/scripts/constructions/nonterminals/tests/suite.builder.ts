@@ -14,8 +14,8 @@ export const buildTestSuite = (def: IDefinition) => {
     import { ${def.struct.map(el => `${el.name}Message`).join(', ')} } from "./message.types";
 
     describe('${def.struct.map(el => el.name).join(', ')} signatures', () => {
-        let RecoverLib: any;
-        let recoverLibInstance: any;
+        let Recover: any;
+        let recoverInstance: any;
         let domainSeparator: any;
         let signer: any;
 
@@ -23,13 +23,13 @@ export const buildTestSuite = (def: IDefinition) => {
         beforeEach(async () => {
             [ signer ] = await ethers.getSigners();
       
-              RecoverLib = await ethers.getContractFactory("LibSignatureVerification_${def.struct.map(el=>el.name).join('_')}");
-              recoverLibInstance = await RecoverLib.deploy();
+              Recover = await ethers.getContractFactory("SignatureVerification_${def.struct.map(el=>el.name).join('_')}");
+              recoverInstance = await Recover.deploy();
               
-              domainSeparator = await recoverLibInstance.buildDomainSeparator(
+              domainSeparator = await recoverInstance.buildDomainSeparator(
                 "${def.domain.name}",
                 "${def.domain.version}",
-                recoverLibInstance.address.toString(),
+                recoverInstance.address.toString(),
                 );
         });
 
