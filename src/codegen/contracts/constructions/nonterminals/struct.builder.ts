@@ -2,7 +2,6 @@ import { IDefinition, IStructProperty } from "../../../types";
 import { stubUndefinedStruct } from "../../../utils";
 import { BR, TAB } from "../terminals";
 
-// todo: don't duplicate declarations
 export const buildStruct = (def: IDefinition): string => def.struct
     .map(el => `
     struct ${el.name} {

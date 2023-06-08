@@ -4,7 +4,7 @@ import * as shortid from 'shortid';
 import { generateContractArtifacts } from './generate-contract-artifacts.option';
 import { generateScriptArtifacts } from './generate-script-artifacts.option';
 import { IDefinition } from '../codegen/types';
-import { test } from './utils';
+import { test, validateDefinition } from './utils';
 
 const cwd: string = path.resolve();
 
@@ -20,6 +20,8 @@ export default async function (opts: OptionValues) {
     
     let verifyingContract = definition.domain.verifyingContract;
     if(verifyingContract) definition.domain.verifyingContract = `"${verifyingContract}"`;
+
+    validateDefinition(definition);
 
     const version = shortid.generate()
     .replace('-', '')
