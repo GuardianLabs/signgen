@@ -21,6 +21,8 @@ export const composeLib = (def: IDefinition, name: string) => {
 
         ${BUILD_DOMAIN_SEPARATOR}
 
+        // For elimination of "Stack too deep" error
+
         ${buildEncodeFunctions(def)}
 
         ${buildRecoverFunctions(def)}

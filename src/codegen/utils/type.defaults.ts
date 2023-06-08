@@ -1,7 +1,7 @@
 import { inferType } from "../scripts/parser";
-import { IDefinition, IProperty } from "../types";
+import { IDefinition, IEnumProperty, IProperty, IStructProperty } from "../types";
 
-export const getDefaultStub = (type: string, def: IDefinition, isStruct: boolean) => {
+export const getDefaultStub = (type: string, def: IDefinition, prop: IProperty) => {
     let baseType: any;
 
     type DefaultKey = keyof typeof Default;
@@ -11,13 +11,15 @@ export const getDefaultStub = (type: string, def: IDefinition, isStruct: boolean
             baseType = Default[key as DefaultKey];
             break;
         } else {
-            if(isStruct) {
+            if((prop as IStructProperty).struct) {
                 const target = def.struct.find(el => el.name == type);
 
                 let targetProps = target ? target.props : stubUndefinedStruct();
                 baseType = `{
-                    ${targetProps.map(el => `${el.name}: ${pasteDefaultStub(el.type, def, el.struct)},`)}
+                    ${targetProps.map(el => `${el.name}: ${pasteDefaultStub(el.type, def, el)},`)}
                 }`;
+            } else if ((prop as IEnumProperty).enum) {
+                baseType = Default.uint;
             } else {
                 baseType = undefined;
             }
@@ -27,13 +29,20 @@ export const getDefaultStub = (type: string, def: IDefinition, isStruct: boolean
     return baseType;
 }
 
-export const pasteDefaultStub = (type: string, def: IDefinition, isStruct: boolean = false) => {
-    const stub = getDefaultStub(type, def, isStruct);
+export const pasteDefaultStub = (type: string, def: IDefinition, prop: IProperty) => {
+    const stub = getDefaultStub(type, def, prop);
     const tsType = inferType(type);
 
     let outTypeStub;
 
-    if(!tsType.includes("BigNumberish") && !tsType.includes("number") && !tsType.includes("boolean") && !isStruct && stub != undefined) {
+    if(
+        !tsType.includes("BigNumberish") &&
+        !tsType.includes("number") && 
+        !tsType.includes("boolean") && 
+        !(prop as IStructProperty).struct && 
+        !(prop as IEnumProperty).enum && 
+        stub != undefined
+    ) {
         outTypeStub = `"${stub}"`;
     } else {
         outTypeStub = stub;
@@ -45,12 +54,13 @@ export const pasteDefaultStub = (type: string, def: IDefinition, isStruct: boole
 }
 
 const Default = {
-    "string" : "str",
+    "string" : "stub",
     bytes: `0x${"0".repeat(64)}`,
     address: `0x${"0".repeat(40)}`,
-    bool: "true",
-    uint: "1",
-    int: "1"
+    bool: "false",
+    uint: "0",
+    int: "0"
 }
 
 export const stubUndefinedStruct = (): IProperty[] => ([{name: "exists", type: "bool"}]);
+export const stubUndefinedEnum = () => ["EXISTS"];

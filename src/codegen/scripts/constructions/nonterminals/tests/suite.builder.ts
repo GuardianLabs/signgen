@@ -29,7 +29,7 @@ export const buildTestSuite = (def: IDefinition) => {
               domainSeparator = await recoverInstance.buildDomainSeparator(
                 "${def.domain.name}",
                 "${def.domain.version}",
-                recoverInstance.address.toString(),
+                ${def.domain.verifyingContract || "recoverInstance.address.toString()"}
                 );
         });
 

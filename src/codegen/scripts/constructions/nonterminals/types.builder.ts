@@ -1,4 +1,4 @@
-import { IDefinition } from "../../../types";
+import { IDefinition, IEnumProperty } from "../../../types";
 import { inferType } from "../../parser";
 import { BR } from "../terminals";
 
@@ -13,8 +13,8 @@ export const buildMessageType = (def: IDefinition) => def.struct
 export const buildEIP712MessageTypes = (def: IDefinition) => def.struct
       .map(el => `
       export const ${el.name}Type = [
-        ${el.props.map(prop => `{ name: '${prop.name}', type: '${prop.type}' }`).join(',' + BR)} ${el.external.length != 0 ? "," : ''}
-        ${el.external.map(ext => `{ name: '${ext.name}', type: '${ext.type}' }`).join(',' + BR)}
+        ${el.props.map(prop => `{ name: '${prop.name}', type: '${(prop as IEnumProperty).enum ? "uint8" : prop.type}' }`).join(',' + BR)} ${el.external.length != 0 ? "," : ''}
+        ${el.external.map(ext => `{ name: '${ext.name}', type: '${(ext as IEnumProperty).enum ? "uint8" : ext.type}' }`).join(',' + BR)}
       ];
       `)
     .join(BR);

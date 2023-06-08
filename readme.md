@@ -35,6 +35,7 @@ Use explicit types! (uint => uint256/128/64...)
 If parameter is a struct, use "struct: true" flag
 
 All the undefined structs will be mocked with { exists: true }
+All the enums will be mocked with { EXISTS }
 
 cli -c -s will automatically launch generated tests
 

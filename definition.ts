@@ -1,7 +1,7 @@
 export default {
     domain: {
         name: 'Sample',
-        version: '1',
+        version: '1'
     },
 
     struct: [
@@ -17,7 +17,8 @@ export default {
                 { name: 'approvalsRequired', type: 'uint8[]' },
                 { name: 'logicsList', type: 'address[]' },
                 { name: 'constantsList', type: 'bytes' },
-                { name: "structure", type: "TypeTwo", struct: true },
+                { name: 'enumerable', type: 'AEnum', enum: true },
+                // { name: "structure", type: "TypeTwo", struct: true },
                 // { name: "structure1", type: "AStruct", struct: true },
                 // { name: "structure2", type: "BStruct", struct: true },
                 { name: 'nonce', type: 'bytes32' }

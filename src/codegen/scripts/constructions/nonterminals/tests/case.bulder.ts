@@ -7,15 +7,15 @@ export const buildRecoverTestCase = (def: IDefinition) => def.struct
     .map(el => `
     it("should recover ${el.name} signer", async () => {
       const args: ${el.name}Message = {
-        ${el.props.map(prop => `${prop.name}: ${pasteDefaultStub(prop.type, def, prop.struct)}`).join(',' + BR)}
+        ${el.props.map(prop => `${prop.name}: ${pasteDefaultStub(prop.type, def, prop)}`).join(',' + BR)}
       }
 
-      ${el.external.length != 0 ? el.external.map(ext => `const ${ext.name} = ${pasteDefaultStub(ext.type, def, ext.struct)};`).join(BR) : ''}
+      ${el.external.length != 0 ? el.external.map(ext => `const ${ext.name} = ${pasteDefaultStub(ext.type, def, ext)};`).join(BR) : ''}
 
         const params = await prepare${el.name}SignedMessage(
           args,
           ${el.external.length != 0 ? el.external.map(ext => `${ext.name}`).join(',' + BR) : ''} ${el.external.length != 0 ? ',' : ''}
-          recoverInstance.address,
+          ${def.domain.verifyingContract || "recoverInstance.address"},
           signer
         );
 
@@ -35,15 +35,15 @@ export const buildVerifyTestCase = (def: IDefinition) => def.struct
     .map(el => `
     it("should verify ${el.name} signer", async () => {
       const args: ${el.name}Message = {
-        ${el.props.map(prop => `${prop.name}: ${pasteDefaultStub(prop.type, def, prop.struct)}`).join(',' + BR)}
+        ${el.props.map(prop => `${prop.name}: ${pasteDefaultStub(prop.type, def, prop)}`).join(',' + BR)}
       }
 
-      ${el.external.length != 0 ? el.external.map(ext => `const ${ext.name} = ${pasteDefaultStub(ext.type, def, ext.struct)};`).join(BR) : ''}
+      ${el.external.length != 0 ? el.external.map(ext => `const ${ext.name} = ${pasteDefaultStub(ext.type, def, ext)};`).join(BR) : ''}
 
         const params = await prepare${el.name}SignedMessage(
           args,
           ${el.external.length != 0 ? el.external.map(ext => `${ext.name}`).join(',' + BR) : ''} ${el.external.length != 0 ? ',' : ''}
-          recoverInstance.address,
+          ${def.domain.verifyingContract || "recoverInstance.address"},
           signer
         );
 

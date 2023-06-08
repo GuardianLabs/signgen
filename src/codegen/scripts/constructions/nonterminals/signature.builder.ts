@@ -11,8 +11,8 @@ export const buildSignedMessage = (def: IDefinition) => def.struct
       signer: SignerWithAddress
     ) => {
     
-      const chainId = await signer.getChainId();
-      const { domain, types, message, primaryType } = build${el.name}Message(
+      const chainId = ${def.domain.chainId || "await signer.getChainId()"};
+      const { domain, types, message } = build${el.name}Message(
         struct,
         ${el.external.map(ext => `${ext.name},`).join(BR)}
         chainId,

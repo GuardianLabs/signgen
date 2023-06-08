@@ -12,8 +12,8 @@ export const buildEncodeFunctions = (def: IDefinition): string => def.struct
 
         return abi.encode(
             ${formatCapitalSnake(el.name)}_TYPEHASH,
-            ${el.props.map(prop => wrapArgument(`message.${prop.name}`, prop.type, def, prop.struct)).join(`,${BR}${TAB.repeat(2)}`)} ${el.external.length != 0 ? ',' : ''}
-            ${el.external?.map(prop => wrapArgument(prop.name, prop.type, def, prop.struct)).join(`,${BR}${TAB.repeat(2)}`) || ''}
+            ${el.props.map(prop => wrapArgument(`message.${prop.name}`, prop.type, def, prop)).join(`,${BR}${TAB.repeat(2)}`)} ${el.external.length != 0 ? ',' : ''}
+            ${el.external?.map(prop => wrapArgument(prop.name, prop.type, def, prop)).join(`,${BR}${TAB.repeat(2)}`) || ''}
         );
     }`)
     .join(BR);

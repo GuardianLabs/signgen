@@ -1,4 +1,4 @@
-import { IDefinition } from "../../../types";
+import { IDefinition, IStructProperty } from "../../../types";
 import { stubUndefinedStruct } from "../../../utils";
 import { inferType } from "../../parser";
 import { BR } from "../terminals";
@@ -31,7 +31,7 @@ export const buildMessage = (def: IDefinition) => def.struct
 
               ${
                 el.props.concat(el.external)
-                .filter(el => el.struct)
+                .filter(el => (el as IStructProperty).struct)
                 .filter(el => !def.struct.map(el => el.name).includes(el.type))
                 .filter((value, index, array) => array.indexOf(value) === index)
                 .map(el => `
@@ -41,7 +41,7 @@ export const buildMessage = (def: IDefinition) => def.struct
 
               ${
                 el.props.concat(el.external)
-                .filter(el => el.struct)
+                .filter(el => (el as IStructProperty).struct)
                 .filter(el => def.struct.map(el => el.name).includes(el.type))
                 .filter((value, index, array) => array.indexOf(value) === index)
                 .map(el => `
