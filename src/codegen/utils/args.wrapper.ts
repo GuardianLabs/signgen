@@ -2,7 +2,6 @@ import { IDefinition, IEnumProperty, IProperty, IStructProperty } from "../types
 import { formatCapitalSnake } from "./string.format";
 import { stubUndefinedStruct } from "./type.defaults";
 
-// todo: pre-encode enums
 export const wrapArgument = (arg: string, type: string, def: IDefinition, prop: IProperty): string => {
     if(type == "string") {
         return `keccak256(bytes(${arg}))`;

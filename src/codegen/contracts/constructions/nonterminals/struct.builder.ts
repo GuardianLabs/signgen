@@ -2,6 +2,7 @@ import { IDefinition, IStructProperty } from "../../../types";
 import { stubUndefinedStruct } from "../../../utils";
 import { BR, TAB } from "../terminals";
 
+// todo: don't duplicate declarations
 export const buildStruct = (def: IDefinition): string => def.struct
     .map(el => `
     struct ${el.name} {
@@ -21,6 +22,11 @@ export const buildStructStubs = (def: IDefinition): string => def.struct
     .flatMap(el => el.props.concat(el.external))
     .filter(el => (el as IStructProperty).struct)
     .filter(el => !def.struct.map(el => el.name).includes(el.type))
+    .filter((value, index, self) =>
+            index === self.findIndex(el => (
+                el.type == value.type
+        ))
+    )
     .filter((value, index, array) => array.indexOf(value) === index)
     .map(el => `
     struct ${el.type} {
