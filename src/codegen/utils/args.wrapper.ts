@@ -2,6 +2,7 @@ import { IDefinition, IEnumProperty, IProperty, IStructProperty } from "../types
 import { formatCapitalSnake } from "./string.format";
 import { stubUndefinedStruct } from "./type.defaults";
 
+// todo: array of structs
 export const wrapArgument = (arg: string, type: string, def: IDefinition, prop: IProperty): string => {
     if(type == "string") {
         return `keccak256(bytes(${arg}))`;
@@ -12,6 +13,15 @@ export const wrapArgument = (arg: string, type: string, def: IDefinition, prop: 
     }
 
     if(type.includes('[')) {
+
+        if(type.includes('string')) {
+            return `encodeStringArray(${arg})`
+        }
+
+        if(type.includes('bytes') && !(/\d/.test(type))) {
+            return `encodeBytesArray(${arg})`
+        }
+
         return `keccak256(abi.encodePacked(${arg}))`;
     }
 

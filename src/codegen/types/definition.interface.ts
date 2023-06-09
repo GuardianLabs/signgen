@@ -28,4 +28,5 @@ export interface IDomain {
     version: string,
     chainId?: number,
     verifyingContract?: string
+    // todo: salt
 }

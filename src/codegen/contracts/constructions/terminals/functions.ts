@@ -37,3 +37,27 @@ function buildDomainSeparator(
             )
         );
 }`;
+
+export const ENCODE_STRING_ARRAY = `
+    function encodeStringArray(string[] memory arr) internal pure returns (bytes32) {
+        bytes32[] memory encodedStrings = new bytes32[](arr.length);
+
+        for (uint256 i = 0; i < arr.length; i++) {
+            encodedStrings[i] = keccak256(bytes((arr[i])));
+        }
+
+        return keccak256(abi.encodePacked(encodedStrings));
+    }
+`;
+
+export const ENCODE_BYTES_ARRAY = `
+    function encodeBytesArray(bytes[] memory arr) internal pure returns (bytes32) {
+        bytes32[] memory encodedBytes = new bytes32[](arr.length);
+
+        for (uint256 i = 0; i < arr.length; i++) {
+            encodedBytes[i] = keccak256(arr[i]);
+        }
+
+        return keccak256(abi.encodePacked(encodedBytes));
+    }
+`;

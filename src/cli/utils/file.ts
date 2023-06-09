@@ -27,6 +27,7 @@ export function save({ dirPath, content, name, ext }: ISaveConfig): string {
     return filePath;
 }
 
+// todo: single version folder
 export async function prettifySolidity(targetFolder: string) {
     const {stdout, stderr} = await execPromise(`prettier --write ${targetFolder}/**/*.sol --plugin-search-dir=.`);
 
