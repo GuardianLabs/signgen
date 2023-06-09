@@ -4,14 +4,14 @@ import { compile, prettifySolidity, save } from "./utils";
 import * as path from 'path';
 import { Extension, MAY_NEED_FILENAME, RECOVERY_LIB_FILENAME, STRUCTS_FILENAME, TYPEHASH_DEFINITIONS_FILENAME } from "./config";
 
-export async function generateContractArtifacts(def: IDefinition, outputFolder: string, version: string): Promise<void> {
+export async function generateContractArtifacts(def: IDefinition, outputFolder: string): Promise<void> {
     
     const nameSnake = def.struct.map(el=>el.name).join('_');
     const nameCamel = def.struct.map(el=>el.name).join('');
 
     const output: IContractsOutput = build(def, nameSnake);
 
-    const targetFolder = path.join(path.join(outputFolder, "contracts"), version);
+    const targetFolder = path.join(outputFolder, "contracts");
 
     save({
         dirPath: targetFolder,
@@ -41,9 +41,9 @@ export async function generateContractArtifacts(def: IDefinition, outputFolder: 
         ext: Extension.Solidity
     })
 
-    const relativeFolder = `./${path.relative(path.resolve(), targetFolder)}`;
+    //const relativeFolder = `./${path.relative(path.resolve(), targetFolder)}`;
 
-    await prettifySolidity(relativeFolder);
+    await prettifySolidity(targetFolder);
 
-    await compile(outputFolder, version);
+    await compile(outputFolder);
 }

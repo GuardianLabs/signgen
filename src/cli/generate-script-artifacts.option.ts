@@ -4,13 +4,13 @@ import * as path from 'path';
 import { build } from "../codegen/scripts";
 import { Extension, TYPES_FILENAME } from "./config";
 
-export async function generateScriptArtifacts(def: IDefinition, outputFolder: string, version: string): Promise<void> {
+export async function generateScriptArtifacts(def: IDefinition, outputFolder: string): Promise<void> {
     const nameSnake = def.struct.map(el=>el.name).join('_');
     const nameCamel = def.struct.map(el=>el.name).join('');
 
     const output: IScriptsOutput = build(def, nameSnake);
 
-    const targetFolder = path.join(path.join(outputFolder, "tests"), version);
+    const targetFolder = path.join(outputFolder, "tests");
 
     save({
         dirPath: targetFolder,
@@ -33,9 +33,9 @@ export async function generateScriptArtifacts(def: IDefinition, outputFolder: st
         ext: Extension.Typescript
     })
 
-    const relativeFolder = `./${path.relative(path.resolve(), targetFolder)}`;
+    //const relativeFolder = `./${path.relative(path.resolve(), targetFolder)}`;
 
-    await prettifyTypescript(relativeFolder);
+    await prettifyTypescript(targetFolder);
 
     //await transpile(relativeFolder);
 }

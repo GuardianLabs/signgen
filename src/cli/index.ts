@@ -29,15 +29,17 @@ export default async function (opts: OptionValues) {
 
     console.info(`Version: ${version}`);
 
+    destinationFolder = path.join(destinationFolder, version);
+
     if(opts.contract) {
-        await generateContractArtifacts(definition, destinationFolder, version);
+        await generateContractArtifacts(definition, destinationFolder);
     }
 
     if(opts.script) {
-        await generateScriptArtifacts(definition, destinationFolder, version);
+        await generateScriptArtifacts(definition, destinationFolder);
     }
 
     if(opts.contract && opts.script) {
-        await test(destinationFolder, version);
+        await test(destinationFolder);
     }
 }

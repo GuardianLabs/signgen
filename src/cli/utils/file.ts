@@ -40,8 +40,8 @@ export async function prettifyTypescript(targetFolder: string) {
     console.log(stdout, stderr);
 }
 
-export async function compile(targetFolder: string, version: string) {
-    const {stdout, stderr} = await execPromise(`cross-env ${OUTPUT_CONTRACTS_PATH}=${path.join(targetFolder, path.join("contracts", version))} ${OUTPUT_TESTS_PATH}=${path.join(targetFolder, path.join("tests", version))} ${OUTPUT_CACHE_PATH}=${path.join(targetFolder, path.join("cache", version))} ${OUTPUT_ARTIFACTS_PATH}=${path.join(targetFolder, path.join("artifacts", version))} pnpm compile`);
+export async function compile(targetFolder: string) {
+    const {stdout, stderr} = await execPromise(`cross-env ${OUTPUT_CONTRACTS_PATH}=${path.join(targetFolder, "contracts")} ${OUTPUT_TESTS_PATH}=${path.join(targetFolder, "tests")} ${OUTPUT_CACHE_PATH}=${path.join(targetFolder, "cache")} ${OUTPUT_ARTIFACTS_PATH}=${path.join(targetFolder, "artifacts")} pnpm compile`);
 
     console.log(stdout, stderr);
 }
@@ -52,14 +52,14 @@ export async function transpile(targetFolder: string) {
     console.log(stdout, stderr);
 }
 
-export async function testWithTrace(targetFolder: string, version: string) {
-    const {stdout, stderr} = await execPromise(`cross-env ${OUTPUT_CONTRACTS_PATH}=${path.join(targetFolder, path.join("contracts", version))} ${OUTPUT_TESTS_PATH}=${path.join(targetFolder, path.join("tests", version))} ${OUTPUT_CACHE_PATH}=${path.join(targetFolder, path.join("cache", version))} ${OUTPUT_ARTIFACTS_PATH}=${path.join(targetFolder, path.join("artifacts", version))} pnpm test:trace`);
+export async function testWithTrace(targetFolder: string) {
+    const {stdout, stderr} = await execPromise(`cross-env ${OUTPUT_CONTRACTS_PATH}=${path.join(targetFolder, "contracts")} ${OUTPUT_TESTS_PATH}=${path.join(targetFolder, "tests")} ${OUTPUT_CACHE_PATH}=${path.join(targetFolder, "cache")} ${OUTPUT_ARTIFACTS_PATH}=${path.join(targetFolder, "artifacts")} pnpm test:trace`);
 
     console.log(stdout, stderr);
 }
 
-export async function test(targetFolder: string, version: string) {
-    const {stdout, stderr} = await execPromise(`cross-env ${OUTPUT_CONTRACTS_PATH}=${path.join(targetFolder, path.join("contracts", version))} ${OUTPUT_TESTS_PATH}=${path.join(targetFolder, path.join("tests", version))} ${OUTPUT_CACHE_PATH}=${path.join(targetFolder, path.join("cache", version))} ${OUTPUT_ARTIFACTS_PATH}=${path.join(targetFolder, path.join("artifacts", version))} pnpm test`);
+export async function test(targetFolder: string) {
+    const {stdout, stderr} = await execPromise(`cross-env ${OUTPUT_CONTRACTS_PATH}=${path.join(targetFolder, "contracts")} ${OUTPUT_TESTS_PATH}=${path.join(targetFolder, "tests")} ${OUTPUT_CACHE_PATH}=${path.join(targetFolder, "cache")} ${OUTPUT_ARTIFACTS_PATH}=${path.join(targetFolder, "artifacts")} pnpm test`);
 
     console.log(stdout, stderr);
 }

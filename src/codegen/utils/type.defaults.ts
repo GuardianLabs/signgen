@@ -16,7 +16,7 @@ export const getDefaultStub = (type: string, def: IDefinition, prop: IProperty) 
 
                 let targetProps = target ? target.props : stubUndefinedStruct();
                 baseType = `{
-                    ${targetProps.map(el => `${el.name}: ${pasteDefaultStub(el.type, def, el)},`)}
+                    ${targetProps.map(el => `${el.name}: ${pasteDefaultStub(el.type, def, el)}`).join(',')}
                 }`;
             } else if ((prop as IEnumProperty).enum) {
                 baseType = Default.uint;
