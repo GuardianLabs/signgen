@@ -2,6 +2,7 @@ Usage: eip712_codegen [options]
 
 You need to create definition.ts file that exports your needed types with the following structure:
 
+```
 {
     domain: {
         name: 'Sample',
@@ -16,7 +17,7 @@ You need to create definition.ts file that exports your needed types with the fo
             name: "TypeOne", 
             props: [
                 { name: 'sample1', type: 'sample' },
-                { name: 'sample2', type: 'sample' },
+                { name: 'sample2', type: 'RelatedStruct', struct: true },
                 { name: 'struct1', type: 'Struct', struct: true },
             ],
             external: [
@@ -29,15 +30,32 @@ You need to create definition.ts file that exports your needed types with the fo
                 { name: 'sample1', type: 'sample' },
                 { name: 'sample2', type: 'TypeOne' },
             ],
-            external: []
+            external: [
+                { name: 'enumerable', type: 'Mocks', enum: true },
+            ]
+        }
+    ],
+
+    related: [
+        {
+            name: "RelatedStruct",
+            props: [
+                { name: 'sample1', type: 'sample' },
+            ],
+            external: [
+                
+            ]
         }
     ]
 }; 
+```
 
 Use explicit types! (uint => uint256/128/64...)
 If parameter is a struct, use "struct: true" flag
 
-All the undefined structs will be mocked with { exists: true }
+Structure types that are used as a parameters for a messages (in "struct" block) but are not included in the "struct" block must be defined in "related block" in the same manner as a "struct".
+All the undefined struct types will be mocked with { exists: bool }
+
 All the enums will be mocked with { EXISTS }
 
 cli -c -s will automatically launch generated tests
