@@ -1,5 +1,6 @@
 import { HardhatUserConfig } from "hardhat/config";
 import '@nomiclabs/hardhat-ethers'
+import '@nomicfoundation/hardhat-toolbox';
 import "hardhat-tracer";
 
 const config: HardhatUserConfig = {
@@ -12,6 +13,10 @@ const config: HardhatUserConfig = {
         runs: 200
       }
     }
+  },
+  typechain: {
+    outDir: process.env.OUTPUT_TYPECHAIN_PATH,
+    target: "ethers-v5",
   },
   paths: {
     sources: process.env.OUTPUT_CONTRACTS_PATH,

@@ -1,7 +1,7 @@
 export default {
     domain: {
         name: 'Sample',
-        version: '1'
+        version: '1',
     },
 
     // todo: additional structs
@@ -33,7 +33,6 @@ export default {
                 { name: 'testEnum', type: 'Operations', enum: true },
             ],
             external: [
-                
             ]
         }
     ]

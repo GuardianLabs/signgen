@@ -9,23 +9,13 @@ export const buildVerifyFunctions = (def: IDefinition): string => def.struct
         bytes calldata signature,
         ${el.external.length != 0 ? formatSolidityParameters(el.external) : ''}
         bytes32 domainSeparator,
-        address addr
-    ) public pure returns (bool) {
+        address addr,
+        string calldata errMessage
+    ) public pure {
 
-        return recover${el.name}(message, signature, ${el.external?.map(ext => `${ext.name},`).join(SPACE) || ''} domainSeparator) == addr;
+        require(
+            recover${el.name}(message, signature, ${el.external?.map(ext => `${ext.name},`).join(SPACE) || ''} domainSeparator) == addr,
+            errMessage
+        );
     }`)
     .join(BR);
-
-
-    // todo
-    // function verifyTypeOne(
-    //     TypeOne calldata message,
-    //     bytes calldata signature,
-    //     string calldata operationId,
-    //     bytes32 domainSeparator,
-    //     address addr,
-    //     string calldata\memory errMessage,
-    // ) public pure returns (bool) {
-
-    //     require(recoverTypeOne(message, signature, operationId, domainSeparator) == addr, errMessage);
-    // }

@@ -27,6 +27,6 @@ export interface IDomain {
     name: string,
     version: string,
     chainId?: number,
-    verifyingContract?: string
-    // todo: salt
+    verifyingContract?: string,
+    salt?: string
 }

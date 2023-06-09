@@ -23,6 +23,7 @@ export const buildMessage = (def: IDefinition) => def.struct
               name: "${def.domain.name}",
               verifyingContract,
               version: "${def.domain.version}",
+              ${def.domain.salt ? `salt: ${def.domain.salt}` : ""}
             },
             message,
             primaryType: "${el.name}",

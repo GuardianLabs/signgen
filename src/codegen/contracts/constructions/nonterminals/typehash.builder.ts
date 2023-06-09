@@ -50,7 +50,6 @@ export const buildTypeHash = (def: IDefinition): string => def.struct
             "${res}");`
     }) 
     .join(BR)
-    .concat(DOMAIN_TYPEHASH + BR);
 
 export const buildStubTypeHash = (def: IDefinition): string => def.struct
     .flatMap(el => el.props.concat(el.external))

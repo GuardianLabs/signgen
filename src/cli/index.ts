@@ -21,6 +21,9 @@ export default async function (opts: OptionValues) {
     let verifyingContract = definition.domain.verifyingContract;
     if(verifyingContract) definition.domain.verifyingContract = `"${verifyingContract}"`;
 
+    let salt = definition.domain.salt;
+    if(salt) definition.domain.salt = `"${salt}"`;
+
     validateDefinition(definition);
 
     const version = shortid.generate()

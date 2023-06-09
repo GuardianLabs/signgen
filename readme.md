@@ -6,6 +6,9 @@ You need to create definition.ts file that exports your needed types with the fo
     domain: {
         name: 'Sample',
         version: '1',
+        chainId?
+        verifyingContract?
+        salt?
     },
 
     struct: [

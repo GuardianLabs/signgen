@@ -8,6 +8,8 @@ dist
 cache
 artifacts
 
+typechain-types
+
 output
 
 .idea

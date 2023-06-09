@@ -1,5 +1,5 @@
 import { IDefinition } from "../../../../types";
-import { buildRecoverTestCase, buildVerifyTestCase } from "./case.bulder";
+import { buildRecoverTestCase, buildVerifyNegativeTestCase, buildVerifyPositiveTestCase } from "./case.bulder";
 
 export const buildTestSuite = (def: IDefinition) => {
 
@@ -18,23 +18,36 @@ export const buildTestSuite = (def: IDefinition) => {
         let recoverInstance: any;
         let domainSeparator: any;
         let signer: any;
+        let intruder: any;
 
 
         beforeEach(async () => {
-            [ signer ] = await ethers.getSigners();
+            [ signer, intruder ] = await ethers.getSigners();
       
               Recover = await ethers.getContractFactory("SignatureVerification_${def.struct.map(el=>el.name).join('_')}");
               recoverInstance = await Recover.deploy();
               
-              domainSeparator = await recoverInstance.buildDomainSeparator(
-                "${def.domain.name}",
-                "${def.domain.version}",
-                ${def.domain.verifyingContract || "recoverInstance.address.toString()"}
-                );
+              domainSeparator =
+              ${def.domain.salt ?
+                `
+                await recoverInstance.buildDomainSeparatorWithSalt(
+                    "${def.domain.name}",
+                    "${def.domain.version}",
+                    ${def.domain.verifyingContract || "recoverInstance.address.toString()"},
+                    ${def.domain.salt}
+                    );
+                ` : `
+                await recoverInstance.buildDomainSeparator(
+                    "${def.domain.name}",
+                    "${def.domain.version}",
+                    ${def.domain.verifyingContract || "recoverInstance.address.toString()"}
+                );`}
         });
 
         ${buildRecoverTestCase(def)}
         
-        ${buildVerifyTestCase(def)}
+        ${buildVerifyPositiveTestCase(def)}
+
+        ${buildVerifyNegativeTestCase(def)}
     });`;
 }
