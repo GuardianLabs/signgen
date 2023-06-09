@@ -11,7 +11,7 @@ const buildTypeHashRecursively = (el: IEntity, def: IDefinition, includedStructs
 
     for (const prop of el.props.concat(el.external)) {
         if((prop as IStructProperty).struct) {
-            const struct = def.struct.find(struct => struct.name == prop.type && struct.name != el.name);
+            const struct = def.struct.concat(def.related).find(struct => struct.name == prop.type && struct.name != el.name);
 
             if(struct) {
 
@@ -27,7 +27,7 @@ const buildTypeHashRecursively = (el: IEntity, def: IDefinition, includedStructs
     }
 }
 
-export const buildTypeHash = (def: IDefinition): string => def.struct
+export const buildTypeHash = (def: IDefinition): string => def.struct.concat(def.related)
     .map(el => {
         let includedStructs: IEntity[] = [];
 
@@ -55,6 +55,7 @@ export const buildStubTypeHash = (def: IDefinition): string => def.struct
     .flatMap(el => el.props.concat(el.external))
     .filter(el => (el as IStructProperty).struct)
     .filter(el => !def.struct.map(el => el.name).includes(el.type))
+    .filter(el => !def.related.map(el => el.name).includes(el.type))
     .filter((value, index, self) =>
             index === self.findIndex(el => (
                 el.type == value.type

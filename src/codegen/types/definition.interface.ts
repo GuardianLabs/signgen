@@ -1,6 +1,7 @@
 export interface IDefinition {
     domain: IDomain
     struct: IEntity[]
+    related: IEntity[]
 }
 
 export interface IEntity {

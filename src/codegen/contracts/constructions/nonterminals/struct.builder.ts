@@ -17,10 +17,18 @@ export const buildSignedStruct = (def: IDefinition): string => def.struct
     }`)
     .join(BR);
 
+export const buildRelatedStruct = (def: IDefinition): string => def.related
+    .map(el => `
+    struct ${el.name} {
+        ${el.props.map(prop => `${prop.type} ${prop.name};`).join(BR + TAB)}
+    }`)
+    .join(BR);
+
 export const buildStructStubs = (def: IDefinition): string => def.struct
     .flatMap(el => el.props.concat(el.external))
     .filter(el => (el as IStructProperty).struct)
     .filter(el => !def.struct.map(el => el.name).includes(el.type))
+    .filter(el => !def.related.map(el => el.name).includes(el.type))
     .filter((value, index, self) =>
             index === self.findIndex(el => (
                 el.type == value.type

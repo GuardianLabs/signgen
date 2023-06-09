@@ -4,7 +4,6 @@ export default {
         version: '1',
     },
 
-    // todo: additional structs
     struct: [
         {
             name: "TypeOne", 
@@ -19,6 +18,7 @@ export default {
                 { name: 'logicsList', type: 'address[]' },
                 { name: 'constantsList', type: 'bytes' },
                 { name: "structure1", type: "AStruct", struct: true },
+                { name: "structure2", type: "BStruct", struct: true },
                 { name: "structure3", type: "TypeTwo", struct: true },
                 { name: 'nonce', type: 'bytes32' }
             ],
@@ -34,6 +34,16 @@ export default {
             ],
             external: [
             ]
+        }
+    ],
+    
+    related: [
+        {
+            name: "BStruct",
+            props: [
+                { name: 'custom', type: 'string' },
+            ],
+            external: []
         }
     ]
 };

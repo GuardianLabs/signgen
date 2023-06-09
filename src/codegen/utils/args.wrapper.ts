@@ -26,7 +26,7 @@ export const wrapArgument = (arg: string, type: string, def: IDefinition, prop: 
     }
 
     if((prop as IStructProperty).struct) {
-        const target = def.struct.find(el => el.name == type);
+        const target = def.struct.concat(def.related).find(el => el.name == type);
 
         let targetProps = target ? target.props : stubUndefinedStruct();
         return `keccak256(abi.encode(${formatCapitalSnake(type)}_TYPEHASH, ${targetProps.map(el => wrapArgument(`${arg}.${el.name}`, el.type, def, el)).join(', ')}))`;

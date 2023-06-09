@@ -28,22 +28,37 @@ export const buildMessage = (def: IDefinition) => def.struct
             message,
             primaryType: "${el.name}",
             types: {
+              // self
               ${el.name}: ${el.name}Type,
 
+              // undefined
               ${
                 el.props.concat(el.external)
                 .filter(el => (el as IStructProperty).struct)
                 .filter(el => !def.struct.map(el => el.name).includes(el.type))
+                .filter(el => !def.related.map(el => el.name).includes(el.type))
                 .filter((value, index, array) => array.indexOf(value) === index)
                 .map(el => `
                 ${el.type}: ${JSON.stringify(stubUndefinedStruct())},`)
                 .join(BR)
               }
 
+              // internal
               ${
                 el.props.concat(el.external)
                 .filter(el => (el as IStructProperty).struct)
                 .filter(el => def.struct.map(el => el.name).includes(el.type))
+                .filter((value, index, array) => array.indexOf(value) === index)
+                .map(el => `
+                ${el.type}: ${el.type}Type,`)
+                .join(BR)
+              }
+
+              // related
+              ${
+                el.props.concat(el.external)
+                .filter(el => (el as IStructProperty).struct)
+                .filter(el => def.related.map(el => el.name).includes(el.type))
                 .filter((value, index, array) => array.indexOf(value) === index)
                 .map(el => `
                 ${el.type}: ${el.type}Type,`)

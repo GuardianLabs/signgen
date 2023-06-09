@@ -12,7 +12,7 @@ export const getDefaultStub = (type: string, def: IDefinition, prop: IProperty) 
             break;
         } else {
             if((prop as IStructProperty).struct) {
-                const target = def.struct.find(el => el.name == type);
+                const target = def.struct.concat(def.related).find(el => el.name == type);
 
                 let targetProps = target ? target.props : stubUndefinedStruct();
                 baseType = `{

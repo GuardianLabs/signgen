@@ -10,7 +10,7 @@ export const buildMessageType = (def: IDefinition) => def.struct
     `)
     .join(BR);
 
-export const buildEIP712MessageTypes = (def: IDefinition) => def.struct
+export const buildEIP712MessageTypes = (def: IDefinition) => def.struct.concat(def.related)
       .map(el => `
       export const ${el.name}Type = [
         ${el.props.map(prop => `{ name: '${prop.name}', type: '${(prop as IEnumProperty).enum ? "uint8" : prop.type}' }`).join(',' + BR)} ${el.external.length != 0 ? "," : ''}
