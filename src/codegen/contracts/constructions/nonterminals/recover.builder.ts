@@ -1,6 +1,7 @@
-import { IDefinition } from "../../../types";
+import { IDefinition, IProperty } from "../../../types";
 import { formatCapitalSnake, formatSolidityParameters, optionalComma, optionalString, wrapArgument } from "../../../utils";
 import { BR, SPACE, TAB } from "../terminals";
+import { composeCustomEncodeArgument } from "./substrings";
 
 export const buildRecoverFunctions = (def: IDefinition): string => def.struct
     .map(el => `
@@ -13,7 +14,7 @@ export const buildRecoverFunctions = (def: IDefinition): string => def.struct
     ) public pure returns (address) {
 
         bytes32 structHash = keccak256(
-            encode${el.name}Parameters(message ${optionalComma(el.external)} ${el.external?.map(ext => `${ext.name}`).join(',' + SPACE) || ''})
+            encode${el.name}Parameters(message ${optionalComma(el.external)} ${optionalString(el.external, composeCustomEncodeArgument)})
         );
     
         return hashAndRecover(structHash, signature, domainSeparator);

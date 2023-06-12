@@ -1,6 +1,7 @@
-import { IDefinition } from "../../../types";
+import { IDefinition, IProperty } from "../../../types";
 import { formatCapitalSnake, formatSolidityParameters, optionalString } from "../../../utils";
 import { BR, SPACE, TAB } from "../terminals";
+import { composeArgument } from "./substrings";
 
 export const buildVerifyFunctions = (def: IDefinition): string => def.struct
     .map(el => `
@@ -14,7 +15,7 @@ export const buildVerifyFunctions = (def: IDefinition): string => def.struct
     ) public pure {
 
         require(
-            recover${el.name}(message, signature, ${el.external?.map(ext => `${ext.name},`).join(SPACE) || ''} domainSeparator) == addr,
+            recover${el.name}(message, signature, ${optionalString(el.external, composeArgument)} domainSeparator) == addr,
             errMessage
         );
     }`)

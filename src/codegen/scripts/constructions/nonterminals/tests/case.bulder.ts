@@ -2,6 +2,7 @@ import { join } from "path";
 import { IDefinition, IProperty } from "../../../../types";
 import { optionalComma, optionalString, pasteDefaultStub } from "../../../../utils";
 import { BR } from "../../terminals";
+import { composeArgument, composeConstantStubs } from "../substrings";
 
 export const buildRecoverTestCase = (def: IDefinition) => def.struct
     .map(el => `
@@ -10,11 +11,11 @@ export const buildRecoverTestCase = (def: IDefinition) => def.struct
         ${el.props.map(prop => `${prop.name}: ${pasteDefaultStub(prop.type, def, prop)}`).join(',' + BR)}
       }
 
-      ${optionalString(el.external, (props: IProperty[]) => props.map(ext => `const ${ext.name} = ${pasteDefaultStub(ext.type, def, ext)};`).join(BR))}
+      ${optionalString(el.external, composeConstantStubs(def))}
 
         const params = await prepare${el.name}SignedMessage(
           args,
-          ${optionalString(el.external, (props: IProperty[]) => props.map(ext => `${ext.name}`).join(',' + BR))}
+          ${optionalString(el.external, composeArgument)}
           ${optionalComma(el.external)}
           ${def.domain.verifyingContract || "recoverInstance.address"},
           signer
@@ -24,7 +25,7 @@ export const buildRecoverTestCase = (def: IDefinition) => def.struct
           await recoverInstance.recover${el.name}(
             args,
             params.signature,
-            ${optionalString(el.external, (props: IProperty[]) => props.map(ext => `${ext.name}`).join(',' + BR))}
+            ${optionalString(el.external, composeArgument)}
             ${optionalComma(el.external)}
             domainSeparator
           );
@@ -44,7 +45,7 @@ export const buildVerifyPositiveTestCase = (def: IDefinition) => def.struct
 
         const params = await prepare${el.name}SignedMessage(
           args,
-          ${optionalString(el.external, (props: IProperty[]) => props.map(ext => `${ext.name}`).join(',' + BR))}
+          ${optionalString(el.external, composeArgument)}
           ${optionalComma(el.external)}
           ${def.domain.verifyingContract || "recoverInstance.address"},
           signer
@@ -53,7 +54,7 @@ export const buildVerifyPositiveTestCase = (def: IDefinition) => def.struct
         await expect(recoverInstance.verify${el.name}(
           args,
           params.signature,
-          ${optionalString(el.external, (props: IProperty[]) => props.map(ext => `${ext.name}`).join(',' + BR))}
+          ${optionalString(el.external, composeArgument)}
           ${optionalComma(el.external)}
           domainSeparator,
           signer.address,
@@ -70,11 +71,11 @@ export const buildVerifyNegativeTestCase = (def: IDefinition) => def.struct
         ${el.props.map(prop => `${prop.name}: ${pasteDefaultStub(prop.type, def, prop)}`).join(',' + BR)}
       }
 
-      ${optionalString(el.external, (props: IProperty[]) => props.map(ext => `const ${ext.name} = ${pasteDefaultStub(ext.type, def, ext)};`).join(BR))}
+      ${optionalString(el.external, composeConstantStubs(def))}
 
         const params = await prepare${el.name}SignedMessage(
           args,
-          ${optionalString(el.external, (props: IProperty[]) => props.map(ext => `${ext.name}`).join(',' + BR))}
+          ${optionalString(el.external, composeArgument)}
           ${optionalComma(el.external)}
           ${def.domain.verifyingContract || "recoverInstance.address"},
           intruder
@@ -83,7 +84,7 @@ export const buildVerifyNegativeTestCase = (def: IDefinition) => def.struct
         await expect(recoverInstance.verify${el.name}(
           args,
           params.signature,
-          ${optionalString(el.external, (props: IProperty[]) => props.map(ext => `${ext.name}`).join(',' + BR))}
+          ${optionalString(el.external, composeArgument)}
           ${optionalComma(el.external)}
           domainSeparator,
           signer.address,
