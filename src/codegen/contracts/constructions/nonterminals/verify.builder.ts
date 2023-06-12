@@ -1,5 +1,5 @@
 import { IDefinition } from "../../../types";
-import { formatCapitalSnake, formatSolidityParameters } from "../../../utils";
+import { formatCapitalSnake, formatSolidityParameters, optionalString } from "../../../utils";
 import { BR, SPACE, TAB } from "../terminals";
 
 export const buildVerifyFunctions = (def: IDefinition): string => def.struct
@@ -7,7 +7,7 @@ export const buildVerifyFunctions = (def: IDefinition): string => def.struct
     function verify${el.name} (
         ${el.name} calldata message,
         bytes calldata signature,
-        ${el.external.length != 0 ? formatSolidityParameters(el.external) : ''}
+        ${optionalString(el.external, formatSolidityParameters)}
         bytes32 domainSeparator,
         address addr,
         string calldata errMessage

@@ -1,6 +1,6 @@
 import { join } from "path";
-import { IDefinition } from "../../../../types";
-import { pasteDefaultStub } from "../../../../utils";
+import { IDefinition, IProperty } from "../../../../types";
+import { optionalComma, optionalString, pasteDefaultStub } from "../../../../utils";
 import { BR } from "../../terminals";
 
 export const buildRecoverTestCase = (def: IDefinition) => def.struct
@@ -10,11 +10,12 @@ export const buildRecoverTestCase = (def: IDefinition) => def.struct
         ${el.props.map(prop => `${prop.name}: ${pasteDefaultStub(prop.type, def, prop)}`).join(',' + BR)}
       }
 
-      ${el.external.length != 0 ? el.external.map(ext => `const ${ext.name} = ${pasteDefaultStub(ext.type, def, ext)};`).join(BR) : ''}
+      ${optionalString(el.external, (props: IProperty[]) => props.map(ext => `const ${ext.name} = ${pasteDefaultStub(ext.type, def, ext)};`).join(BR))}
 
         const params = await prepare${el.name}SignedMessage(
           args,
-          ${el.external.length != 0 ? el.external.map(ext => `${ext.name}`).join(',' + BR) : ''} ${el.external.length != 0 ? ',' : ''}
+          ${optionalString(el.external, (props: IProperty[]) => props.map(ext => `${ext.name}`).join(',' + BR))}
+          ${optionalComma(el.external)}
           ${def.domain.verifyingContract || "recoverInstance.address"},
           signer
         );
@@ -23,7 +24,8 @@ export const buildRecoverTestCase = (def: IDefinition) => def.struct
           await recoverInstance.recover${el.name}(
             args,
             params.signature,
-            ${el.external.length != 0 ? el.external.map(ext => `${ext.name}`).join(',' + BR) : ''} ${el.external.length != 0 ? ',' : ''}
+            ${optionalString(el.external, (props: IProperty[]) => props.map(ext => `${ext.name}`).join(',' + BR))}
+            ${optionalComma(el.external)}
             domainSeparator
           );
           
@@ -38,11 +40,12 @@ export const buildVerifyPositiveTestCase = (def: IDefinition) => def.struct
         ${el.props.map(prop => `${prop.name}: ${pasteDefaultStub(prop.type, def, prop)}`).join(',' + BR)}
       }
 
-      ${el.external.length != 0 ? el.external.map(ext => `const ${ext.name} = ${pasteDefaultStub(ext.type, def, ext)};`).join(BR) : ''}
+      ${optionalString(el.external, (props: IProperty[]) => props.map(ext => `const ${ext.name} = ${pasteDefaultStub(ext.type, def, ext)};`).join(BR))}
 
         const params = await prepare${el.name}SignedMessage(
           args,
-          ${el.external.length != 0 ? el.external.map(ext => `${ext.name}`).join(',' + BR) : ''} ${el.external.length != 0 ? ',' : ''}
+          ${optionalString(el.external, (props: IProperty[]) => props.map(ext => `${ext.name}`).join(',' + BR))}
+          ${optionalComma(el.external)}
           ${def.domain.verifyingContract || "recoverInstance.address"},
           signer
         );
@@ -50,7 +53,8 @@ export const buildVerifyPositiveTestCase = (def: IDefinition) => def.struct
         await expect(recoverInstance.verify${el.name}(
           args,
           params.signature,
-          ${el.external.length != 0 ? el.external.map(ext => `${ext.name}`).join(',' + BR) : ''} ${el.external.length != 0 ? ',' : ''}
+          ${optionalString(el.external, (props: IProperty[]) => props.map(ext => `${ext.name}`).join(',' + BR))}
+          ${optionalComma(el.external)}
           domainSeparator,
           signer.address,
           "${el.name} verification failed"
@@ -66,11 +70,12 @@ export const buildVerifyNegativeTestCase = (def: IDefinition) => def.struct
         ${el.props.map(prop => `${prop.name}: ${pasteDefaultStub(prop.type, def, prop)}`).join(',' + BR)}
       }
 
-      ${el.external.length != 0 ? el.external.map(ext => `const ${ext.name} = ${pasteDefaultStub(ext.type, def, ext)};`).join(BR) : ''}
+      ${optionalString(el.external, (props: IProperty[]) => props.map(ext => `const ${ext.name} = ${pasteDefaultStub(ext.type, def, ext)};`).join(BR))}
 
         const params = await prepare${el.name}SignedMessage(
           args,
-          ${el.external.length != 0 ? el.external.map(ext => `${ext.name}`).join(',' + BR) : ''} ${el.external.length != 0 ? ',' : ''}
+          ${optionalString(el.external, (props: IProperty[]) => props.map(ext => `${ext.name}`).join(',' + BR))}
+          ${optionalComma(el.external)}
           ${def.domain.verifyingContract || "recoverInstance.address"},
           intruder
         );
@@ -78,7 +83,8 @@ export const buildVerifyNegativeTestCase = (def: IDefinition) => def.struct
         await expect(recoverInstance.verify${el.name}(
           args,
           params.signature,
-          ${el.external.length != 0 ? el.external.map(ext => `${ext.name}`).join(',' + BR) : ''} ${el.external.length != 0 ? ',' : ''}
+          ${optionalString(el.external, (props: IProperty[]) => props.map(ext => `${ext.name}`).join(',' + BR))}
+          ${optionalComma(el.external)}
           domainSeparator,
           signer.address,
           "${el.name} verification failed"

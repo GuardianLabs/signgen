@@ -16,3 +16,6 @@ export const formatSolidityParameters = (props: IProperty[]): string =>
     .join(BR + TAB);
 
 const dynamicAllocTypes = ["string", "[]"]; // bytes vs bytesX
+
+export const optionalComma = (props: IProperty[]) => `${props?.length != 0 ? "," : ''}`;
+export const optionalString = (props: IProperty[], delegate: any) => `${props?.length != 0 ? delegate(props) : ''}`;
