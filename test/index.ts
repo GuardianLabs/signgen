@@ -6,11 +6,14 @@ import { cwd } from "process";
 const execPromise = util.promisify(exec);
 
 (async () => {
-    await launchTests();
-    
-    try {
-        await execPromise(`rd /s /q "./test/testOutput"`);
-    } catch(e) {
-        console.error(e);
-    }
+    launchTests()
+    .then(async () => {
+
+        try {
+            await execPromise(`rd /s /q "./test/tempOutput"`);
+        } catch(e) {
+            console.error(e);
+        }
+    })
+    .catch(err => console.error(err))
 })();

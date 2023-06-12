@@ -10,19 +10,23 @@ const execPromise = util.promisify(exec);
 
 export async function launchTests() {
 
-    fs.readdir(testsFolder, async (err, files) => {
-        if(err) console.error(err);
+    const cases: Promise<void>[] = [];
+    const files = await fs.promises.readdir(testsFolder);
 
-        files.forEach(async (file) => {
-          
-          try {
-            await execPromise(`pnpm cli -c -s -f "${path.join(testsFolder, file)}" -d "./test/testOutput"`);
+    files.forEach(async (file) => {
+        cases.push(new Promise(async (res, rej) => {
+            try {
+                await execPromise(`pnpm cli -c -s -f "${path.join(testsFolder, file)}" -d "./test/tempOutput"`);
+        
+                console.info(`${file}: ✔ `);
+            } catch (e) {
+                console.info(`${file}: ✘`);
+                //console.error(e);
+            }
 
-            console.info(`${file}: ✔ `);
-          } catch (e) {
-            console.info(`${file}: ✘`);
-            console.error(e);
-          }
-        });
+            res();
+        }));
     });
+
+    return Promise.all(cases);
 }
