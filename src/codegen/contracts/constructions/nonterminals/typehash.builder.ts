@@ -1,5 +1,5 @@
 import { IDefinition, IEntity, IEnumProperty, IProperty, IStructProperty } from "../../../types";
-import { formatCapitalSnake, stubUndefinedStruct } from "../../../utils";
+import { formatCapitalSnake, stubUndefinedStruct, unique, uniquePropertyWise } from "../../../utils";
 import { BR, DOMAIN_TYPEHASH } from "../terminals";
 import { TypedDataUtils } from 'signtypeddata-v5';
 
@@ -34,10 +34,7 @@ export const buildTypeHash = (def: IDefinition): string => def.struct.concat(def
         buildTypeHashRecursively(el, def, includedStructs);
 
         includedStructs = includedStructs
-        .filter((value, index, self) =>
-            index === self.findIndex(el => (
-                el.name == value.name
-            )))
+        .filter(uniquePropertyWise('name'))
         .sort((a, b) => a.name.localeCompare(b.name));
 
         let res = includedStructs.map(inc => typeHashScaffold(inc))
@@ -56,12 +53,8 @@ export const buildStubTypeHash = (def: IDefinition): string => def.struct
     .filter(el => (el as IStructProperty).struct)
     .filter(el => !def.struct.map(el => el.name).includes(el.type))
     .filter(el => !def.related.map(el => el.name).includes(el.type))
-    .filter((value, index, self) =>
-            index === self.findIndex(el => (
-                el.type == value.type
-        ))
-    )
-    .filter((value, index, array) => array.indexOf(value) === index)
+    .filter(uniquePropertyWise('type'))
+    .filter(unique)
     .map(el => `
     bytes32 constant ${formatCapitalSnake(el.type)}_TYPEHASH = keccak256("${el.type}(${stubUndefinedStruct().map(prop => `${prop.type} ${prop.name}`).join(',')})");
     `)

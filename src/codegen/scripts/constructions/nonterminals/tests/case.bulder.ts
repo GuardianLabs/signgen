@@ -2,13 +2,13 @@ import { join } from "path";
 import { IDefinition, IProperty } from "../../../../types";
 import { optionalComma, optionalString, pasteDefaultStub } from "../../../../utils";
 import { BR } from "../../terminals";
-import { composeArgument, composeConstantStubs } from "../substrings";
+import { composeArgument, composeConstantStubs, composeObjectFields } from "../substrings";
 
 export const buildRecoverTestCase = (def: IDefinition) => def.struct
     .map(el => `
     it("should recover ${el.name} signer", async () => {
       const args: ${el.name}Message = {
-        ${el.props.map(prop => `${prop.name}: ${pasteDefaultStub(prop.type, def, prop)}`).join(',' + BR)}
+        ${composeObjectFields(def, el.props)}
       }
 
       ${optionalString(el.external, composeConstantStubs(def))}
@@ -38,7 +38,7 @@ export const buildVerifyPositiveTestCase = (def: IDefinition) => def.struct
     .map(el => `
     it("should verify ${el.name} signer", async () => {
       const args: ${el.name}Message = {
-        ${el.props.map(prop => `${prop.name}: ${pasteDefaultStub(prop.type, def, prop)}`).join(',' + BR)}
+        ${composeObjectFields(def, el.props)}
       }
 
       ${optionalString(el.external, (props: IProperty[]) => props.map(ext => `const ${ext.name} = ${pasteDefaultStub(ext.type, def, ext)};`).join(BR))}
@@ -68,7 +68,7 @@ export const buildVerifyNegativeTestCase = (def: IDefinition) => def.struct
     .map(el => `
     it("should reject ${el.name} intruder", async () => {
       const args: ${el.name}Message = {
-        ${el.props.map(prop => `${prop.name}: ${pasteDefaultStub(prop.type, def, prop)}`).join(',' + BR)}
+        ${composeObjectFields(def, el.props)}
       }
 
       ${optionalString(el.external, composeConstantStubs(def))}
