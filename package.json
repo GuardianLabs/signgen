@@ -13,6 +13,7 @@
     "test:trace": "npx hardhat test --trace",
     "test:internal": "cross-env OUTPUT_TESTS_PATH=output/tests OUTPUT_ARTIFACTS_PATH=output/artifacts OUTPUT_CACHE_PATH=output/cache pnpm test:trace",
     "test:prune": "pnpm clear && pnpm cli -c -s",
+    "test:bunch": "ts-node ./test/index.ts",
     "cli": "ts-node src/index.ts",
     "compile": "npx hardhat compile",
     "version": "pnpm version"
