@@ -9,7 +9,7 @@ export async function launchTests() {
     const cases: Promise<void>[] = [];
     const files = await fs.promises.readdir(testsFolder);
 
-    files.forEach((file) => {
+    files.forEach(async (file) => {
         cases.push(new Promise(async (res, rej) => {
             try {
                 exec(`pnpm cli -c -s -f "${path.join(testsFolder, file)}" -d "./test/tempOutput"`, (err, stdout, stderr) => {
@@ -20,13 +20,15 @@ export async function launchTests() {
                     } else {
                         console.info(`${file}: ✔ `);
                     }
+
+                    res();
                 })
             } catch (e) {
                 console.info(`${file}: ✘`);
                 console.error(e);
-            }
 
-            res();
+                res();
+            }
         }));
     });
 
