@@ -11,6 +11,7 @@ artifacts
 typechain-types
 
 output
+testOutput
 
 .idea
 .deps

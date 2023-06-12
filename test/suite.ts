@@ -6,22 +6,28 @@ import { cwd } from "process";
 
 const testsFolder = './test/definitions';
 
+const execPromise = util.promisify(exec);
+
 export async function launchTests() {
 
-    fs.readdir(testsFolder, (err, files) => {
+    fs.readdir(testsFolder, async (err, files) => {
         if(err) console.error(err);
 
-        files.forEach(file => {
+        files.forEach(async (file) => {
           
-          exec(`pnpm cli -c -s -f "${path.join(testsFolder, file)}" -d "./testOutput"`, 
-          (err, out) => {
-              if(err) {
-                console.error(err, out);
+          try {
+            const { stdout, stderr } = await execPromise(`pnpm cli -c -s -f "${path.join(testsFolder, file)}" -d "./test/testOutput"`);
+
+            if (stderr) {
+                //console.error(err, out);
                 console.info(`${file}: ✘`);
               } else {
                 console.info(`${file}: ✔ `);
               }
-          })
+          } catch (e) {
+            console.info(`${file}: ✘`);
+            //console.error(e);
+          }
         });
     });
 }
