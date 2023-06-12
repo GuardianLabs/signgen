@@ -16,17 +16,12 @@ export async function launchTests() {
         files.forEach(async (file) => {
           
           try {
-            const { stdout, stderr } = await execPromise(`pnpm cli -c -s -f "${path.join(testsFolder, file)}" -d "./test/testOutput"`);
+            await execPromise(`pnpm cli -c -s -f "${path.join(testsFolder, file)}" -d "./test/testOutput"`);
 
-            if (stderr) {
-                //console.error(err, out);
-                console.info(`${file}: ✘`);
-              } else {
-                console.info(`${file}: ✔ `);
-              }
+            console.info(`${file}: ✔ `);
           } catch (e) {
             console.info(`${file}: ✘`);
-            //console.error(e);
+            console.error(e);
           }
         });
     });
