@@ -10,7 +10,7 @@ const execPromise = util.promisify(exec);
     .then(async () => {
 
         try {
-            await execPromise(`rd /s /q "./test/tempOutput"`);
+            await execPromise(`rd /s /q "./e2e/tempOutput"`);
         } catch(e) {
             console.error(e);
         }

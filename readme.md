@@ -51,7 +51,15 @@ You need to create definition.ts file that exports your needed types with the fo
 ```
 
 Use explicit types! (uint => uint256/128/64...)
+
 If parameter is a struct, use "struct: true" flag
+If parameter is an enum, use "enum: true" flag
+
+Do not sign too much data in one message or at least do not use lots of struct fields.
+
+Struct arrays are not supported yet.
+
+Avoid cyclic dependencies!
 
 Structure types that are used as a parameters for a messages (in "struct" block) but are not included in the "struct" block must be defined in "related block" in the same manner as a "struct".
 All the undefined struct types will be mocked with { exists: bool }
@@ -59,6 +67,9 @@ All the undefined struct types will be mocked with { exists: bool }
 All the enums will be mocked with { EXISTS }
 
 cli -c -s will automatically launch generated tests
+
+```pnpm test:e2e``` for end-to-end testing
+```pnpm test:unit``` for syntax unit testing
 
 EIP712 artifacts generator
 

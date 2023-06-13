@@ -13,7 +13,9 @@
     "test:trace": "npx hardhat test --trace",
     "test:internal": "cross-env OUTPUT_TESTS_PATH=output/tests OUTPUT_ARTIFACTS_PATH=output/artifacts OUTPUT_CACHE_PATH=output/cache pnpm test:trace",
     "test:prune": "pnpm clear && pnpm cli -c -s",
-    "test:bunch": "ts-node ./test/index.ts",
+    "test:e2e": "ts-node ./e2e/index.ts",
+    "test:unit": "mocha --recursive --bail",
+    "coverage": "nyc -r lcov -e .ts -x \"*.test.ts\" npm run test:unit",
     "cli": "ts-node src/index.ts",
     "compile": "npx hardhat compile",
     "version": "pnpm version"
@@ -25,7 +27,7 @@
     "@nomicfoundation/hardhat-network-helpers": "^1.0.8",
     "@nomicfoundation/hardhat-toolbox": "^2.0.2",
     "@openzeppelin/contracts": "^4.9.0",
-    "chai": "^4.3.7",
+    "@solidity-parser/parser": "^0.16.0",
     "commander": "^10.0.1",
     "cross-env": "^7.0.3",
     "dotenv": "^16.0.3",
@@ -41,11 +43,15 @@
   },
   "devDependencies": {
     "@nomiclabs/hardhat-ethers": "^2.2.3",
+    "@types/chai": "^4.3.5",
     "@types/lodash": "^4.14.195",
     "@types/mocha": "^10.0.1",
     "@types/node": "^20.2.3",
     "@types/shortid": "^0.0.29",
+    "chai": "^4.3.7",
+    "mocha": "^10.2.0",
     "nodemon": "^2.0.22",
+    "nyc": "^15.1.0",
     "ts-node": "^10.9.1",
     "typescript": "^5.0.4"
   }

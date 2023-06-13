@@ -2,7 +2,7 @@ import * as fs from "fs";
 import * as path from 'path';
 import { exec } from 'child_process';
 
-const testsFolder = './test/definitions';
+const testsFolder = './e2e/definitions';
 
 export async function launchTests() {
 
@@ -12,11 +12,11 @@ export async function launchTests() {
     files.forEach(async (file) => {
         cases.push(new Promise(async (res, rej) => {
             try {
-                exec(`pnpm cli -c -s -f "${path.join(testsFolder, file)}" -d "./test/tempOutput"`, (err, stdout, stderr) => {
+                exec(`pnpm cli -c -s -f "${path.join(testsFolder, file)}" -d "./e2e/tempOutput"`, (err, stdout, stderr) => {
 
                     if(err) {
                         console.info(`${file}: ✘`);
-                        console.error(err);
+                        // console.error(err);
                     } else {
                         console.info(`${file}: ✔ `);
                     }
