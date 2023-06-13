@@ -1,8 +1,10 @@
 import { expect } from "chai";
 import { IContractsOutput, IDefinition } from "../../../../src/codegen/types";
-import { ContractDefinition, FunctionDefinition, ParseResult, loadDefinitions } from "../utils";
+import { ContractDefinition, FunctionDefinition, ParseResult, loadDefinitions, selectFunctions } from "../utils";
 import { build } from "../../../../src/codegen/contracts";
 import { parse, visit } from '@solidity-parser/parser';
+
+const messageCount = (defs: IDefinition[]) => defs.map(def => def.struct.length).reduce((acc, el) => acc + el, 0);
 
 describe('Recovery Function', () => {
 
@@ -21,24 +23,9 @@ describe('Recovery Function', () => {
 
     recoveryContractsAST = recoveryContracts.map(src => parse(src, { tolerant: true, loc: true }));
 
-    recoveryFunctionsAST = recoveryContractsAST.flatMap(ast => {
-      let func: FunctionDefinition[] = [];
+    recoveryFunctionsAST = recoveryContractsAST.flatMap(ast => selectFunctions(ast, 'recover'));
 
-      (ast.children
-        .filter(node => (node as ContractDefinition).kind == "contract")
-        [0] as ContractDefinition)
-        .subNodes
-        .filter(node => node.type == 'FunctionDefinition')
-        .map(node => {
-          if((node as FunctionDefinition).name?.includes("recover")) {
-            func.push((node as FunctionDefinition));
-          }
-        });
-
-      return func!;
-    });
-
-    expect(recoveryFunctionsAST.length).to.eql(definitions.map(def => def.struct.length).reduce((acc, el) => acc + el, 0));
+    expect(recoveryFunctionsAST.length).to.eql(messageCount(definitions));
   })
   
   it("Static syntax validity check", () => {
