@@ -8,7 +8,7 @@
     "build:dev": "tsc",
     "watch": "nodemon ./src/index.ts",
     "clear": "pnpm remove:output",
-    "remove:output": "rd /s /q output",
+    "remove:output": "rimraf output",
     "test": "npx hardhat test",
     "test:trace": "npx hardhat test --trace",
     "test:internal": "cross-env OUTPUT_TESTS_PATH=output/tests OUTPUT_ARTIFACTS_PATH=output/artifacts OUTPUT_CACHE_PATH=output/cache pnpm test:trace",
@@ -38,6 +38,7 @@
     "path": "^0.12.7",
     "prettier": "^2.8.8",
     "prettier-plugin-solidity": "^1.1.3",
+    "rimraf": "^5.0.1",
     "shortid": "^2.2.16",
     "signtypeddata-v5": "^5.0.1"
   },

@@ -29,7 +29,7 @@ describe('Verify Function', () => {
     expect(verifyFunctionsAST.length).to.eql(messageCount(definitions));
   })
 
-  it("Output type should be address", () => {
+  it("Output type should be void", () => {
     verifyFunctionsAST.map(ast => {
 
       expect(ast.returnParameters).to.be.null;

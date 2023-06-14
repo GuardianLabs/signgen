@@ -5,12 +5,14 @@ import { cwd } from "process";
 
 const execPromise = util.promisify(exec);
 
+// Test entrypoint, needed to delete temporary output in a proper order
+
 (async () => {
     launchTests()
     .then(async () => {
 
         try {
-            await execPromise(`rd /s /q "./e2e/tempOutput"`);
+            await execPromise(`rimraf "./e2e/tempOutput"`);
         } catch(e) {
             console.error(e);
         }
