@@ -8,8 +8,8 @@ describe('Verify Function', () => {
 
   let definitions: IDefinition[];
   let contracts: IContractsOutput[];
-  let recoveryContracts: string[];
-  let recoveryContractsAST: ParseResult[];
+  let sigContracts: string[];
+  let sigContractsAST: ParseResult[];
   let verifyFunctionsAST: FunctionDefinition[];
 
   before(async () => {
@@ -17,11 +17,11 @@ describe('Verify Function', () => {
 
     contracts = definitions.map(def => build(def, def.struct.map(el=>el.name).join('_')));
 
-    recoveryContracts = contracts.map(set => set.recoveryLib);
+    sigContracts = contracts.map(set => set.recoveryLib);
 
-    recoveryContractsAST = recoveryContracts.map(src => parse(src, { tolerant: true, loc: true }));
+    sigContractsAST = sigContracts.map(src => parse(src, { tolerant: true, loc: true }));
 
-    verifyFunctionsAST = recoveryContractsAST.flatMap(ast => selectFunctions(ast, 'verify'));
+    verifyFunctionsAST = sigContractsAST.flatMap(ast => selectFunctions(ast, 'verify'));
   })
 
   it("All defined messages should have corresponding verify functions", () => {

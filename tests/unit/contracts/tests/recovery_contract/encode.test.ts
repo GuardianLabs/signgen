@@ -10,7 +10,7 @@ describe('Recovery Function', () => {
   let contracts: IContractsOutput[];
   let sigContracts: string[];
   let sigContractsAST: ParseResult[];
-  let recoveryFunctionsAST: FunctionDefinition[];
+  let encodeParamsFunctionsAST: FunctionDefinition[];
 
   before(async () => {
     definitions = await loadDefinitions();
@@ -21,19 +21,22 @@ describe('Recovery Function', () => {
 
     sigContractsAST = sigContracts.map(src => parse(src, { tolerant: true, loc: true }));
 
-    recoveryFunctionsAST = sigContractsAST.flatMap(ast => selectFunctions(ast, 'recover'));
+    encodeParamsFunctionsAST = sigContractsAST.flatMap(ast => selectFunctions(ast, '^encode.*Parameters$'));
   })
 
-  it("All defined messages should have corresponding recovery functions", () => {
+  it("All defined messages should have corresponding encode functions", () => {
 
-    expect(recoveryFunctionsAST.length).to.eql(messageCount(definitions));
+    expect(encodeParamsFunctionsAST.length).to.eql(messageCount(definitions));
   })
 
-  it("Output type should be address", () => {
-    recoveryFunctionsAST.map(ast => {
+  it("Output type should be memory bytes", () => {
+    encodeParamsFunctionsAST.map(ast => {
 
       expect(ast.returnParameters?.length).to.eql(1);
-      expect((ast.returnParameters![0].typeName as ElementaryTypeName).name).to.eq("address");
+
+      expect((ast.returnParameters![0].typeName as ElementaryTypeName).name).to.eq("bytes");
+
+      expect(ast.returnParameters![0].storageLocation).to.eq("memory");
     })
   })
 });

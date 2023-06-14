@@ -4,26 +4,26 @@ import { ParseResult, loadDefinitions } from "../../utils";
 import { build } from "../../../../../src/codegen/contracts";
 import { parse, visit } from '@solidity-parser/parser';
 
-describe('Signature Verification Contract General Smoke Tests', () => {
+describe('Structs Contract General Smoke Tests', () => {
 
   let definitions: IDefinition[];
   let contracts: IContractsOutput[];
-  let sigContracts: string[];
-  let sigContractsAST: ParseResult[];
+  let structContracts: string[];
+  let structContractsAST: ParseResult[];
 
   before(async () => {
     definitions = await loadDefinitions();
 
     contracts = definitions.map(def => build(def, def.struct.map(el=>el.name).join('_')));
 
-    sigContracts = contracts.map(set => set.recoveryLib);
+    structContracts = contracts.map(set => set.params);
 
-    sigContractsAST = sigContracts.map(src => parse(src, { tolerant: true, loc: true }));
+    structContractsAST = structContracts.map(src => parse(src, { tolerant: true, loc: true }));
   })
   
   it("Static syntax validity check", () => {
 
-    sigContractsAST.map(ast => {
+    structContractsAST.map(ast => {
 
       expect(ast.errors).to.be.undefined;
     })

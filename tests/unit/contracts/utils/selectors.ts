@@ -9,7 +9,9 @@ export const selectFunctions = (ast: ParseResult, selector: string): FunctionDef
         .subNodes
         .filter(node => node.type == 'FunctionDefinition')
         .map(node => {
-            if((node as FunctionDefinition).name?.includes(selector)) {
+            const regexp = new RegExp(selector);
+
+            if(regexp.test((node as FunctionDefinition).name!)) {
               func.push((node as FunctionDefinition));
             }
           });
