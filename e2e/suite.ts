@@ -16,7 +16,7 @@ export async function launchTests() {
 
                     if(err) {
                         console.info(`${file}: ✘`);
-                        // console.error(err);
+                        console.error(err);
                     } else {
                         console.info(`${file}: ✔ `);
                     }

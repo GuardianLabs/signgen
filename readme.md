@@ -50,6 +50,9 @@ You need to create definition.ts file that exports your needed types with the fo
 }; 
 ```
 
+Definition must have at least one message (def#struct.length > 0)
+Message must have at least one field (def#struct#props.length > 0)
+
 Use explicit types! (uint => uint256/128/64...)
 
 If parameter is a struct, use "struct: true" flag

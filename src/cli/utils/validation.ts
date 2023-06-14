@@ -4,6 +4,15 @@ import { uniquePropertyWise } from "../../codegen/utils";
 type ValidationResult = [isValid: boolean, error: string];
 
 export const isValidDefinition = (def: IDefinition): ValidationResult => {
+
+    if(def.struct.length == 0) {
+        return [false, "Empty message definitions are not allowed"];
+    }
+
+    if (def.struct.map(message => message.props.length).some(len => len == 0)) {
+        return [false, "Messages with no fields are not allowed"];
+    }
+
     const uniqueArr = def.struct
         .filter(uniquePropertyWise('name'))
 

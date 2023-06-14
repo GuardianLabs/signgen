@@ -8,22 +8,7 @@ export default {
         {
             name: "TypeOne", 
             props: [
-                { name: 'operation', type: 'uint256' },
-                { name: 'contractAddress', type: 'address' },
-                { name: 'rules', type: 'uint256[]' },
-                { name: 'flag', type: 'bool' },
-                // { name: 'approvers', type: 'address[]' },
-                { name: 'approversGiven', type: 'uint8[]' },
-                // { name: 'approvalsRequired', type: 'uint8[]' },
-                { name: 'logicsList', type: 'address[]' },
-                { name: 'constantsList', type: 'bytes' },
-                { name: "structure1", type: "AStruct", struct: true },
-                { name: "structure2", type: "BStruct", struct: true },
-                { name: "structure3", type: "TypeTwo", struct: true },
-                { name: "structure4", type: "TypeTwo", struct: true },
-                { name: "structure5", type: "TypeTwo", struct: true },
-                { name: "structure6", type: "TypeTwo", struct: true },
-                { name: 'nonce', type: 'bytes32' }
+                { name: 'sample', type: 'uint256' },
             ],
             external: [
                 { name: "operationId", type: "string" },
@@ -36,6 +21,9 @@ export default {
                 { name: 'testEnum', type: 'Operations', enum: true },
             ],
             external: [
+                { name: 'struct1', type: 'BStruct', struct: true },
+                { name: 'struct2', type: 'CStruct', struct: true },
+                { name: 'struct3', type: 'DStruct', struct: true },
             ]
         }
     ],
@@ -43,6 +31,20 @@ export default {
     related: [
         {
             name: "BStruct",
+            props: [
+                { name: 'custom', type: 'string' },
+            ],
+            external: []
+        },
+        {
+            name: "CStruct",
+            props: [
+                { name: 'custom', type: 'string' },
+            ],
+            external: []
+        },
+        {
+            name: "DStruct",
             props: [
                 { name: 'custom', type: 'string' },
             ],
