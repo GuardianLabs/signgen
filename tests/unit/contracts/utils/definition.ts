@@ -27,3 +27,5 @@ export const loadDefinitions = async (): Promise<IDefinition[]> => {
 
     return await definitions;
 }
+
+export const messageCount = (defs: IDefinition[]) => defs.map(def => def.struct.length).reduce((acc, el) => acc + el, 0);
