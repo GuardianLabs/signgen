@@ -54,7 +54,7 @@ publish:
       artifacts: true
   script:
     - export GUARDIAN_NPM_TOKEN=$CI_JOB_TOKEN
-    - pnpm publish
+    - npm publish
   tags:
     - guardian-docker
 
