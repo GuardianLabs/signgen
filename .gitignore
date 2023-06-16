@@ -15,3 +15,5 @@ tempOutput
 
 .idea
 .deps
+
+.npmrc

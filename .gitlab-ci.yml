@@ -1,0 +1,64 @@
+variables:
+  DOCKER_TLS_CERTDIR: "/certs" # https://docs.gitlab.com/ee/ci/docker/using_docker_build.html
+  PNPM_VERSION: 7.13.6
+
+image: node:18.12-alpine3.15
+
+stages:
+  - lint
+  - test
+  - publish
+
+before_script:
+  - npm i -g --save-exact pnpm@$PNPM_VERSION; pnpm -v; node -v
+
+dependencies:
+  stage: .pre
+  when: always
+  cache:
+    key: NPM_DOWNLOAD_CACHE
+    paths:
+      - .npm/
+  before_script:
+    - apk update && apk add --no-cache bash git
+    - npm i -g --save-exact pnpm@$PNPM_VERSION; pnpm -v; node -v
+  script:
+    - pnpm install
+    - pnpm build:all
+  tags:
+    - guardian-docker
+  artifacts:
+    untracked: true
+    paths:
+      - node_modules/
+      - .env.test
+
+unit-tests:
+  stage: test
+  when: on_success
+  needs:
+    - job: dependencies
+      artifacts: true
+  variables:
+    NODE_ENV: test
+  script:
+    - pnpm test:unit
+  tags:
+    - guardian-docker
+
+publish:
+  stage: publish
+  when: on_success
+  needs:
+    - job: unit-tests
+    - job: dependencies
+      artifacts: true
+  script:
+    - export GUARDIAN_NPM_TOKEN=$CI_JOB_TOKEN
+    - npm publish
+  tags:
+    - guardian-docker
+  rules:
+    # 1. Adopt tagging convention by enforcing semantic versioning (https://semver.org/) - All our Docker image versions will be tagged according to it. Other tags won't kick off this build.
+    - if: '$CI_COMMIT_TAG =~ /^v\d+.\d+.\d+/'
+
