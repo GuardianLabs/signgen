@@ -20,7 +20,7 @@ dependencies:
     paths:
       - .npm/
   before_script:
-    - apk add --update python make g++ && rm -rf /var/cache/apk/*
+    - apk add --update python3 make g++ && rm -rf /var/cache/apk/*
     - apk update && apk add --no-cache bash git
     - npm i -g --save-exact pnpm@$PNPM_VERSION; pnpm -v; node -v
   script:
