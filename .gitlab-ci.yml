@@ -31,7 +31,6 @@ dependencies:
     untracked: true
     paths:
       - node_modules/
-      - .env.test
 
 unit-tests:
   stage: test
