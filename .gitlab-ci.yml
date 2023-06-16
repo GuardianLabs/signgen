@@ -24,7 +24,6 @@ dependencies:
     - npm i -g --save-exact pnpm@$PNPM_VERSION; pnpm -v; node -v
   script:
     - pnpm install
-    - pnpm build:all
   tags:
     - guardian-docker
   artifacts:
