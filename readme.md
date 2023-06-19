@@ -1,9 +1,9 @@
 Usage: eip712_codegen [options]
 
-You need to create definition.ts file that exports your needed types with the following structure:
+You need to create definition.js file that exports your needed types with the following structure:
 
 ```
-{
+module.exports = {
     domain: {
         name: 'Sample',
         version: '1',

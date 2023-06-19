@@ -1,13 +1,17 @@
 {
   "name": "@guardian-network/signgen",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "author": "Priadko",
   "license": "proprietary",
   "description": "EIP712 signatures infrastructure CLI tool",
-  "main": "src/index.js",
+  "main": "./dist/src/index.js",
+  "types": "./dist/src/index.d.ts",
   "files": [
     "dist"
   ],
+  "bin": {
+    "gen": "./dist/src/index.js"
+  },
   "engines": {
     "node": ">=16.0.0"
   },
