@@ -35,23 +35,22 @@ async function generateScriptArtifacts(def, outputFolder) {
     const targetFolder = path.join(outputFolder, "tests");
     (0, utils_1.save)({
         dirPath: targetFolder,
-        content: output.tests,
+        content: (0, utils_1.prettifyTypescript)(output.tests),
         name: `${nameCamel}_recovery.spec`,
         ext: config_1.Extension.Typescript
     });
     (0, utils_1.save)({
         dirPath: targetFolder,
-        content: output.types,
+        content: (0, utils_1.prettifyTypescript)(output.types),
         name: config_1.TYPES_FILENAME,
         ext: config_1.Extension.Typescript
     });
     (0, utils_1.save)({
         dirPath: targetFolder,
-        content: output.utils,
+        content: (0, utils_1.prettifyTypescript)(output.utils),
         name: `${nameCamel}.utils`,
         ext: config_1.Extension.Typescript
     });
-    await (0, utils_1.prettifyTypescript)(targetFolder);
 }
 exports.generateScriptArtifacts = generateScriptArtifacts;
 //# sourceMappingURL=generate-script-artifacts.option.js.map

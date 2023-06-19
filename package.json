@@ -1,6 +1,6 @@
 {
   "name": "@guardian-network/signgen",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "author": "Priadko",
   "license": "proprietary",
   "description": "EIP712 signatures infrastructure CLI tool",
@@ -25,7 +25,6 @@
     "clear": "pnpm remove:output",
     "remove:output": "rimraf output",
     "crossenv": "cross-env",
-    "prettier": "npx prettier --write --plugin-search-dir=.",
     "test": "npx hardhat test",
     "test:trace": "npx hardhat test --trace",
     "test:internal": "cross-env OUTPUT_TESTS_PATH=output/tests OUTPUT_ARTIFACTS_PATH=output/artifacts OUTPUT_CACHE_PATH=output/cache pnpm test:trace",

@@ -22,6 +22,9 @@ var __importStar = (this && this.__importStar) || function (mod) {
     __setModuleDefault(result, mod);
     return result;
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.test = exports.testWithTrace = exports.transpile = exports.compile = exports.prettifyTypescript = exports.prettifySolidity = exports.save = void 0;
 const fs = __importStar(require("fs"));
@@ -29,6 +32,7 @@ const path = __importStar(require("path"));
 const child_process_1 = require("child_process");
 const util = __importStar(require("util"));
 const config_1 = require("../../config");
+const prettier_1 = __importDefault(require("prettier"));
 const execPromise = util.promisify(child_process_1.exec);
 function save({ dirPath, content, name, ext }) {
     const filePath = path.join(dirPath, `${name}${ext}`);
@@ -39,14 +43,18 @@ function save({ dirPath, content, name, ext }) {
     return filePath;
 }
 exports.save = save;
-async function prettifySolidity(targetFolder) {
-    const { stdout, stderr } = await execPromise(`pnpm prettier ${targetFolder}/**/*.sol`);
-    console.log(stdout, stderr);
+function prettifySolidity(originalCode) {
+    return prettier_1.default.format(originalCode, {
+        parser: 'solidity-parse',
+        pluginSearchDirs: ["."],
+        plugins: ['prettier-plugin-solidity']
+    });
 }
 exports.prettifySolidity = prettifySolidity;
-async function prettifyTypescript(targetFolder) {
-    const { stdout, stderr } = await execPromise(`pnpm prettier ${targetFolder}/**/*.ts`);
-    console.log(stdout, stderr);
+function prettifyTypescript(originalCode) {
+    return prettier_1.default.format(originalCode, {
+        parser: 'babel'
+    });
 }
 exports.prettifyTypescript = prettifyTypescript;
 async function compile(targetFolder) {

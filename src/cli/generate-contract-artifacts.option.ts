@@ -15,35 +15,31 @@ export async function generateContractArtifacts(def: IDefinition, outputFolder: 
 
     save({
         dirPath: targetFolder,
-        content: output.recoveryLib,
+        content: prettifySolidity(output.recoveryLib),
         name: `${RECOVERY_LIB_FILENAME}_${nameCamel}`,
         ext: Extension.Solidity
     })
 
     save({
         dirPath: targetFolder,
-        content: output.typeHashDefinitions,
+        content: prettifySolidity(output.typeHashDefinitions),
         name: TYPEHASH_DEFINITIONS_FILENAME,
         ext: Extension.Solidity
     })
 
     save({
         dirPath: targetFolder,
-        content: output.params,
+        content: prettifySolidity(output.params),
         name: STRUCTS_FILENAME,
         ext: Extension.Solidity
     })
 
     save({
         dirPath: targetFolder,
-        content: output.mayNeed,
+        content: prettifySolidity(output.mayNeed),
         name: MAY_NEED_FILENAME,
         ext: Extension.Solidity
     })
-
-    //const relativeFolder = `./${path.relative(path.resolve(), targetFolder)}`;
-
-    await prettifySolidity(targetFolder);
 
     await compile(outputFolder);
 }

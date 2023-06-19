@@ -35,29 +35,28 @@ async function generateContractArtifacts(def, outputFolder) {
     const targetFolder = path.join(outputFolder, "contracts");
     (0, utils_1.save)({
         dirPath: targetFolder,
-        content: output.recoveryLib,
+        content: (0, utils_1.prettifySolidity)(output.recoveryLib),
         name: `${config_1.RECOVERY_LIB_FILENAME}_${nameCamel}`,
         ext: config_1.Extension.Solidity
     });
     (0, utils_1.save)({
         dirPath: targetFolder,
-        content: output.typeHashDefinitions,
+        content: (0, utils_1.prettifySolidity)(output.typeHashDefinitions),
         name: config_1.TYPEHASH_DEFINITIONS_FILENAME,
         ext: config_1.Extension.Solidity
     });
     (0, utils_1.save)({
         dirPath: targetFolder,
-        content: output.params,
+        content: (0, utils_1.prettifySolidity)(output.params),
         name: config_1.STRUCTS_FILENAME,
         ext: config_1.Extension.Solidity
     });
     (0, utils_1.save)({
         dirPath: targetFolder,
-        content: output.mayNeed,
+        content: (0, utils_1.prettifySolidity)(output.mayNeed),
         name: config_1.MAY_NEED_FILENAME,
         ext: config_1.Extension.Solidity
     });
-    await (0, utils_1.prettifySolidity)(targetFolder);
     await (0, utils_1.compile)(outputFolder);
 }
 exports.generateContractArtifacts = generateContractArtifacts;

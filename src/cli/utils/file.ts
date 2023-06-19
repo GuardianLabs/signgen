@@ -28,16 +28,20 @@ export function save({ dirPath, content, name, ext }: ISaveConfig): string {
     return filePath;
 }
 
-export async function prettifySolidity(targetFolder: string) {
-    const {stdout, stderr} = await execPromise(`pnpm prettier ${targetFolder}/**/*.sol`); // `npx prettier --write ${targetFolder}/**/*.sol --plugin-search-dir=.`
+export function prettifySolidity(originalCode: string): string {
 
-    console.log(stdout, stderr);
+    return prettier.format(originalCode, {
+        parser: 'solidity-parse',
+        pluginSearchDirs: ["."],
+        plugins: ['prettier-plugin-solidity']
+      });
 }
 
-export async function prettifyTypescript(targetFolder: string) {
-    const {stdout, stderr} = await execPromise(`pnpm prettier ${targetFolder}/**/*.ts`);
+export  function prettifyTypescript(originalCode: string): string {
 
-    console.log(stdout, stderr);
+    return prettier.format(originalCode, {
+        parser: 'babel'
+    });
 }
 
 export async function compile(targetFolder: string) {

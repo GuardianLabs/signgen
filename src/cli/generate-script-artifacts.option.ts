@@ -14,28 +14,24 @@ export async function generateScriptArtifacts(def: IDefinition, outputFolder: st
 
     save({
         dirPath: targetFolder,
-        content: output.tests,
+        content: prettifyTypescript(output.tests),
         name: `${nameCamel}_recovery.spec`,
         ext: Extension.Typescript
     })
 
     save({
         dirPath: targetFolder,
-        content: output.types,
+        content: prettifyTypescript(output.types),
         name: TYPES_FILENAME,
         ext: Extension.Typescript
     })
 
     save({
         dirPath: targetFolder,
-        content: output.utils,
+        content: prettifyTypescript(output.utils),
         name: `${nameCamel}.utils`,
         ext: Extension.Typescript
     })
-
-    //const relativeFolder = `./${path.relative(path.resolve(), targetFolder)}`;
-
-    await prettifyTypescript(targetFolder);
 
     //await transpile(relativeFolder);
 }
