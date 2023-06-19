@@ -35,7 +35,7 @@
     "compile": "npx hardhat compile",
     "version": "pnpm version"
   },
-  "keywords": [],
+  "keywords": [ "cli", "signature", "eip712"],
   "dependencies": {
     "@nomicfoundation/hardhat-network-helpers": "^1.0.8",
     "@nomicfoundation/hardhat-toolbox": "^2.0.2",
