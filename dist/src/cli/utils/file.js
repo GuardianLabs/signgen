@@ -26,14 +26,18 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.test = exports.testWithTrace = exports.transpile = exports.compile = exports.prettifyTypescript = exports.prettifySolidity = exports.save = void 0;
+exports.test = exports.transpile = exports.compile = exports.prettifyTypescript = exports.prettifySolidity = exports.save = void 0;
 const fs = __importStar(require("fs"));
 const path = __importStar(require("path"));
 const child_process_1 = require("child_process");
 const util = __importStar(require("util"));
-const config_1 = require("../../config");
 const prettier_1 = __importDefault(require("prettier"));
+const hardhat_1 = __importDefault(require("hardhat"));
+require("./types");
 const execPromise = util.promisify(child_process_1.exec);
+function setHardhatPaths(dir) {
+    hardhat_1.default.setPaths(dir);
+}
 function save({ dirPath, content, name, ext }) {
     const filePath = path.join(dirPath, `${name}${ext}`);
     if (!fs.existsSync(dirPath)) {
@@ -58,8 +62,8 @@ function prettifyTypescript(originalCode) {
 }
 exports.prettifyTypescript = prettifyTypescript;
 async function compile(targetFolder) {
-    const { stdout, stderr } = await execPromise(`pnpm crossenv ${config_1.OUTPUT_CONTRACTS_PATH}=${path.join(targetFolder, "contracts")} ${config_1.OUTPUT_TESTS_PATH}=${path.join(targetFolder, "tests")} ${config_1.OUTPUT_CACHE_PATH}=${path.join(targetFolder, "cache")} ${config_1.OUTPUT_ARTIFACTS_PATH}=${path.join(targetFolder, "artifacts")} ${config_1.OUTPUT_TYPECHAIN_PATH}=${path.join(targetFolder, "typechain")} pnpm compile`);
-    console.log(stdout, stderr);
+    setHardhatPaths(targetFolder);
+    await hardhat_1.default.run('compile', {});
 }
 exports.compile = compile;
 async function transpile(targetFolder) {
@@ -67,14 +71,9 @@ async function transpile(targetFolder) {
     console.log(stdout, stderr);
 }
 exports.transpile = transpile;
-async function testWithTrace(targetFolder) {
-    const { stdout, stderr } = await execPromise(`pnpm crossenv ${config_1.OUTPUT_CONTRACTS_PATH}=${path.join(targetFolder, "contracts")} ${config_1.OUTPUT_TESTS_PATH}=${path.join(targetFolder, "tests")} ${config_1.OUTPUT_CACHE_PATH}=${path.join(targetFolder, "cache")} ${config_1.OUTPUT_ARTIFACTS_PATH}=${path.join(targetFolder, "artifacts")} ${config_1.OUTPUT_TYPECHAIN_PATH}=${path.join(targetFolder, "typechain")} pnpm test:trace`);
-    console.log(stdout, stderr);
-}
-exports.testWithTrace = testWithTrace;
 async function test(targetFolder) {
-    const { stdout, stderr } = await execPromise(`pnpm crossenv ${config_1.OUTPUT_CONTRACTS_PATH}=${path.join(targetFolder, "contracts")} ${config_1.OUTPUT_TESTS_PATH}=${path.join(targetFolder, "tests")} ${config_1.OUTPUT_CACHE_PATH}=${path.join(targetFolder, "cache")} ${config_1.OUTPUT_ARTIFACTS_PATH}=${path.join(targetFolder, "artifacts")} ${config_1.OUTPUT_TYPECHAIN_PATH}=${path.join(targetFolder, "typechain")} pnpm test`);
-    console.log(stdout, stderr);
+    setHardhatPaths(targetFolder);
+    await hardhat_1.default.run('test');
 }
 exports.test = test;
 //# sourceMappingURL=file.js.map
