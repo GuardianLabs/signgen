@@ -15,8 +15,6 @@ interface ISaveConfig {
     ext: Extension
 }
 
-const crossEnvPath = `cross-env`;
-
 export function save({ dirPath, content, name, ext }: ISaveConfig): string {
 
     const filePath = path.join(dirPath, `${name}${ext}`);
@@ -31,19 +29,19 @@ export function save({ dirPath, content, name, ext }: ISaveConfig): string {
 }
 
 export async function prettifySolidity(targetFolder: string) {
-    const {stdout, stderr} = await execPromise(`npx prettier --write ${targetFolder}/**/*.sol --plugin-search-dir=.`);
+    const {stdout, stderr} = await execPromise(`pnpm prettier ${targetFolder}/**/*.sol`); // `npx prettier --write ${targetFolder}/**/*.sol --plugin-search-dir=.`
 
     console.log(stdout, stderr);
 }
 
 export async function prettifyTypescript(targetFolder: string) {
-    const {stdout, stderr} = await execPromise(`npx prettier --write ${targetFolder}/**/*.ts --plugin-search-dir=.`);
+    const {stdout, stderr} = await execPromise(`pnpm prettier ${targetFolder}/**/*.ts`);
 
     console.log(stdout, stderr);
 }
 
 export async function compile(targetFolder: string) {
-    const {stdout, stderr} = await execPromise(`${crossEnvPath} ${OUTPUT_CONTRACTS_PATH}=${path.join(targetFolder, "contracts")} ${OUTPUT_TESTS_PATH}=${path.join(targetFolder, "tests")} ${OUTPUT_CACHE_PATH}=${path.join(targetFolder, "cache")} ${OUTPUT_ARTIFACTS_PATH}=${path.join(targetFolder, "artifacts")} ${OUTPUT_TYPECHAIN_PATH}=${path.join(targetFolder, "typechain")} pnpm compile`);
+    const {stdout, stderr} = await execPromise(`pnpm crossenv ${OUTPUT_CONTRACTS_PATH}=${path.join(targetFolder, "contracts")} ${OUTPUT_TESTS_PATH}=${path.join(targetFolder, "tests")} ${OUTPUT_CACHE_PATH}=${path.join(targetFolder, "cache")} ${OUTPUT_ARTIFACTS_PATH}=${path.join(targetFolder, "artifacts")} ${OUTPUT_TYPECHAIN_PATH}=${path.join(targetFolder, "typechain")} pnpm compile`);
 
     console.log(stdout, stderr);
 }
@@ -55,13 +53,13 @@ export async function transpile(targetFolder: string) {
 }
 
 export async function testWithTrace(targetFolder: string) {
-    const {stdout, stderr} = await execPromise(`${crossEnvPath} ${OUTPUT_CONTRACTS_PATH}=${path.join(targetFolder, "contracts")} ${OUTPUT_TESTS_PATH}=${path.join(targetFolder, "tests")} ${OUTPUT_CACHE_PATH}=${path.join(targetFolder, "cache")} ${OUTPUT_ARTIFACTS_PATH}=${path.join(targetFolder, "artifacts")} ${OUTPUT_TYPECHAIN_PATH}=${path.join(targetFolder, "typechain")} pnpm test:trace`);
+    const {stdout, stderr} = await execPromise(`pnpm crossenv ${OUTPUT_CONTRACTS_PATH}=${path.join(targetFolder, "contracts")} ${OUTPUT_TESTS_PATH}=${path.join(targetFolder, "tests")} ${OUTPUT_CACHE_PATH}=${path.join(targetFolder, "cache")} ${OUTPUT_ARTIFACTS_PATH}=${path.join(targetFolder, "artifacts")} ${OUTPUT_TYPECHAIN_PATH}=${path.join(targetFolder, "typechain")} pnpm test:trace`);
 
     console.log(stdout, stderr);
 }
 
 export async function test(targetFolder: string) {
-    const {stdout, stderr} = await execPromise(`${crossEnvPath} ${OUTPUT_CONTRACTS_PATH}=${path.join(targetFolder, "contracts")} ${OUTPUT_TESTS_PATH}=${path.join(targetFolder, "tests")} ${OUTPUT_CACHE_PATH}=${path.join(targetFolder, "cache")} ${OUTPUT_ARTIFACTS_PATH}=${path.join(targetFolder, "artifacts")} ${OUTPUT_TYPECHAIN_PATH}=${path.join(targetFolder, "typechain")} pnpm test`);
+    const {stdout, stderr} = await execPromise(`pnpm crossenv ${OUTPUT_CONTRACTS_PATH}=${path.join(targetFolder, "contracts")} ${OUTPUT_TESTS_PATH}=${path.join(targetFolder, "tests")} ${OUTPUT_CACHE_PATH}=${path.join(targetFolder, "cache")} ${OUTPUT_ARTIFACTS_PATH}=${path.join(targetFolder, "artifacts")} ${OUTPUT_TYPECHAIN_PATH}=${path.join(targetFolder, "typechain")} pnpm test`);
 
     console.log(stdout, stderr);
 }

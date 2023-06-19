@@ -30,7 +30,6 @@ const child_process_1 = require("child_process");
 const util = __importStar(require("util"));
 const config_1 = require("../../config");
 const execPromise = util.promisify(child_process_1.exec);
-const crossEnvPath = `cross-env`;
 function save({ dirPath, content, name, ext }) {
     const filePath = path.join(dirPath, `${name}${ext}`);
     if (!fs.existsSync(dirPath)) {
@@ -41,17 +40,17 @@ function save({ dirPath, content, name, ext }) {
 }
 exports.save = save;
 async function prettifySolidity(targetFolder) {
-    const { stdout, stderr } = await execPromise(`npx prettier --write ${targetFolder}/**/*.sol --plugin-search-dir=.`);
+    const { stdout, stderr } = await execPromise(`pnpm prettier ${targetFolder}/**/*.sol`);
     console.log(stdout, stderr);
 }
 exports.prettifySolidity = prettifySolidity;
 async function prettifyTypescript(targetFolder) {
-    const { stdout, stderr } = await execPromise(`npx prettier --write ${targetFolder}/**/*.ts --plugin-search-dir=.`);
+    const { stdout, stderr } = await execPromise(`pnpm prettier ${targetFolder}/**/*.ts`);
     console.log(stdout, stderr);
 }
 exports.prettifyTypescript = prettifyTypescript;
 async function compile(targetFolder) {
-    const { stdout, stderr } = await execPromise(`${crossEnvPath} ${config_1.OUTPUT_CONTRACTS_PATH}=${path.join(targetFolder, "contracts")} ${config_1.OUTPUT_TESTS_PATH}=${path.join(targetFolder, "tests")} ${config_1.OUTPUT_CACHE_PATH}=${path.join(targetFolder, "cache")} ${config_1.OUTPUT_ARTIFACTS_PATH}=${path.join(targetFolder, "artifacts")} ${config_1.OUTPUT_TYPECHAIN_PATH}=${path.join(targetFolder, "typechain")} pnpm compile`);
+    const { stdout, stderr } = await execPromise(`pnpm crossenv ${config_1.OUTPUT_CONTRACTS_PATH}=${path.join(targetFolder, "contracts")} ${config_1.OUTPUT_TESTS_PATH}=${path.join(targetFolder, "tests")} ${config_1.OUTPUT_CACHE_PATH}=${path.join(targetFolder, "cache")} ${config_1.OUTPUT_ARTIFACTS_PATH}=${path.join(targetFolder, "artifacts")} ${config_1.OUTPUT_TYPECHAIN_PATH}=${path.join(targetFolder, "typechain")} pnpm compile`);
     console.log(stdout, stderr);
 }
 exports.compile = compile;
@@ -61,12 +60,12 @@ async function transpile(targetFolder) {
 }
 exports.transpile = transpile;
 async function testWithTrace(targetFolder) {
-    const { stdout, stderr } = await execPromise(`${crossEnvPath} ${config_1.OUTPUT_CONTRACTS_PATH}=${path.join(targetFolder, "contracts")} ${config_1.OUTPUT_TESTS_PATH}=${path.join(targetFolder, "tests")} ${config_1.OUTPUT_CACHE_PATH}=${path.join(targetFolder, "cache")} ${config_1.OUTPUT_ARTIFACTS_PATH}=${path.join(targetFolder, "artifacts")} ${config_1.OUTPUT_TYPECHAIN_PATH}=${path.join(targetFolder, "typechain")} pnpm test:trace`);
+    const { stdout, stderr } = await execPromise(`pnpm crossenv ${config_1.OUTPUT_CONTRACTS_PATH}=${path.join(targetFolder, "contracts")} ${config_1.OUTPUT_TESTS_PATH}=${path.join(targetFolder, "tests")} ${config_1.OUTPUT_CACHE_PATH}=${path.join(targetFolder, "cache")} ${config_1.OUTPUT_ARTIFACTS_PATH}=${path.join(targetFolder, "artifacts")} ${config_1.OUTPUT_TYPECHAIN_PATH}=${path.join(targetFolder, "typechain")} pnpm test:trace`);
     console.log(stdout, stderr);
 }
 exports.testWithTrace = testWithTrace;
 async function test(targetFolder) {
-    const { stdout, stderr } = await execPromise(`${crossEnvPath} ${config_1.OUTPUT_CONTRACTS_PATH}=${path.join(targetFolder, "contracts")} ${config_1.OUTPUT_TESTS_PATH}=${path.join(targetFolder, "tests")} ${config_1.OUTPUT_CACHE_PATH}=${path.join(targetFolder, "cache")} ${config_1.OUTPUT_ARTIFACTS_PATH}=${path.join(targetFolder, "artifacts")} ${config_1.OUTPUT_TYPECHAIN_PATH}=${path.join(targetFolder, "typechain")} pnpm test`);
+    const { stdout, stderr } = await execPromise(`pnpm crossenv ${config_1.OUTPUT_CONTRACTS_PATH}=${path.join(targetFolder, "contracts")} ${config_1.OUTPUT_TESTS_PATH}=${path.join(targetFolder, "tests")} ${config_1.OUTPUT_CACHE_PATH}=${path.join(targetFolder, "cache")} ${config_1.OUTPUT_ARTIFACTS_PATH}=${path.join(targetFolder, "artifacts")} ${config_1.OUTPUT_TYPECHAIN_PATH}=${path.join(targetFolder, "typechain")} pnpm test`);
     console.log(stdout, stderr);
 }
 exports.test = test;
