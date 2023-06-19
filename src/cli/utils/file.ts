@@ -15,7 +15,7 @@ interface ISaveConfig {
     ext: Extension
 }
 
-const crossEnvPath = `"./node_modules/.bin/cross-env.cmd"`;
+const crossEnvPath = `cross-env`;
 
 export function save({ dirPath, content, name, ext }: ISaveConfig): string {
 

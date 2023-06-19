@@ -83,3 +83,7 @@ Options:
   -s, --script        Generate scripts artifacts
   -V, --version       output the version number
   -h, --help          display help for command
+
+Usage:
+
+```npx @guardian-network/signgen gen -c -s```
