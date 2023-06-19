@@ -30,7 +30,7 @@ const child_process_1 = require("child_process");
 const util = __importStar(require("util"));
 const config_1 = require("../../config");
 const execPromise = util.promisify(child_process_1.exec);
-const crossEnvPath = `"./node_modules/.bin/cross-env.cmd"`;
+const crossEnvPath = `cross-env`;
 function save({ dirPath, content, name, ext }) {
     const filePath = path.join(dirPath, `${name}${ext}`);
     if (!fs.existsSync(dirPath)) {
