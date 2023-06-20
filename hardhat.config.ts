@@ -7,6 +7,8 @@ import './src/cli/utils/types';
 import * as path from 'path';
 import { HardhatConfig } from "hardhat/types";
 
+const cwd: string = path.resolve();
+
 extendEnvironment((hre) => {
 
   hre.setPaths = function setPaths(dir: string) {

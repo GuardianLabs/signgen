@@ -2,7 +2,6 @@ import * as fs from 'fs';
 import * as path from 'path';
 import { exec } from 'child_process';
 import * as util from "util";
-import { OUTPUT_ARTIFACTS_PATH, OUTPUT_CACHE_PATH, OUTPUT_CONTRACTS_PATH, OUTPUT_TESTS_PATH, OUTPUT_TYPECHAIN_PATH} from '../../config';
 import { Extension } from '../config';
 import prettier from 'prettier';
 import hre, { userConfig } from 'hardhat';

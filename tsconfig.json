@@ -15,7 +15,8 @@
       "resolveJsonModule": true,
     },
     "include": [
-      "./src/**/*"
+      "./src/**/*",
+      "./hardhat.config.ts"
     ],
   }
   

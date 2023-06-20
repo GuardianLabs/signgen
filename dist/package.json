@@ -27,7 +27,6 @@
         "crossenv": "cross-env",
         "test": "npx hardhat test",
         "test:trace": "npx hardhat test --trace",
-        "test:internal": "cross-env OUTPUT_TESTS_PATH=output/tests OUTPUT_ARTIFACTS_PATH=output/artifacts OUTPUT_CACHE_PATH=output/cache pnpm test:trace",
         "test:prune": "pnpm clear && pnpm cli -c -s",
         "test:e2e": "ts-node ./e2e/index.ts",
         "test:unit": "mocha --recursive --bail",
