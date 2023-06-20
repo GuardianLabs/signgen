@@ -7,6 +7,5 @@ declare module "hardhat/types/runtime" {
 
   export interface HardhatRuntimeEnvironment {
     setPaths(dir: string): void;
-    changeNetwork(newNetwork: string): void;
   }
 }

@@ -26,7 +26,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 require("@nomiclabs/hardhat-ethers");
 require("@nomicfoundation/hardhat-toolbox");
 const config_1 = require("hardhat/config");
-require("./src/cli/utils/types");
 const path = __importStar(require("path"));
 const cwd = path.resolve();
 (0, config_1.extendEnvironment)((hre) => {
@@ -62,5 +61,5 @@ const config = {
         }
     }
 };
-exports.default = config;
+module.exports = config;
 //# sourceMappingURL=hardhat.config.js.map

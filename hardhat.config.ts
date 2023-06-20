@@ -1,17 +1,14 @@
-import { HardhatUserConfig, extendConfig } from "hardhat/config";
-import '@nomiclabs/hardhat-ethers'
+import '@nomiclabs/hardhat-ethers';
 import '@nomicfoundation/hardhat-toolbox';
 //import "hardhat-tracer";
 import { extendEnvironment } from "hardhat/config";
-import './src/cli/utils/types';
 import * as path from 'path';
-import { HardhatConfig } from "hardhat/types";
 
-const cwd: string = path.resolve();
+const cwd = path.resolve();
 
-extendEnvironment((hre) => {
+extendEnvironment((hre: any) => {
 
-  hre.setPaths = function setPaths(dir: string) {
+  hre.setPaths = function setPaths(dir: any) {
 
     this.config.paths = {
             sources: path.join(dir, "contracts"),
@@ -22,7 +19,7 @@ extendEnvironment((hre) => {
             configFile: this.config.paths.configFile
           };
     
-    (this.artifacts as any)._artifactsPath = path.join(dir, "artifacts");
+    this.artifacts._artifactsPath = path.join(dir, "artifacts");
     
     this.config.typechain = {
             outDir: path.join(dir, "typechain"),
@@ -35,7 +32,7 @@ extendEnvironment((hre) => {
   }
 })
 
-const config: HardhatUserConfig = {
+const config = {
   defaultNetwork: "hardhat",
   solidity: {
     version: "0.8.19",
@@ -48,4 +45,4 @@ const config: HardhatUserConfig = {
   }
 };
 
-export default config;
+module.exports = config;

@@ -71,9 +71,12 @@ async function transpile(targetFolder) {
     console.log(stdout, stderr);
 }
 exports.transpile = transpile;
-async function test(targetFolder) {
+async function test(targetFolder, testFiles) {
     setHardhatPaths(targetFolder);
-    await hardhat_1.default.run('test');
+    await hardhat_1.default.run('test', {
+        noCompile: true,
+        testFiles: testFiles.map(testFile => path.join(path.join(targetFolder, 'tests'), testFile))
+    });
 }
 exports.test = test;
 //# sourceMappingURL=file.js.map

@@ -66,9 +66,14 @@ export async function transpile(targetFolder: string) {
     console.log(stdout, stderr);
 }
 
-export async function test(targetFolder: string) {
+export async function test(targetFolder: string, testFiles: string[]) {
 
     setHardhatPaths(targetFolder);
 
-    await hre.run('test');
+    //console.log({path: hre.config.paths, env: hre})
+
+    await hre.run('test', {
+        noCompile: true,
+        testFiles: testFiles.map(testFile => path.join(path.join(targetFolder, 'tests'), testFile))
+    });
 }

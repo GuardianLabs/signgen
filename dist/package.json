@@ -1,6 +1,6 @@
 {
     "name": "@guardian-network/signgen",
-    "version": "1.0.8",
+    "version": "1.0.9",
     "author": "Priadko",
     "license": "proprietary",
     "description": "EIP712 signatures infrastructure CLI tool",
@@ -35,10 +35,15 @@
         "compile": "npx hardhat compile",
         "version": "pnpm version"
     },
-    "keywords": ["cli", "signature", "eip712"],
+    "keywords": [
+        "cli",
+        "signature",
+        "eip712"
+    ],
     "dependencies": {
         "@nomicfoundation/hardhat-network-helpers": "^1.0.8",
         "@nomicfoundation/hardhat-toolbox": "^2.0.2",
+        "@nomiclabs/hardhat-waffle": "^2.0.6",
         "@openzeppelin/contracts": "^4.9.0",
         "@solidity-parser/parser": "^0.16.0",
         "commander": "^10.0.1",

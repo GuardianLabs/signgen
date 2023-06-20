@@ -54,7 +54,9 @@ async function default_1(opts) {
         await (0, generate_script_artifacts_option_1.generateScriptArtifacts)(definition, destinationFolder);
     }
     if (opts.contract && opts.script) {
-        await (0, utils_1.test)(destinationFolder);
+        const nameCamel = definition.struct.map(el => el.name).join('');
+        const testFile = `${nameCamel}_recovery.spec`;
+        await (0, utils_1.test)(destinationFolder, [testFile]);
     }
 }
 exports.default = default_1;
