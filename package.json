@@ -1,6 +1,6 @@
 {
   "name": "@guardian-network/signgen",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "author": "Priadko",
   "license": "proprietary",
   "description": "EIP712 signatures infrastructure CLI tool",
