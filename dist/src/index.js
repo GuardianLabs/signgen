@@ -15,6 +15,7 @@ program
     .option("-d, --dist  <path>", "Destination folder")
     .option("-c, --contract", "Generate contract artifacts")
     .option("-s, --script", "Generate scripts artifacts")
+    .option("-l, --launch", "Automatically launch generated tests (if -c -s passed)")
     .version(package_json_1.version);
 program.parse();
 (0, cli_1.default)(program.opts());

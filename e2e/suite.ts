@@ -12,7 +12,7 @@ export async function launchTests() {
     files.forEach(async (file) => {
         cases.push(new Promise(async (res, rej) => {
             try {
-                exec(`pnpm cli -c -s -f "${path.join(testsFolder, file)}" -d "./e2e/tempOutput"`, (err, stdout, stderr) => {
+                exec(`pnpm cli -c -s -l -f "${path.join(testsFolder, file)}" -d "./e2e/tempOutput"`, (err, stdout, stderr) => {
 
                     if(err) {
                         console.info(`${file}: ✘`);

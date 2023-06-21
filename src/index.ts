@@ -13,6 +13,7 @@ program
   .option("-d, --dist  <path>", "Destination folder")
   .option("-c, --contract", "Generate contract artifacts")
   .option("-s, --script", "Generate scripts artifacts")
+  .option("-l, --launch", "Automatically launch generated tests (if -c -s passed)")
   .version(version);
 
 program.parse();

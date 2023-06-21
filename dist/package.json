@@ -1,6 +1,6 @@
 {
     "name": "@guardian-network/signgen",
-    "version": "1.0.10",
+    "version": "1.0.11",
     "author": "Priadko",
     "license": "proprietary",
     "description": "EIP712 signatures infrastructure CLI tool",
@@ -26,7 +26,7 @@
         "remove:output": "rimraf output",
         "test": "npx hardhat test",
         "test:trace": "npx hardhat test --trace",
-        "test:prune": "pnpm clear && pnpm cli -c -s",
+        "test:prune": "pnpm clear && pnpm cli -c -s -l",
         "test:e2e": "ts-node ./e2e/index.ts",
         "test:unit": "mocha --recursive --bail",
         "coverage": "nyc -r lcov -e .ts -x \"*.test.ts\" npm run test:unit",

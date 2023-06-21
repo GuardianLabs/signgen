@@ -4,11 +4,8 @@ exports.buildTestSuite = void 0;
 const case_bulder_1 = require("./case.bulder");
 const buildTestSuite = (def) => {
     return `
-    import { ethers, network } from "hardhat";
+    import { ethers } from "hardhat";
     import { expect } from "chai";
-
-    import { SignerWithAddress } from "@nomiclabs/hardhat-ethers/src/signers";
-    import { BigNumberish } from "ethers";
 
     import { ${def.struct.map(el => `prepare${el.name}SignedMessage`).join(', ')} } from "./${def.struct.map(el => el.name).join('')}.utils";
     import { ${def.struct.map(el => `${el.name}Message`).join(', ')} } from "./message.types";

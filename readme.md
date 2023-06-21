@@ -69,7 +69,7 @@ All the undefined struct types will be mocked with { exists: bool }
 
 All the enums will be mocked with { EXISTS }
 
-cli -c -s will automatically launch generated tests
+cli -c -s -l will automatically launch generated tests
 
 ```pnpm test:e2e``` for end-to-end testing
 ```pnpm test:unit``` for syntax unit testing
@@ -81,6 +81,7 @@ Options:
   -d, --dist  <path>  Destination folder
   -c, --contract      Generate contract artifacts
   -s, --script        Generate scripts artifacts
+  -l, --launch        Automatically launch generated tests (if -c -s passed)
   -V, --version       output the version number
   -h, --help          display help for command
 

@@ -42,7 +42,7 @@ export default async function (opts: OptionValues) {
         await generateScriptArtifacts(definition, destinationFolder);
     }
 
-    if(opts.contract && opts.script) {
+    if(opts.launch && opts.contract && opts.script) {
 
         const nameCamel = definition.struct.map(el=>el.name).join('');
         const testFile = `${nameCamel}_recovery.spec.ts`;
