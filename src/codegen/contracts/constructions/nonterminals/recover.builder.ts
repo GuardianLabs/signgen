@@ -7,8 +7,8 @@ export const buildRecoverFunctions = (def: IDefinition): string => def.struct
     .map(el => `
 
     function recover${el.name} (
-        ${el.name} calldata message,
-        bytes calldata signature,
+        ${el.name} memory message,
+        bytes memory signature,
         ${optionalString(el.external, formatSolidityParameters)}
         bytes32 domainSeparator
     ) public pure returns (address) {

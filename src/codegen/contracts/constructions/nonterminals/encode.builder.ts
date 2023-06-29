@@ -7,7 +7,7 @@ export const buildEncodeFunctions = (def: IDefinition): string => def.struct
     .map(el => `
 
     function encode${el.name}Parameters (
-        ${el.name} calldata message ${optionalComma(el.external)}
+        ${el.name} memory message ${optionalComma(el.external)}
         ${optionalString(el.external, composeParameters)}
     ) internal pure returns (bytes memory) {
 

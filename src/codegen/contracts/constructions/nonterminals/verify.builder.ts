@@ -6,8 +6,8 @@ import { composeArgument } from "./substrings";
 export const buildVerifyFunctions = (def: IDefinition): string => def.struct
     .map(el => `
     function verify${el.name} (
-        ${el.name} calldata message,
-        bytes calldata signature,
+        ${el.name} memory message,
+        bytes memory signature,
         ${optionalString(el.external, formatSolidityParameters)}
         bytes32 domainSeparator,
         address addr,
