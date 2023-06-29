@@ -2,7 +2,8 @@ export interface IContractsOutput {
     recoveryLib: string,
     typeHashDefinitions: string,
     params: string,
-    mayNeed: string
+    mayNeed: string,
+    utilLib: string
 }
 
 export interface IScriptsOutput {

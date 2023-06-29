@@ -17,6 +17,6 @@ export const buildRecoverFunctions = (def: IDefinition): string => def.struct
             encode${el.name}Parameters(message ${optionalComma(el.external)} ${optionalString(el.external, composeCustomEncodeArgument)})
         );
     
-        return hashAndRecover(structHash, signature, domainSeparator);
+        return Util.hashAndRecover(structHash, signature, domainSeparator);
     }`)
     .join(BR);

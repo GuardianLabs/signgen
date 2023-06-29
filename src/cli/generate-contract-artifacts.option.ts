@@ -2,7 +2,7 @@ import { build } from "../codegen/contracts";
 import { IContractsOutput, IDefinition } from "../codegen/types";
 import { compile, prettifySolidity, save } from "./utils";
 import * as path from 'path';
-import { Extension, MAY_NEED_FILENAME, RECOVERY_LIB_FILENAME, STRUCTS_FILENAME, TYPEHASH_DEFINITIONS_FILENAME } from "./config";
+import { Extension, MAY_NEED_FILENAME, RECOVERY_LIB_FILENAME, STRUCTS_FILENAME, TYPEHASH_DEFINITIONS_FILENAME, UTIL_LIB_FILENAME } from "./config";
 
 export async function generateContractArtifacts(def: IDefinition, outputFolder: string): Promise<void> {
     
@@ -38,6 +38,13 @@ export async function generateContractArtifacts(def: IDefinition, outputFolder: 
         dirPath: targetFolder,
         content: prettifySolidity(output.mayNeed),
         name: MAY_NEED_FILENAME,
+        ext: Extension.Solidity
+    })
+
+    save({
+        dirPath: targetFolder,
+        content: prettifySolidity(output.utilLib),
+        name: UTIL_LIB_FILENAME,
         ext: Extension.Solidity
     })
 

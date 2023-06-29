@@ -3,6 +3,7 @@ import { buildRecoverTestCase, buildVerifyNegativeTestCase, buildVerifyPositiveT
 
 export const buildTestSuite = (def: IDefinition) => {
 
+    // todo: buildDomainSeparator per name ==> singleton
     return `
     import { ethers } from "hardhat";
     import { expect } from "chai";
@@ -27,14 +28,14 @@ export const buildTestSuite = (def: IDefinition) => {
               domainSeparator =
               ${def.domain.salt ?
                 `
-                await recoverInstance.buildDomainSeparatorWithSalt(
+                await recoverInstance.buildDomainSeparator${def.struct[0].name}WithSalt(
                     "${def.domain.name}",
                     "${def.domain.version}",
                     ${def.domain.verifyingContract || "recoverInstance.address.toString()"},
                     ${def.domain.salt}
-                    );
+                );
                 ` : `
-                await recoverInstance.buildDomainSeparator(
+                await recoverInstance.buildDomainSeparator${def.struct[0].name}(
                     "${def.domain.name}",
                     "${def.domain.version}",
                     ${def.domain.verifyingContract || "recoverInstance.address.toString()"}

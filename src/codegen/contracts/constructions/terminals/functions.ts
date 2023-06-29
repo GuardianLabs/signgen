@@ -12,7 +12,7 @@ export const HASH_TYPED_DATA_V4 = `
 function hashTypedDataV4(
     bytes32 structHash,
     bytes32 domainSeparator
-) internal pure returns (bytes32) {
+) private pure returns (bytes32) {
     return ECDSA.toTypedDataHash(domainSeparator, structHash);
 }`;
 
@@ -23,7 +23,7 @@ function buildDomainSeparatorWithSalt(
     string memory version,
     address verifyingContract,
     bytes32 salt
-) external  view returns (bytes32) {
+) internal view returns (bytes32) {
     bytes32 hashedDomainName = keccak256(bytes(domainName));
     bytes32 hashedVersion = keccak256(bytes(version));
 
@@ -46,7 +46,7 @@ function buildDomainSeparator(
     string memory domainName,
     string memory version,
     address verifyingContract
-) external  view returns (bytes32) {
+) internal view returns (bytes32) {
     bytes32 hashedDomainName = keccak256(bytes(domainName));
     bytes32 hashedVersion = keccak256(bytes(version));
 

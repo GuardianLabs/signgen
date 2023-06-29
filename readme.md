@@ -87,4 +87,5 @@ Options:
 
 Usage:
 
-```npx @guardian-network/signgen gen -c -s```
+package: ```npx @guardian-network/signgen gen -c -s -l```
+project: ```pnpm cli -c -s -l```

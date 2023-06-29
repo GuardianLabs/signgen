@@ -9,5 +9,6 @@ export const composeUtils = (def: IDefinition) => {
     ${SOLIDITY_19}
     
     ${ERC1271}
+
     `;
 }

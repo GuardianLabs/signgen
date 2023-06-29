@@ -4,13 +4,6 @@ import '@nomicfoundation/hardhat-toolbox';
 import { extendEnvironment } from "hardhat/config";
 import * as path from 'path';
 
-// todo: mocha =>> deps
-// test path
-// i hardhat + config
-// peer deps + semver
-
-// plan b: solc
-
 const cwd = path.resolve();
 
 extendEnvironment((hre: any) => {
