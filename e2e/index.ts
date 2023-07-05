@@ -7,7 +7,7 @@ const execPromise = util.promisify(exec);
 
 // Test entrypoint, needed to delete temporary output in a proper order
 
-(async () => {
+void async function () {
     launchTests()
     .then(async () => {
 
@@ -18,4 +18,4 @@ const execPromise = util.promisify(exec);
         }
     })
     .catch(err => console.error(err))
-})();
+} ();
