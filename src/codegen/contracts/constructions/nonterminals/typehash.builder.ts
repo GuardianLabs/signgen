@@ -3,13 +3,13 @@ import { formatCapitalSnake, stubUndefinedStruct, unique, uniquePropertyWise } f
 import { BR, DOMAIN_TYPEHASH } from "../terminals";
 import { TypedDataUtils } from 'signtypeddata-v5';
 
-const typeHashScaffold = (el: IEntity) => `${el.name}(${el.props.map(prop => `${(prop as IEnumProperty).enum ? "uint8" : prop.type} ${prop.name}`).join(',')}${el.external.length == 0 ? '' : ',' + el.external.map(ext => `${(ext as IEnumProperty).enum ? "uint8" : ext.type} ${ext.name}`).join(',')})`;
+const typeHashScaffold = (el: IEntity) => `${el.name}(${el.props.filter(prop => !prop.omit).map(prop => `${(prop as IEnumProperty).enum ? "uint8" : prop.type} ${prop.name}`).join(',')}${el.external.filter(prop => !prop.omit).length == 0 ? '' : ',' + el.external.filter(prop => !prop.omit).map(ext => `${(ext as IEnumProperty).enum ? "uint8" : ext.type} ${ext.name}`).join(',')})`;
 
 const buildTypeHashRecursively = (el: IEntity, def: IDefinition, includedStructs: IEntity[], acc: number = 0): void => {
     
     if(acc != 0) includedStructs.push(el);
 
-    for (const prop of el.props.concat(el.external)) {
+    for (const prop of el.props.concat(el.external).filter(prop => !prop.omit)) {
         if((prop as IStructProperty).struct) {
             const struct = def.struct.concat(def.related).find(struct => struct.name == prop.type && struct.name != el.name);
 

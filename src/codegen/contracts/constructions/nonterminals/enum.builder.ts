@@ -3,7 +3,7 @@ import { stubUndefinedEnum, uniquePropertyWise } from "../../../utils";
 import { BR, TAB } from "../terminals";
 
 export const buildEnumStubs = (def: IDefinition): string => def.struct
-    .flatMap(el => el.props.concat(el.external))
+    .flatMap(el => el.props.concat(el.external).filter(prop => !prop.omit))
     .filter(el => (el as IEnumProperty).enum)
     .filter(uniquePropertyWise('type'))
     .map(el => `

@@ -10,7 +10,7 @@ export interface IEntity {
     external: IProperty[]
 }
 
-export type IProperty = IStructProperty | IEnumProperty;
+export type IProperty = (IStructProperty | IEnumProperty) & {omit?: boolean};
 
 export interface IStructProperty {
     name: string,

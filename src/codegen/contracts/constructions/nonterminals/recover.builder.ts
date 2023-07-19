@@ -14,7 +14,7 @@ export const buildRecoverFunctions = (def: IDefinition): string => def.struct
     ) public pure returns (address) {
 
         bytes32 structHash = keccak256(
-            encode${el.name}Parameters(message ${optionalComma(el.external)} ${optionalString(el.external, composeCustomEncodeArgument)})
+            encode${el.name}Parameters(message ${optionalComma(el.external.filter(prop => !prop.omit))} ${optionalString(el.external.filter(prop => !prop.omit), composeCustomEncodeArgument)})
         );
     
         return Util.hashAndRecover(structHash, signature, domainSeparator);

@@ -14,8 +14,8 @@ export const buildMessageType = (def: IDefinition) => def.struct
 export const buildEIP712MessageTypes = (def: IDefinition) => def.struct.concat(def.related)
       .map(el => `
       export const ${el.name}Type = [
-        ${el.props.map(prop => `{ name: '${prop.name}', type: '${(prop as IEnumProperty).enum ? "uint8" : prop.type}' }`).join(',' + BR)} ${optionalComma(el.external)}
-        ${el.external.map(ext => `{ name: '${ext.name}', type: '${(ext as IEnumProperty).enum ? "uint8" : ext.type}' }`).join(',' + BR)}
+        ${el.props.filter(prop => !prop.omit).map(prop => `{ name: '${prop.name}', type: '${(prop as IEnumProperty).enum ? "uint8" : prop.type}' }`).join(',' + BR)} ${optionalComma(el.external.filter(prop => !prop.omit))}
+        ${el.external.filter(prop => !prop.omit).map(ext => `{ name: '${ext.name}', type: '${(ext as IEnumProperty).enum ? "uint8" : ext.type}' }`).join(',' + BR)}
       ];
       `)
     .join(BR);

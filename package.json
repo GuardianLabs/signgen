@@ -3,7 +3,7 @@
   "version": "1.0.16",
   "author": "Priadko",
   "license": "proprietary",
-  "description": "EIP712 signatures infrastructure CLI tool",
+  "description": "EIP712 signatures infrastructure tool",
   "main": "./dist/src/index.js",
   "types": "./dist/src/index.d.ts",
   "files": [

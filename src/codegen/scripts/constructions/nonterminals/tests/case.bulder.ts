@@ -15,8 +15,8 @@ export const buildRecoverTestCase = (def: IDefinition) => def.struct
 
         const params = await prepare${el.name}SignedMessage(
           args,
-          ${optionalString(el.external, composeArgument)}
-          ${optionalComma(el.external)}
+          ${optionalString(el.external.filter(prop => !prop.omit), composeArgument)}
+          ${optionalComma(el.external.filter(prop => !prop.omit))}
           ${def.domain.verifyingContract || "recoverInstance.address"},
           signer
         );
@@ -45,8 +45,8 @@ export const buildVerifyPositiveTestCase = (def: IDefinition) => def.struct
 
         const params = await prepare${el.name}SignedMessage(
           args,
-          ${optionalString(el.external, composeArgument)}
-          ${optionalComma(el.external)}
+          ${optionalString(el.external.filter(prop => !prop.omit), composeArgument)}
+          ${optionalComma(el.external.filter(prop => !prop.omit))}
           ${def.domain.verifyingContract || "recoverInstance.address"},
           signer
         );
@@ -75,8 +75,8 @@ export const buildVerifyNegativeTestCase = (def: IDefinition) => def.struct
 
         const params = await prepare${el.name}SignedMessage(
           args,
-          ${optionalString(el.external, composeArgument)}
-          ${optionalComma(el.external)}
+          ${optionalString(el.external.filter(prop => !prop.omit), composeArgument)}
+          ${optionalComma(el.external.filter(prop => !prop.omit))}
           ${def.domain.verifyingContract || "recoverInstance.address"},
           intruder
         );

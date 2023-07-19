@@ -58,13 +58,18 @@ Use explicit types! (uint => uint256/128/64...)
 If parameter is a struct, use "struct: true" flag
 If parameter is an enum, use "enum: true" flag
 
+Use "omit: true" flag to exclude the field from the signature but keep it in the message struct.
+
 Do not sign too much data in one message or at least do not use lots of struct fields.
 
 Struct arrays are not supported yet.
 
 Avoid cyclic dependencies!
 
-Structure types that are used as a parameters for a messages (in "struct" block) but are not included in the "struct" block must be defined in "related block" in the same manner as a "struct".
+Structure types that are used as a parameters for a messages (in "struct" block) but are not included in the "struct" block must be defined in "related" block in the same manner as a "struct", **except** "related" can not have "external"s.
+
+"props" and "external" blocks of the same Struct must not share members with the same name (cause they will end up as indistinguishable signature type fields). As far as you won't omit the conflicting one. 
+
 All the undefined struct types will be mocked with { exists: bool }
 
 All the enums will be mocked with { EXISTS }
