@@ -13,6 +13,10 @@ export const isValidDefinition = (def: IDefinition): ValidationResult => {
         return [false, "Messages with no fields are not allowed"];
     }
 
+    if (def.related.map(rel => rel.external.length).some(len => len != 0)) {
+        return [false, "Related structures can not have externals"];
+    }
+
     const uniqueArr = def.struct
         .filter(uniquePropertyWise('name'))
 

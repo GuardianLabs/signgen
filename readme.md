@@ -18,7 +18,7 @@ module.exports = {
             props: [
                 { name: 'sample1', type: 'sample' },
                 { name: 'sample2', type: 'RelatedStruct', struct: true },
-                { name: 'struct1', type: 'Struct', struct: true },
+                { name: 'struct1', type: 'Struct', struct: true, omit: true },
             ],
             external: [
                 { name: 'sample1', type: 'sample' },
@@ -50,7 +50,7 @@ module.exports = {
 }; 
 ```
 
-Definition must have at least one message (def#struct.length > 0)
+Definition must have at least one message (def#struct.length > 0);
 Message must have at least one field (def#struct#props.length > 0)
 
 Use explicit types! (uint => uint256/128/64...)
