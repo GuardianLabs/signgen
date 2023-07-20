@@ -1,5 +1,5 @@
 import { BR, TAB } from "../contracts/constructions/terminals";
-import { IProperty } from "../types";
+import { IProperty, IStructProperty } from "../types";
 
 export const formatCapitalSnake = (str: string) => 
     str
@@ -10,9 +10,12 @@ export const formatCapitalSnake = (str: string) =>
 export const formatSolidityParameters = (props: IProperty[]): string => 
     props
     .map(prop => 
-        dynamicAllocTypes.some(el => prop.type.includes(el)) || prop.type == "bytes" || prop.struct ?
-        `${prop.type} memory ${prop.name},` : `${prop.type} ${prop.name},`
+        dynamicAllocTypes.some(el => prop.type.includes(el)) || prop.type == "bytes" || (prop as IStructProperty).struct ?
+        `${prop.type} calldata ${prop.name},` : `${prop.type} ${prop.name},`
     )
     .join(BR + TAB);
 
 const dynamicAllocTypes = ["string", "[]"]; // bytes vs bytesX
+
+export const optionalComma = (props: IProperty[]) => `${props?.length != 0 ? "," : ''}`;
+export const optionalString = (props: IProperty[], delegate: any) => `${props?.length != 0 ? delegate(props) : ''}`;
