@@ -14,8 +14,12 @@
       "declaration": true,
       "resolveJsonModule": true,
     },
-    "include": [
-      "./src/**/*",
+    "exclude": [
+      "node_modules"
     ],
+    "include": [
+      "./src/**/*"
+    ],
+    "files": ["./hardhat.config.ts"]
   }
   

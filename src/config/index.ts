@@ -1,5 +1,4 @@
 import dotenv from 'dotenv';
-export * from './constants';
 dotenv.config();
 
 export abstract class Config {

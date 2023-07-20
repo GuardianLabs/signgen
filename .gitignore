@@ -2,13 +2,16 @@ node_modules
 .env
 coverage
 coverage.json
-dist
 
 #Hardhat files
 cache
 artifacts
 
+typechain-types
+
 output
+tempOutput
+definition
 
 .idea
 .deps
