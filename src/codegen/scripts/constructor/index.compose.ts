@@ -1,11 +1,11 @@
 import { IDefinition } from "../../types";
 import {
-    buildTestSuite,
+    buildIndex,
 } from "../constructions/nonterminals";
 
-export const composeTests = (def: IDefinition) => {
+export const composeIndex = (def: IDefinition) => {
 
     return `
-    ${buildTestSuite(def)}
+    ${buildIndex(def)}
     `;
 }

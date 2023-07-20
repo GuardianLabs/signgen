@@ -8,26 +8,34 @@ export async function generateScriptArtifacts(def: IDefinition, outputFolder: st
     const nameSnake = def.struct.map(el=>el.name).join('_');
     const nameCamel = def.struct.map(el=>el.name).join('');
 
-    const output: IScriptsOutput = build(def, nameSnake);
+    const output: IScriptsOutput = build(def);
 
-    const targetFolder = path.join(outputFolder, "tests");
+    const targetFolderTests = path.join(outputFolder, "tests");
+    const targetFolderHelpers = path.join(outputFolder, "src");
 
     save({
-        dirPath: targetFolder,
+        dirPath: targetFolderHelpers,
+        content: prettifyTypescript(output.index),
+        name: `index`,
+        ext: Extension.Typescript
+    })
+
+    save({
+        dirPath: targetFolderTests,
         content: prettifyTypescript(output.tests),
         name: `${nameCamel}_recovery.spec`,
         ext: Extension.Typescript
     })
 
     save({
-        dirPath: targetFolder,
+        dirPath: targetFolderHelpers,
         content: prettifyTypescript(output.types),
         name: TYPES_FILENAME,
         ext: Extension.Typescript
     })
 
     save({
-        dirPath: targetFolder,
+        dirPath: targetFolderHelpers,
         content: prettifyTypescript(output.utils),
         name: `${nameCamel}.utils`,
         ext: Extension.Typescript

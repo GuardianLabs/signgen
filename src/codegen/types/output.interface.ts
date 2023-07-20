@@ -9,5 +9,6 @@ export interface IContractsOutput {
 export interface IScriptsOutput {
     tests: string,
     utils: string,
-    types: string
+    types: string,
+    index: string
 }

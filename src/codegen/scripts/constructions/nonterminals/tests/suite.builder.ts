@@ -8,8 +8,7 @@ export const buildTestSuite = (def: IDefinition) => {
     import { ethers } from "hardhat";
     import { expect } from "chai";
 
-    import { ${def.struct.map(el => `prepare${el.name}SignedMessage`).join(', ')} } from "./${def.struct.map(el=>el.name).join('')}.utils";
-    import { ${def.struct.map(el => `${el.name}Message`).join(', ')} } from "./message.types";
+    import { ${def.struct.map(el => `prepare${el.name}SignedMessage`).join(', ')}, ${def.struct.map(el => `${el.name}Message`).join(', ')} } from "../src";
 
     describe('${def.struct.map(el => el.name).join(', ')} signatures', () => {
         let Recover: any;
