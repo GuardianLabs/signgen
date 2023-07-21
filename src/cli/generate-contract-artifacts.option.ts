@@ -16,7 +16,7 @@ export async function generateContractArtifacts(def: IDefinition, outputFolder: 
     save({
         dirPath: targetFolder,
         content: prettifySolidity(output.recoveryLib),
-        name: `${RECOVERY_LIB_FILENAME}_${nameCamel}`,
+        name: `${RECOVERY_LIB_FILENAME}`, // _${nameSnake}
         ext: Extension.Solidity
     })
 

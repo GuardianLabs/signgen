@@ -16,7 +16,7 @@ export const composeLib = (def: IDefinition, name: string) => {
     import "./${TYPEHASH_DEFINITIONS_FILENAME}.sol";
     import { Util } from "./UtilLib.sol";
 
-    contract SignatureVerification_${name} {
+    contract SignatureVerification { // _${name}
 
         ${buildDomainSeparatorFunctions(def)}
 

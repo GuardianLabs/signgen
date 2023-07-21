@@ -21,7 +21,7 @@ export const buildTestSuite = (def: IDefinition) => {
         beforeEach(async () => {
             [ signer, intruder ] = await ethers.getSigners();
       
-              Recover = await ethers.getContractFactory("SignatureVerification_${def.struct.map(el=>el.name).join('_')}");
+              Recover = await ethers.getContractFactory("SignatureVerification"); // _${def.struct.map(el=>el.name).join('_')}
               recoverInstance = await Recover.deploy();
               
               domainSeparator =
