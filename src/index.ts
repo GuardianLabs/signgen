@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 import { Command } from "commander";
 import { version } from '../package.json';
 import exec from './cli';
@@ -11,6 +13,7 @@ program
   .option("-d, --dist  <path>", "Destination folder")
   .option("-c, --contract", "Generate contract artifacts")
   .option("-s, --script", "Generate scripts artifacts")
+  .option("-l, --launch", "Automatically launch generated tests (if -c -s passed)") // todo: integration tests
   .version(version);
 
 program.parse();

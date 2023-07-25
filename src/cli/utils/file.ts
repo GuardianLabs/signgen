@@ -2,19 +2,29 @@ import * as fs from 'fs';
 import * as path from 'path';
 import { exec } from 'child_process';
 import * as util from "util";
-import { OUTPUT_PATH } from '../../config';
+import { Extension } from '../config';
+import prettier from 'prettier';
+import hre, { userConfig } from 'hardhat';
+import { extendConfig } from 'hardhat/config';
+import './types';
 
 const execPromise = util.promisify(exec);
 
 interface ISaveConfig {
     dirPath: string,
     content: string,
-    name: string
+    name: string,
+    ext: Extension
 }
 
-export function save({ dirPath, content, name }: ISaveConfig): string {
+function setHardhatPaths(dir: string) {
 
-    const filePath = path.join(dirPath, `${name}.sol`);
+    hre.setPaths(dir);
+}
+
+export function save({ dirPath, content, name, ext }: ISaveConfig): string {
+
+    const filePath = path.join(dirPath, `${name}${ext}`);
 
     if (!fs.existsSync(dirPath)){
         fs.mkdirSync(dirPath, { recursive: true });
@@ -25,14 +35,45 @@ export function save({ dirPath, content, name }: ISaveConfig): string {
     return filePath;
 }
 
-export async function prettier(targetFolder: string) {
-    const {stdout, stderr} = await execPromise(`pnpm prettier "${targetFolder}/**/*.sol"`);
+export function prettifySolidity(originalCode: string): string {
+
+    return prettier.format(originalCode, {
+        parser: 'solidity-parse',
+        pluginSearchDirs: ["."],
+        plugins: ['prettier-plugin-solidity']
+      });
+}
+
+export  function prettifyTypescript(originalCode: string): string {
+
+    return prettier.format(originalCode, {
+        parser: 'babel'
+    });
+}
+
+export async function compile(targetFolder: string) {
+
+    setHardhatPaths(targetFolder);
+
+    await hre.run('compile', {
+        // noTypechain: true
+    });
+}
+
+export async function transpile(targetFolder: string) {
+    const {stdout, stderr} = await execPromise(`npx tsc ${targetFolder}/**/*.ts`);
 
     console.log(stdout, stderr);
 }
 
-export async function compile(targetFolder: string) {
-    const {stdout, stderr} = await execPromise(`cross-env ${OUTPUT_PATH}=${targetFolder} pnpm compile`);
+export async function test(targetFolder: string, testFiles: string[]) {
 
-    console.log(stdout, stderr);
+    setHardhatPaths(targetFolder);
+
+    //console.log({path: hre.config.paths, env: hre})
+
+    await hre.run('test', {
+        noCompile: true,
+        testFiles: testFiles.map(testFile => path.join(path.join(targetFolder, 'tests'), testFile))
+    });
 }
