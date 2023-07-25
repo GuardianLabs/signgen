@@ -2,7 +2,7 @@ import { IDefinition, IScriptsOutput } from "../codegen/types";
 import { prettifyTypescript, save, transpile } from "./utils";
 import * as path from 'path';
 import { build } from "../codegen/scripts";
-import { Extension, TYPES_FILENAME } from "./config";
+import { Extension, INDEX_FILENAME, SIGNATURE_UTILS_FILENAME, TYPES_FILENAME } from "./config";
 
 export async function generateScriptArtifacts(def: IDefinition, outputFolder: string): Promise<void> {
     const nameSnake = def.struct.map(el=>el.name).join('_');
@@ -16,7 +16,7 @@ export async function generateScriptArtifacts(def: IDefinition, outputFolder: st
     save({
         dirPath: targetFolderHelpers,
         content: prettifyTypescript(output.index),
-        name: `index`,
+        name: INDEX_FILENAME,
         ext: Extension.Typescript
     })
 
@@ -37,7 +37,7 @@ export async function generateScriptArtifacts(def: IDefinition, outputFolder: st
     save({
         dirPath: targetFolderHelpers,
         content: prettifyTypescript(output.utils),
-        name: `${nameCamel}.utils`,
+        name: SIGNATURE_UTILS_FILENAME,
         ext: Extension.Typescript
     })
 
