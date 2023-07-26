@@ -68,7 +68,9 @@ Avoid cyclic dependencies!
 
 Structure types that are used as a parameters for a messages (in "struct" block) but are not included in the "struct" block must be defined in "related" block in the same manner as a "struct", **except** "related" can not have "external"s.
 
-"props" and "external" blocks of the same Struct must not share members with the same name (cause they will end up as indistinguishable signature type fields). As far as you won't omit the conflicting one. 
+"props" and "external" blocks of the same Struct must not share members with the same name (cause they will end up as indistinguishable signature type fields). As far as you won't omit the conflicting one.
+
+No "external" properties should be called "addr" or "domainSeparator" - reserved names.
 
 All the undefined struct types will be mocked with { exists: bool }
 
