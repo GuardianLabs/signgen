@@ -67,7 +67,7 @@ When config is ready the consumption have two options:
 * as a package: `npx @guardian-network/signgen gen -c -s -l`
 * inside a project: `pnpm cli -c -s -l`
 
-## Useful tips
+## Useful tips:
 1. Definition must have at least one message (`def#struct.length > 0`)
 1. Message must have at least one field (`def#struct#props.length > 0`)
 1. Use explicit types! (`uint => uint256/128/64...`)
