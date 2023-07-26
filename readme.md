@@ -63,9 +63,11 @@ module.exports = {
 
 ## Usage:
 
-When config is ready the consumption have two options:
+When config is ready there are two consumption options:
 * as a package: `npx @guardian-network/signgen gen -c -s -l`
-* inside a project: `pnpm cli -c -s -l`
+* inside a project:
+    * install `pnpm`: `npm add -g pnpm`
+    * `pnpm i && pnpm build && pnpm cli -c -s -l`
 
 ## Useful tips:
 1. Definition must have at least one message (`def#struct.length > 0`)
@@ -73,15 +75,15 @@ When config is ready the consumption have two options:
 1. Use explicit types! (`uint => uint256/128/64...`)
 1. If parameter is a struct, use `struct: true` flag
 1. If parameter is an enum, use `enum: true` flag
-1. Use `omit: true` flag to exclude the field from the signature but keep it in the message struct.
-1. Do not sign too much data in one message or at least do not use lots of struct fields.
+1. Use `omit: true` flag to exclude the field from the signature but keep it in the message struct
+1. Do not sign too much data in one message or at least do not use lots of struct fields
 1. Struct arrays are not supported yet
 1. Avoid cyclic dependencies!
 1. Structure types that are used as a parameters for a messages (in `struct` block) but are not included in the `struct` block must be defined in `related` block in the same manner as a `struct`, **except** `related` can not have `external`s
-1. `props` and `external` blocks of the same Struct must not share members with the same name (cause they will end up as indistinguishable signature type fields). As far as you won't omit the conflicting one.
-1. No `external` properties should be named **`addr`** or **`domainSeparator`**; those are reserved names.
+1. `props` and `external` blocks of the same Struct must not share members with the same name (cause they will end up as indistinguishable signature type fields). As far as you won't omit the conflicting one
+1. No `external` properties should be named **`addr`** or **`domainSeparator`**; those are reserved names
 1. All the undefined struct types will be mocked with `{ exists: bool }`
 1. All the enums will be mocked with `{ EXISTS }`
-1. `cli -c -s -l` will automatically launch generated tests
+1. The given `cli -c -s -l` command and flags will automatically launch generated tests
 1. Use `pnpm test:e2e` for end-to-end testing
 1. Use `pnpm test:unit` for syntax unit testing
