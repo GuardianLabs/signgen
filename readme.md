@@ -84,4 +84,4 @@ When config is ready the consumption have two options:
 1. All the enums will be mocked with `{ EXISTS }`
 1. `cli -c -s -l` will automatically launch generated tests
 1. Use `pnpm test:e2e` for end-to-end testing
-1. Use `pnpm test:unit` for syntax unit 
+1. Use `pnpm test:unit` for syntax unit testing
