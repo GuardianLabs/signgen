@@ -126,7 +126,7 @@ When config is ready there are two consumption options:
             { name: 'omitMe', type: 'uint256', omit: true },
         ],
         external: [
-            { name: 'orOmitMe', type: 'uint256'}
+            { name: 'omitMe', type: 'uint256'}
         ]
         ```
 1. No `external` properties should be named **`addr`** or **`domainSeparator`**; those are reserved names
