@@ -88,7 +88,7 @@ When config is ready there are two consumption options:
             { name: 'struct5', type: 'Struct', struct: true },
         ],
         external: []
-    ```
+        ```
 1. Struct arrays are not supported yet
     * Negative example:
         ```
