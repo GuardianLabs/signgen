@@ -77,13 +77,89 @@ When config is ready there are two consumption options:
 1. If parameter is an enum, use `enum: true` flag
 1. Use `omit: true` flag to exclude the field from the signature but keep it in the message struct
 1. Do not sign too much data in one message or at least do not use lots of struct fields
+    * Negative example:
+        ```
+        name: "Don't", 
+        props: [
+            { name: 'struct1', type: 'Struct', struct: true },
+            { name: 'struct2', type: 'Struct', struct: true },
+            { name: 'struct3', type: 'Struct', struct: true },
+            { name: 'struct4', type: 'Struct', struct: true },
+            { name: 'struct5', type: 'Struct', struct: true },
+        ],
+        external: []
+    ```
 1. Struct arrays are not supported yet
+    * Negative example:
+        ```
+        name: "Don't", 
+        props: [
+            { name: 'struct1', type: 'Struct[]', struct: true },
+        ],
+        external: []
+        ```
 1. Avoid cyclic dependencies!
+    * Negative example:
+        ```
+        name: "Don't", 
+        props: [
+            { name: 'struct1', type: 'Don't', struct: true },
+        ],
+        external: []
+        ```
 1. Structure types that are used as a parameters for a messages (in `struct` block) but are not included in the `struct` block must be defined in `related` block in the same manner as a `struct`, **except** `related` can not have `external`s
-1. `props` and `external` blocks of the same Struct must not share members with the same name (cause they will end up as indistinguishable signature type fields). As far as you won't omit the conflicting one
+1. `props` and `external` blocks of the same Struct must not share members with the same name (cause they will end up as indistinguishable signature type fields). As far as you won't omit the conflicting one.
+    * Negative example:
+        ```
+        name: "Don't", 
+        props: [
+            { name: 'num', type: 'uint256' },
+        ],
+        external: [
+            { name: 'num', type: 'uint256' },
+        ]
+        ```
+    * Positive example:
+        ```
+        name: "Do", 
+        props: [
+            { name: 'omitMe', type: 'uint256', omit: true },
+        ],
+        external: [
+            { name: 'orOmitMe', type: 'uint256'}
+        ]
+        ```
 1. No `external` properties should be named **`addr`** or **`domainSeparator`**; those are reserved names
+    * Negative example:
+        ```
+        name: "Don't", 
+        props: [
+            { name: 'num', type: 'uint256' },
+        ],
+        external: [
+            { name: 'addr', type: 'address' },
+            { name: 'domainSeparator', type: 'bytes32' },
+        ]
+        ```
 1. All the undefined struct types will be mocked with `{ exists: bool }`
 1. All the enums will be mocked with `{ EXISTS }`
 1. The given `cli -c -s -l` command and flags will automatically launch generated tests
 1. Use `pnpm test:e2e` for end-to-end testing
 1. Use `pnpm test:unit` for syntax unit testing
+1. Generated tests-specific constraints:
+    * If `salt` is not specified, it won't be included in the domain separator.
+    * If `verifyingContract` is not specified, the address of the Signature Verification contract will be used in the domain separator
+    as verifying contract's address.
+    * If `chainId` is not specified, the chain ID of the emulator's blockchain will be used (extracted from the hardhat's `signer`). **Change before deploy**.
+
+* Using as a project:
+    1. `git clone`
+    1. `cd signgen`
+    1. `pnpm i`
+    1. create `definition.js` file (and move it to the root of the project - near `package.json` - for default mode)
+    1. execute:
+        * for default mode (resulting folder: `output`): `pnpm cli -c -s -l`
+        * for custom mode: `pnpm cli -c -s -l -f "{YOUR_DEFINITION_PATH}" -d "{YOUR_OUTPUT_PATH}"`
+
+* Using as a package
+    - not implemented
