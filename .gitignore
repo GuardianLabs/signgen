@@ -13,5 +13,7 @@ output
 tempOutput
 definition
 
+dist
+
 .idea
 .deps

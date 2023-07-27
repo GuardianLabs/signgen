@@ -1,4 +1,4 @@
 export enum Extension {
-    Solidity = '.sol',
-    Typescript = '.ts'
+  Solidity = ".sol",
+  Typescript = ".ts",
 }

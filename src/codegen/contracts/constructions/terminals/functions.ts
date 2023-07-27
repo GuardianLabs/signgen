@@ -61,7 +61,7 @@ function buildDomainSeparatorWithSalt (
     return Util.buildDomainSeparatorWithSalt(domainName, version, verifyingContract, salt);
 }
 `;
-    
+
 export const BUILD_DOMAIN_SEPARATOR = `
 
 function buildDomainSeparator(

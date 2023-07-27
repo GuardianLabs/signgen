@@ -1,11 +1,22 @@
-import { STRUCTS_FILENAME, TYPEHASH_DEFINITIONS_FILENAME } from "../../../cli/config";
+import {
+  STRUCTS_FILENAME,
+  TYPEHASH_DEFINITIONS_FILENAME,
+} from "../../../cli/config";
 import { IDefinition } from "../../types";
-import { buildEncodeFunctions, buildRecoverFunctions, buildVerifyFunctions } from "../constructions/nonterminals";
-import { UNLICENSED_LICENSE, SOLIDITY_19, ECDSA_OZ, BUILD_DOMAIN_SEPARATOR_PROXY } from "../constructions/terminals";
+import {
+  buildEncodeFunctions,
+  buildRecoverFunctions,
+  buildVerifyFunctions,
+} from "../constructions/nonterminals";
+import {
+  BUILD_DOMAIN_SEPARATOR_PROXY,
+  ECDSA_OZ,
+  SOLIDITY_19,
+  UNLICENSED_LICENSE,
+} from "../constructions/terminals";
 
 export const composeLib = (def: IDefinition, name: string) => {
-
-    return `
+  return `
 
     ${UNLICENSED_LICENSE}
     ${SOLIDITY_19}
@@ -27,4 +38,4 @@ export const composeLib = (def: IDefinition, name: string) => {
         ${buildVerifyFunctions(def)}
     }
     `;
-}
+};

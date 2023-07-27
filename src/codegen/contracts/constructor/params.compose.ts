@@ -1,10 +1,15 @@
 import { IDefinition } from "../../types";
-import { buildStruct, buildSignedStruct, buildStructStubs, buildEnumStubs, buildRelatedStruct } from "../constructions/nonterminals";
-import { UNLICENSED_LICENSE, SOLIDITY_19 } from "../constructions/terminals";
+import {
+  buildEnumStubs,
+  buildRelatedStruct,
+  buildSignedStruct,
+  buildStruct,
+  buildStructStubs,
+} from "../constructions/nonterminals";
+import { SOLIDITY_19, UNLICENSED_LICENSE } from "../constructions/terminals";
 
 export const composeParams = (def: IDefinition) => {
-
-    return `
+  return `
     
     ${UNLICENSED_LICENSE}
     ${SOLIDITY_19}
@@ -19,4 +24,4 @@ export const composeParams = (def: IDefinition) => {
 
     ${buildStructStubs(def)}
     `;
-}
+};

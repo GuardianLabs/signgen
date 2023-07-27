@@ -1,9 +1,11 @@
 import { parseEvmType } from "./parseEvmTypes";
-import { generateOutputType, generateInputType } from "./types";
+import { generateInputType } from "./types";
 
-export const inferType = (solidityType: string): string => 
-    generateInputType({
-        returnResultObject: false,
-        useStructs: true
+export const inferType = (solidityType: string): string =>
+  generateInputType(
+    {
+      returnResultObject: false,
+      useStructs: true,
     },
-    parseEvmType(solidityType));
+    parseEvmType(solidityType)
+  );

@@ -1,11 +1,20 @@
-import { join } from "path";
 import { IDefinition, IProperty } from "../../../../types";
-import { optionalComma, optionalString, pasteDefaultStub } from "../../../../utils";
+import {
+  optionalComma,
+  optionalString,
+  pasteDefaultStub,
+} from "../../../../utils";
 import { BR } from "../../terminals";
-import { composeArgument, composeConstantStubs, composeObjectFields } from "../substrings";
+import {
+  composeArgument,
+  composeConstantStubs,
+  composeObjectFields,
+} from "../substrings";
 
-export const buildRecoverTestCase = (def: IDefinition) => def.struct
-    .map(el => `
+export const buildRecoverTestCase = (def: IDefinition) =>
+  def.struct
+    .map(
+      (el) => `
     it("should recover ${el.name} signer", async () => {
       const args: ${el.name}Message = {
         ${composeObjectFields(def, el.props)}
@@ -15,8 +24,11 @@ export const buildRecoverTestCase = (def: IDefinition) => def.struct
 
         const params = await prepare${el.name}SignedMessage(
           args,
-          ${optionalString(el.external.filter(prop => !prop.omit), composeArgument)}
-          ${optionalComma(el.external.filter(prop => !prop.omit))}
+          ${optionalString(
+            el.external.filter((prop) => !prop.omit),
+            composeArgument
+          )}
+          ${optionalComma(el.external.filter((prop) => !prop.omit))}
           ${def.domain.verifyingContract || "recoverInstance.address"},
           signer
         );
@@ -31,22 +43,35 @@ export const buildRecoverTestCase = (def: IDefinition) => def.struct
           );
           
         expect(recoveredAddress).to.be.equal(signer.address);
-      });`)
+      });`
+    )
     .join(BR);
 
-export const buildVerifyPositiveTestCase = (def: IDefinition) => def.struct
-    .map(el => `
+export const buildVerifyPositiveTestCase = (def: IDefinition) =>
+  def.struct
+    .map(
+      (el) => `
     it("should verify ${el.name} signer", async () => {
       const args: ${el.name}Message = {
         ${composeObjectFields(def, el.props)}
       }
 
-      ${optionalString(el.external, (props: IProperty[]) => props.map(ext => `const ${ext.name} = ${pasteDefaultStub(ext.type, def, ext)};`).join(BR))}
+      ${optionalString(el.external, (props: IProperty[]) =>
+        props
+          .map(
+            (ext) =>
+              `const ${ext.name} = ${pasteDefaultStub(ext.type, def, ext)};`
+          )
+          .join(BR)
+      )}
 
         const params = await prepare${el.name}SignedMessage(
           args,
-          ${optionalString(el.external.filter(prop => !prop.omit), composeArgument)}
-          ${optionalComma(el.external.filter(prop => !prop.omit))}
+          ${optionalString(
+            el.external.filter((prop) => !prop.omit),
+            composeArgument
+          )}
+          ${optionalComma(el.external.filter((prop) => !prop.omit))}
           ${def.domain.verifyingContract || "recoverInstance.address"},
           signer
         );
@@ -60,12 +85,14 @@ export const buildVerifyPositiveTestCase = (def: IDefinition) => def.struct
           signer.address,
           "${el.name} verification failed"
         )).to.be.not.revertedWith("${el.name} verification failed");
-    });`)
+    });`
+    )
     .join(BR);
 
-
-export const buildVerifyNegativeTestCase = (def: IDefinition) => def.struct
-    .map(el => `
+export const buildVerifyNegativeTestCase = (def: IDefinition) =>
+  def.struct
+    .map(
+      (el) => `
     it("should reject ${el.name} intruder", async () => {
       const args: ${el.name}Message = {
         ${composeObjectFields(def, el.props)}
@@ -75,8 +102,11 @@ export const buildVerifyNegativeTestCase = (def: IDefinition) => def.struct
 
         const params = await prepare${el.name}SignedMessage(
           args,
-          ${optionalString(el.external.filter(prop => !prop.omit), composeArgument)}
-          ${optionalComma(el.external.filter(prop => !prop.omit))}
+          ${optionalString(
+            el.external.filter((prop) => !prop.omit),
+            composeArgument
+          )}
+          ${optionalComma(el.external.filter((prop) => !prop.omit))}
           ${def.domain.verifyingContract || "recoverInstance.address"},
           intruder
         );
@@ -90,5 +120,6 @@ export const buildVerifyNegativeTestCase = (def: IDefinition) => def.struct
           signer.address,
           "${el.name} verification failed"
         )).to.be.revertedWith("${el.name} verification failed");
-    });`)
+    });`
+    )
     .join(BR);
