@@ -5,6 +5,7 @@ import { generateContractArtifacts } from './generate-contract-artifacts.option'
 import { generateScriptArtifacts } from './generate-script-artifacts.option';
 import { IDefinition } from '../codegen/types';
 import { test, validateDefinition } from './utils';
+import { TESTS_FILENAME } from './config';
 
 const cwd: string = path.resolve();
 
@@ -45,7 +46,7 @@ export default async function (opts: OptionValues) {
     if(opts.launch && opts.contract && opts.script) {
 
         const nameCamel = definition.struct.map(el=>el.name).join('');
-        const testFile = `${nameCamel}_recovery.spec.ts`;
+        const testFile = `${TESTS_FILENAME}.ts`; // `${nameCamel}_recovery.spec.ts`;
 
         await test(destinationFolder, [testFile]);
     }
