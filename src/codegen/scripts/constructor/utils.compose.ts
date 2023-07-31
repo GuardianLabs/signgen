@@ -12,8 +12,8 @@ export const composeUtils = (def: IDefinition) => {
     import { ${def.struct
       .map((el) => `${el.name}Message, ${el.name}Type`)
       .join(", ")}, EIP712DomainType, ${def.related
-    .map((el) => `${el.name}Type`)
-    .join(", ")} } from "./message.types";
+      .map((el) => `${el.name}Type`)
+      .join(", ")} } from "./message.types";
 
     ${buildMessage(def)}
 

@@ -25,17 +25,17 @@ describe("Recovery Function", () => {
     definitions = await loadDefinitions();
 
     contracts = definitions.map((def) =>
-      build(def, def.struct.map((el) => el.name).join("_"))
+      build(def, def.struct.map((el) => el.name).join("_")),
     );
 
     sigContracts = contracts.map((set) => set.recoveryLib);
 
     sigContractsAST = sigContracts.map((src) =>
-      parse(src, { tolerant: true, loc: true })
+      parse(src, { tolerant: true, loc: true }),
     );
 
     recoveryFunctionsAST = sigContractsAST.flatMap((ast) =>
-      selectFunctions(ast, "recover")
+      selectFunctions(ast, "recover"),
     );
   });
 
@@ -47,7 +47,7 @@ describe("Recovery Function", () => {
     recoveryFunctionsAST.map((ast) => {
       expect(ast.returnParameters?.length).to.eql(1);
       expect(
-        (ast.returnParameters![0].typeName as ElementaryTypeName).name
+        (ast.returnParameters![0].typeName as ElementaryTypeName).name,
       ).to.eq("address");
     });
   });

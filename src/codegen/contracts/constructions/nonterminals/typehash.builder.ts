@@ -17,7 +17,7 @@ const typeHashScaffold = (el: IEntity) =>
     .filter((prop) => !prop.omit)
     .map(
       (prop) =>
-        `${(prop as IEnumProperty).enum ? "uint8" : prop.type} ${prop.name}`
+        `${(prop as IEnumProperty).enum ? "uint8" : prop.type} ${prop.name}`,
     )
     .join(",")}${
     el.external.filter((prop) => !prop.omit).length == 0
@@ -27,7 +27,7 @@ const typeHashScaffold = (el: IEntity) =>
           .filter((prop) => !prop.omit)
           .map(
             (ext) =>
-              `${(ext as IEnumProperty).enum ? "uint8" : ext.type} ${ext.name}`
+              `${(ext as IEnumProperty).enum ? "uint8" : ext.type} ${ext.name}`,
           )
           .join(",")
   })`;
@@ -36,7 +36,7 @@ const buildTypeHashRecursively = (
   el: IEntity,
   def: IDefinition,
   includedStructs: IEntity[],
-  acc: number = 0
+  acc: number = 0,
 ): void => {
   if (acc != 0) includedStructs.push(el);
 
@@ -94,10 +94,10 @@ export const buildStubTypeHash = (def: IDefinition): string =>
     .map(
       (el) => `
     bytes32 constant ${formatCapitalSnake(el.type)}_TYPEHASH = keccak256("${
-        el.type
-      }(${stubUndefinedStruct()
-        .map((prop) => `${prop.type} ${prop.name}`)
-        .join(",")})");
-    `
+      el.type
+    }(${stubUndefinedStruct()
+      .map((prop) => `${prop.type} ${prop.name}`)
+      .join(",")})");
+    `,
     )
     .join(BR);

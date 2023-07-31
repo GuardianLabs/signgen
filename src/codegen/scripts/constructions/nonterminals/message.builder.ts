@@ -27,8 +27,8 @@ export const buildMessage = (def: IDefinition) =>
             .filter((prop) => !!prop.omit)
             .map((om) => om.name)
             .join(",")} ${optionalComma(
-          el.props.filter((prop) => !!prop.omit)
-        )} ...o }) => o)(rawMessage);
+            el.props.filter((prop) => !!prop.omit),
+          )} ...o }) => o)(rawMessage);
           const message = {
             ...omittedMessage,
             ${el.external
@@ -57,16 +57,16 @@ export const buildMessage = (def: IDefinition) =>
                 .filter((prop) => !prop.omit)
                 .filter((el) => (el as IStructProperty).struct)
                 .filter(
-                  (el) => !def.struct.map((el) => el.name).includes(el.type)
+                  (el) => !def.struct.map((el) => el.name).includes(el.type),
                 )
                 .filter(
-                  (el) => !def.related.map((el) => el.name).includes(el.type)
+                  (el) => !def.related.map((el) => el.name).includes(el.type),
                 )
                 .filter(unique)
                 .filter(uniquePropertyWise("type"))
                 .map(
                   (el) => `
-                ${el.type}: ${JSON.stringify(stubUndefinedStruct())},`
+                ${el.type}: ${JSON.stringify(stubUndefinedStruct())},`,
                 )
                 .join(BR)}
 
@@ -78,18 +78,18 @@ export const buildMessage = (def: IDefinition) =>
                 .filter(
                   (p) =>
                     def.struct.map((p) => p.name).includes(p.type) ||
-                    def.related.map((p) => p.name).includes(p.type)
+                    def.related.map((p) => p.name).includes(p.type),
                 )
                 .filter(unique)
                 .filter(uniquePropertyWise("type"))
                 .map(
                   (p) => `
-                ${p.type}: ${p.type}Type,`
+                ${p.type}: ${p.type}Type,`,
                 )
                 .join(BR)}
             },
           };
         };
-      `
+      `,
     )
     .join(BR);

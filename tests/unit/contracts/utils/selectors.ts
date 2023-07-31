@@ -2,13 +2,13 @@ import { ContractDefinition, FunctionDefinition, ParseResult } from "./types";
 
 export const selectFunctions = (
   ast: ParseResult,
-  selector: string
+  selector: string,
 ): FunctionDefinition[] => {
   let func: FunctionDefinition[] = [];
 
   (
     ast.children.filter(
-      (node) => (node as ContractDefinition).kind == "contract"
+      (node) => (node as ContractDefinition).kind == "contract",
     )[0] as ContractDefinition
   ).subNodes
     .filter((node) => node.type == "FunctionDefinition")

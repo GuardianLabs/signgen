@@ -13,7 +13,7 @@ import { compile, prettifySolidity, save } from "./utils";
 
 export async function generateContractArtifacts(
   def: IDefinition,
-  outputFolder: string
+  outputFolder: string,
 ): Promise<void> {
   const nameSnake = def.struct.map((el) => el.name).join("_");
   const nameCamel = def.struct.map((el) => el.name).join("");
@@ -24,35 +24,35 @@ export async function generateContractArtifacts(
 
   save({
     dirPath: targetFolder,
-    content: prettifySolidity(output.recoveryLib),
+    content: await prettifySolidity(output.recoveryLib),
     name: `${RECOVERY_LIB_FILENAME}`, // _${nameSnake}
     ext: Extension.Solidity,
   });
 
   save({
     dirPath: targetFolder,
-    content: prettifySolidity(output.typeHashDefinitions),
+    content: await prettifySolidity(output.typeHashDefinitions),
     name: TYPEHASH_DEFINITIONS_FILENAME,
     ext: Extension.Solidity,
   });
 
   save({
     dirPath: targetFolder,
-    content: prettifySolidity(output.params),
+    content: await prettifySolidity(output.params),
     name: STRUCTS_FILENAME,
     ext: Extension.Solidity,
   });
 
   save({
     dirPath: targetFolder,
-    content: prettifySolidity(output.mayNeed),
+    content: await prettifySolidity(output.mayNeed),
     name: MAY_NEED_FILENAME,
     ext: Extension.Solidity,
   });
 
   save({
     dirPath: targetFolder,
-    content: prettifySolidity(output.utilLib),
+    content: await prettifySolidity(output.utilLib),
     name: UTIL_LIB_FILENAME,
     ext: Extension.Solidity,
   });

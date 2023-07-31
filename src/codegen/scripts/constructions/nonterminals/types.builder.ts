@@ -12,7 +12,7 @@ export const buildMessageType = (def: IDefinition) =>
           .map((prop) => `${prop.name}: ${inferType(prop.type)};`)
           .join(BR)} 
       };
-    `
+    `,
     )
     .join(BR);
 
@@ -28,21 +28,21 @@ export const buildEIP712MessageTypes = (def: IDefinition) =>
             (prop) =>
               `{ name: '${prop.name}', type: '${
                 (prop as IEnumProperty).enum ? "uint8" : prop.type
-              }' }`
+              }' }`,
           )
           .join("," + BR)} ${optionalComma(
-        el.external.filter((prop) => !prop.omit)
-      )}
+          el.external.filter((prop) => !prop.omit),
+        )}
         ${el.external
           .filter((prop) => !prop.omit)
           .map(
             (ext) =>
               `{ name: '${ext.name}', type: '${
                 (ext as IEnumProperty).enum ? "uint8" : ext.type
-              }' }`
+              }' }`,
           )
           .join("," + BR)}
       ];
-      `
+      `,
     )
     .join(BR);

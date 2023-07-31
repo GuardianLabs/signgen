@@ -18,7 +18,7 @@ interface GenerateTypeOptions {
 
 export function generateInputTypes(
   input: Array<AbiParameter>,
-  options: GenerateTypeOptions
+  options: GenerateTypeOptions,
 ): string {
   if (input.length === 0) {
     return "";
@@ -29,8 +29,8 @@ export function generateInputTypes(
         (input, index) =>
           `${input.name || `arg${index}`}: ${generateInputType(
             options,
-            input.type
-          )}`
+            input.type,
+          )}`,
       )
       .join(", ") + ", "
   );
@@ -38,7 +38,7 @@ export function generateInputTypes(
 
 export function generateOutputTypes(
   options: GenerateTypeOptions,
-  outputs: Array<AbiOutputParameter>
+  outputs: Array<AbiOutputParameter>,
 ): string {
   if (!options.returnResultObject && outputs.length === 1) {
     return generateOutputType(options, outputs[0].type);
@@ -50,7 +50,7 @@ export function generateOutputTypes(
 // https://docs.ethers.io/ethers.js/html/api-contract.html#types
 export function generateInputType(
   options: GenerateTypeOptions,
-  evmType: EvmType
+  evmType: EvmType,
 ): string {
   switch (evmType.type) {
     case "integer":
@@ -65,7 +65,7 @@ export function generateInputType(
     case "array":
       return generateArrayOrTupleType(
         generateInputType(options, evmType.itemType),
-        evmType.size
+        evmType.size,
       );
     case "boolean":
       return "boolean";
@@ -77,7 +77,7 @@ export function generateInputType(
       }
       return generateObjectTypeLiteral(
         evmType,
-        generateInputType.bind(null, { ...options, useStructs: true })
+        generateInputType.bind(null, { ...options, useStructs: true }),
       );
     case "unknown":
       return "any";
@@ -86,7 +86,7 @@ export function generateInputType(
 
 export function generateOutputType(
   options: GenerateTypeOptions,
-  evmType: EvmOutputType
+  evmType: EvmOutputType,
 ): string {
   switch (evmType.type) {
     case "integer":
@@ -102,7 +102,7 @@ export function generateOutputType(
     case "array":
       return generateArrayOrTupleType(
         generateOutputType(options, evmType.itemType),
-        evmType.size
+        evmType.size,
       );
     case "boolean":
       return "boolean";
@@ -123,7 +123,7 @@ export function generateOutputType(
 
 export function generateObjectTypeLiteral(
   tuple: TupleType,
-  generator: (evmType: EvmType) => string
+  generator: (evmType: EvmType) => string,
 ) {
   return (
     "{" +
@@ -140,7 +140,7 @@ export function generateObjectTypeLiteral(
  **/
 export function generateOutputComplexType(
   components: AbiOutputParameter[],
-  options: GenerateTypeOptions
+  options: GenerateTypeOptions,
 ) {
   const existingOutputComponents = compact([
     generateOutputComplexTypeAsArray(components, options),
@@ -151,7 +151,7 @@ export function generateOutputComplexType(
 
 export function generateOutputComplexTypeAsArray(
   components: AbiOutputParameter[],
-  options: GenerateTypeOptions
+  options: GenerateTypeOptions,
 ): string {
   return `[${components
     .map((t) => generateOutputType(options, t.type))
@@ -160,7 +160,7 @@ export function generateOutputComplexTypeAsArray(
 
 export function generateOutputComplexTypesAsObject(
   components: AbiOutputParameter[],
-  options: GenerateTypeOptions
+  options: GenerateTypeOptions,
 ): string | undefined {
   let namedElementsCode;
   const namedElements = components.filter((e) => !!e.name);

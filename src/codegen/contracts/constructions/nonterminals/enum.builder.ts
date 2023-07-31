@@ -11,6 +11,6 @@ export const buildEnumStubs = (def: IDefinition): string =>
       (el) => `
     enum ${el.type} {
         ${stubUndefinedEnum().join("," + BR + TAB)}
-    }`
+    }`,
     )
     .join(BR);

@@ -12,7 +12,7 @@ export const wrapArgument = (
   arg: string,
   type: string,
   def: IDefinition,
-  prop: IProperty
+  prop: IProperty,
 ): string => {
   if (type == "string") {
     return `keccak256(bytes(${arg}))`;
@@ -39,7 +39,7 @@ export const wrapArgument = (
 
     let targetProps = target ? target.props : stubUndefinedStruct();
     return `keccak256(abi.encode(${formatCapitalSnake(
-      type
+      type,
     )}_TYPEHASH, ${targetProps
       .map((el) => wrapArgument(`${arg}.${el.name}`, el.type, def, el))
       .join(", ")}))`;

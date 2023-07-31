@@ -14,7 +14,7 @@ export const formatSolidityParameters = (props: IProperty[]): string =>
       prop.type == "bytes" ||
       (prop as IStructProperty).struct
         ? `${prop.type} calldata ${prop.name},`
-        : `${prop.type} ${prop.name},`
+        : `${prop.type} ${prop.name},`,
     )
     .join(BR + TAB);
 

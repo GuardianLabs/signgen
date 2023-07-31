@@ -12,7 +12,7 @@ import { prettifyTypescript, save } from "./utils";
 
 export async function generateScriptArtifacts(
   def: IDefinition,
-  outputFolder: string
+  outputFolder: string,
 ): Promise<void> {
   const nameSnake = def.struct.map((el) => el.name).join("_");
   const nameCamel = def.struct.map((el) => el.name).join("");
@@ -24,28 +24,28 @@ export async function generateScriptArtifacts(
 
   save({
     dirPath: targetFolderHelpers,
-    content: prettifyTypescript(output.index),
+    content: await prettifyTypescript(output.index),
     name: INDEX_FILENAME,
     ext: Extension.Typescript,
   });
 
   save({
     dirPath: targetFolderTests,
-    content: prettifyTypescript(output.tests),
+    content: await prettifyTypescript(output.tests),
     name: TESTS_FILENAME, // `${nameCamel}_`
     ext: Extension.Typescript,
   });
 
   save({
     dirPath: targetFolderHelpers,
-    content: prettifyTypescript(output.types),
+    content: await prettifyTypescript(output.types),
     name: TYPES_FILENAME,
     ext: Extension.Typescript,
   });
 
   save({
     dirPath: targetFolderHelpers,
-    content: prettifyTypescript(output.utils),
+    content: await prettifyTypescript(output.utils),
     name: SIGNATURE_UTILS_FILENAME,
     ext: Extension.Typescript,
   });

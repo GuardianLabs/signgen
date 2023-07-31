@@ -15,11 +15,11 @@ export const buildEncodeFunctions = (def: IDefinition): string =>
 
     function encode${el.name}Parameters (
         ${el.name} memory message ${optionalComma(
-        el.external.filter((prop) => !prop.omit)
-      )}
+          el.external.filter((prop) => !prop.omit),
+        )}
         ${optionalString(
           el.external.filter((prop) => !prop.omit),
-          composeParameters
+          composeParameters,
         )}
     ) internal pure returns (bytes memory) {
 
@@ -28,15 +28,15 @@ export const buildEncodeFunctions = (def: IDefinition): string =>
             ${el.props
               .filter((prop) => !prop.omit)
               .map((prop) =>
-                wrapArgument(`message.${prop.name}`, prop.type, def, prop)
+                wrapArgument(`message.${prop.name}`, prop.type, def, prop),
               )
               .join(`,${BR}`)}
             ${optionalComma(el.external.filter((prop) => !prop.omit))}
             ${optionalString(
               el.external.filter((prop) => !prop.omit),
-              composeEncodeArgument(def)
+              composeEncodeArgument(def),
             )}
         );
-    }`
+    }`,
     )
     .join(BR);

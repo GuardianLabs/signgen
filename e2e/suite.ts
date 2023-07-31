@@ -15,7 +15,7 @@ export async function launchTests() {
           exec(
             `pnpm cli -c -s -l -f "${path.join(
               testsFolder,
-              file
+              file,
             )}" -d "./e2e/tempOutput"`,
             (err, stdout, stderr) => {
               if (err) {
@@ -26,7 +26,7 @@ export async function launchTests() {
               }
 
               res();
-            }
+            },
           );
         } catch (e) {
           console.info(`${file}: ✘`);
@@ -34,7 +34,7 @@ export async function launchTests() {
 
           res();
         }
-      })
+      }),
     );
   });
 

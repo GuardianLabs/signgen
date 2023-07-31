@@ -33,6 +33,6 @@ export const buildSignedMessage = (def: IDefinition) =>
         message: struct,
         signature,
       };
-    }`
+    }`,
     )
     .join(BR);

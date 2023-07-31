@@ -26,7 +26,7 @@ export const buildRecoverTestCase = (def: IDefinition) =>
           args,
           ${optionalString(
             el.external.filter((prop) => !prop.omit),
-            composeArgument
+            composeArgument,
           )}
           ${optionalComma(el.external.filter((prop) => !prop.omit))}
           ${def.domain.verifyingContract || "recoverInstance.address"},
@@ -43,7 +43,7 @@ export const buildRecoverTestCase = (def: IDefinition) =>
           );
           
         expect(recoveredAddress).to.be.equal(signer.address);
-      });`
+      });`,
     )
     .join(BR);
 
@@ -60,16 +60,16 @@ export const buildVerifyPositiveTestCase = (def: IDefinition) =>
         props
           .map(
             (ext) =>
-              `const ${ext.name} = ${pasteDefaultStub(ext.type, def, ext)};`
+              `const ${ext.name} = ${pasteDefaultStub(ext.type, def, ext)};`,
           )
-          .join(BR)
+          .join(BR),
       )}
 
         const params = await prepare${el.name}SignedMessage(
           args,
           ${optionalString(
             el.external.filter((prop) => !prop.omit),
-            composeArgument
+            composeArgument,
           )}
           ${optionalComma(el.external.filter((prop) => !prop.omit))}
           ${def.domain.verifyingContract || "recoverInstance.address"},
@@ -85,7 +85,7 @@ export const buildVerifyPositiveTestCase = (def: IDefinition) =>
           signer.address,
           "${el.name} verification failed"
         )).to.be.not.revertedWith("${el.name} verification failed");
-    });`
+    });`,
     )
     .join(BR);
 
@@ -104,7 +104,7 @@ export const buildVerifyNegativeTestCase = (def: IDefinition) =>
           args,
           ${optionalString(
             el.external.filter((prop) => !prop.omit),
-            composeArgument
+            composeArgument,
           )}
           ${optionalComma(el.external.filter((prop) => !prop.omit))}
           ${def.domain.verifyingContract || "recoverInstance.address"},
@@ -120,6 +120,6 @@ export const buildVerifyNegativeTestCase = (def: IDefinition) =>
           signer.address,
           "${el.name} verification failed"
         )).to.be.revertedWith("${el.name} verification failed");
-    });`
+    });`,
     )
     .join(BR);

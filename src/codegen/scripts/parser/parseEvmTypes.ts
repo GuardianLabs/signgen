@@ -93,7 +93,7 @@ export class StructName {
   merge(other: Partial<StructName>) {
     return new StructName(
       other.identifier || this.identifier,
-      other.namespace || this.namespace
+      other.namespace || this.namespace,
     );
   }
 }
@@ -110,7 +110,7 @@ const isBytesTypeRegex = /^bytes([0-9]+)$/;
 export function parseEvmType(
   rawType: string,
   components?: EvmSymbol[],
-  internalType?: string
+  internalType?: string,
 ): EvmType {
   const lastChar = rawType[rawType.length - 1];
 
@@ -123,7 +123,7 @@ export function parseEvmType(
 
     const arraySizeRaw = rawType.slice(
       finishArrayTypeIndex + 1,
-      rawType.length - 1
+      rawType.length - 1,
     );
     const arraySize = arraySizeRaw !== "" ? parseInt(arraySizeRaw) : undefined;
 
@@ -207,7 +207,7 @@ export function parseEvmType(
 
 /** @internal */
 export function extractStructNameIfAvailable(
-  internalType: string | undefined
+  internalType: string | undefined,
 ): StructName | undefined {
   if (internalType?.startsWith("struct ")) {
     // get rid of "struct " in the beginning

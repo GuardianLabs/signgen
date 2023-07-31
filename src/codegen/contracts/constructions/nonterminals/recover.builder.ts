@@ -21,14 +21,14 @@ export const buildRecoverFunctions = (def: IDefinition): string =>
 
         bytes32 structHash = keccak256(
             encode${el.name}Parameters(message ${optionalComma(
-        el.external.filter((prop) => !prop.omit)
-      )} ${optionalString(
-        el.external.filter((prop) => !prop.omit),
-        composeCustomEncodeArgument
-      )})
+              el.external.filter((prop) => !prop.omit),
+            )} ${optionalString(
+              el.external.filter((prop) => !prop.omit),
+              composeCustomEncodeArgument,
+            )})
         );
     
         return Util.hashAndRecover(structHash, signature, domainSeparator);
-    }`
+    }`,
     )
     .join(BR);

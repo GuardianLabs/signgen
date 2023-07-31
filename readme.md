@@ -152,6 +152,7 @@ When config is ready there are two consumption options:
 1. The given `cli -c -s -l` command and flags will automatically launch generated tests
 1. Use `pnpm test:e2e` for end-to-end testing
 1. Use `pnpm test:unit` for syntax unit testing
+1. Use `pnpm test:prune` to generate output deleting previous output folder (for quick definition changing and regenerating). 
 1. Generated tests-specific constraints:
     * If `salt` is not specified, it won't be included in the domain separator.
     * If `verifyingContract` is not specified, the address of the Signature Verification contract will be used in the domain separator

@@ -17,13 +17,13 @@ describe("Structs Contract General Smoke Tests", () => {
     definitions = await loadDefinitions();
 
     contracts = definitions.map((def) =>
-      build(def, def.struct.map((el) => el.name).join("_"))
+      build(def, def.struct.map((el) => el.name).join("_")),
     );
 
     structContracts = contracts.map((set) => set.params);
 
     structContractsAST = structContracts.map((src) =>
-      parse(src, { tolerant: true, loc: true })
+      parse(src, { tolerant: true, loc: true }),
     );
   });
 

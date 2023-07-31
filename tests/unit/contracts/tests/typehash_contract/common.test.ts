@@ -17,13 +17,13 @@ describe("Typehash Contract General Smoke Tests", () => {
     definitions = await loadDefinitions();
 
     contracts = definitions.map((def) =>
-      build(def, def.struct.map((el) => el.name).join("_"))
+      build(def, def.struct.map((el) => el.name).join("_")),
     );
 
     typehashContracts = contracts.map((set) => set.typeHashDefinitions);
 
     typehashContractsAST = typehashContracts.map((src) =>
-      parse(src, { tolerant: true, loc: true })
+      parse(src, { tolerant: true, loc: true }),
     );
   });
 

@@ -7,5 +7,5 @@ export const inferType = (solidityType: string): string =>
       returnResultObject: false,
       useStructs: true,
     },
-    parseEvmType(solidityType)
+    parseEvmType(solidityType),
   );

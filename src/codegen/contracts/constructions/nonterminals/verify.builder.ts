@@ -18,11 +18,11 @@ export const buildVerifyFunctions = (def: IDefinition): string =>
 
         require(
             recover${el.name}(message, signature, ${optionalString(
-        el.external,
-        composeArgument
-      )} domainSeparator) == addr,
+              el.external,
+              composeArgument,
+            )} domainSeparator) == addr,
             errMessage
         );
-    }`
+    }`,
     )
     .join(BR);

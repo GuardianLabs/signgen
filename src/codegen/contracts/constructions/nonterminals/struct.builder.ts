@@ -13,7 +13,7 @@ export const buildStruct = (def: IDefinition): string =>
       (el) => `
     struct ${el.name} {
         ${composeStructFields(el.props)}
-    }`
+    }`,
     )
     .join(BR);
 
@@ -24,7 +24,7 @@ export const buildSignedStruct = (def: IDefinition): string =>
     struct ${el.name}Signed {
         ${el.name} message;
         bytes signature;
-    }`
+    }`,
     )
     .join(BR);
 
@@ -34,7 +34,7 @@ export const buildRelatedStruct = (def: IDefinition): string =>
       (el) => `
     struct ${el.name} {
         ${composeStructFields(el.props)}
-    }`
+    }`,
     )
     .join(BR);
 
@@ -52,6 +52,6 @@ export const buildStructStubs = (def: IDefinition): string =>
         ${stubUndefinedStruct()
           .map((prop) => `${prop.type} ${prop.name};`)
           .join(BR + TAB)}
-    }`
+    }`,
     )
     .join(BR);

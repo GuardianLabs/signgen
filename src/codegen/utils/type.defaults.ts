@@ -9,7 +9,7 @@ import {
 export const getDefaultStub = (
   type: string,
   def: IDefinition,
-  prop: IProperty
+  prop: IProperty,
 ) => {
   let baseType: any;
 
@@ -30,7 +30,7 @@ export const getDefaultStub = (
                     ${targetProps
                       .map(
                         (el) =>
-                          `${el.name}: ${pasteDefaultStub(el.type, def, el)}`
+                          `${el.name}: ${pasteDefaultStub(el.type, def, el)}`,
                       )
                       .join(",")}
                 }`;
@@ -48,7 +48,7 @@ export const getDefaultStub = (
 export const pasteDefaultStub = (
   type: string,
   def: IDefinition,
-  prop: IProperty
+  prop: IProperty,
 ) => {
   const stub = getDefaultStub(type, def, prop);
   const tsType = inferType(type);

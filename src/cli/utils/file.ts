@@ -32,17 +32,18 @@ export function save({ dirPath, content, name, ext }: ISaveConfig): string {
   return filePath;
 }
 
-export function prettifySolidity(originalCode: string): string {
-  return prettier.format(originalCode, {
+export async function prettifySolidity(originalCode: string): Promise<string> {
+  return await prettier.format(originalCode, {
     parser: "solidity-parse",
-    pluginSearchDirs: ["."],
     plugins: ["prettier-plugin-solidity"],
   });
 }
 
-export function prettifyTypescript(originalCode: string): string {
-  return prettier.format(originalCode, {
-    parser: "babel",
+export async function prettifyTypescript(
+  originalCode: string,
+): Promise<string> {
+  return await prettier.format(originalCode, {
+    parser: "typescript",
   });
 }
 
@@ -56,7 +57,7 @@ export async function compile(targetFolder: string) {
 
 export async function transpile(targetFolder: string) {
   const { stdout, stderr } = await execPromise(
-    `npx tsc ${targetFolder}/**/*.ts`
+    `npx tsc ${targetFolder}/**/*.ts`,
   );
 
   console.log(stdout, stderr);
@@ -70,7 +71,7 @@ export async function test(targetFolder: string, testFiles: string[]) {
   await hre.run("test", {
     noCompile: true,
     testFiles: testFiles.map((testFile) =>
-      path.join(path.join(targetFolder, "tests"), testFile)
+      path.join(path.join(targetFolder, "tests"), testFile),
     ),
   });
 }

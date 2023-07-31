@@ -15,7 +15,7 @@ program
   .option("-s, --script", "Generate scripts artifacts")
   .option(
     "-l, --launch",
-    "Automatically launch generated tests (if -c -s passed)"
+    "Automatically launch generated tests (if -c -s passed)",
   ) // todo: integration tests
   .version(version);
 

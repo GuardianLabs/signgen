@@ -25,17 +25,17 @@ describe("Recovery Function", () => {
     definitions = await loadDefinitions();
 
     contracts = definitions.map((def) =>
-      build(def, def.struct.map((el) => el.name).join("_"))
+      build(def, def.struct.map((el) => el.name).join("_")),
     );
 
     sigContracts = contracts.map((set) => set.recoveryLib);
 
     sigContractsAST = sigContracts.map((src) =>
-      parse(src, { tolerant: true, loc: true })
+      parse(src, { tolerant: true, loc: true }),
     );
 
     encodeParamsFunctionsAST = sigContractsAST.flatMap((ast) =>
-      selectFunctions(ast, "^encode.*Parameters$")
+      selectFunctions(ast, "^encode.*Parameters$"),
     );
   });
 
@@ -48,7 +48,7 @@ describe("Recovery Function", () => {
       expect(ast.returnParameters?.length).to.eql(1);
 
       expect(
-        (ast.returnParameters![0].typeName as ElementaryTypeName).name
+        (ast.returnParameters![0].typeName as ElementaryTypeName).name,
       ).to.eq("bytes");
 
       expect(ast.returnParameters![0].storageLocation).to.eq("memory");

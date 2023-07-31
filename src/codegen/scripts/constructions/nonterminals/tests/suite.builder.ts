@@ -13,10 +13,12 @@ export const buildTestSuite = (def: IDefinition) => {
     import { ${def.struct
       .map((el) => `prepare${el.name}SignedMessage`)
       .join(", ")}, ${def.struct
-    .map((el) => `${el.name}Message`)
-    .join(", ")} } from "../src";
+      .map((el) => `${el.name}Message`)
+      .join(", ")} } from "../src";
 
-    describe('${def.struct.map((el) => el.name).join(", ")} signatures', () => {
+    describe(\`${def.struct
+      .map((el) => el.name)
+      .join(", ")} signatures\`, () => {
         let Recover: any;
         let recoverInstance: any;
         let domainSeparator: any;
