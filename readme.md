@@ -64,10 +64,16 @@ module.exports = {
 ## Usage:
 
 When config is ready there are two consumption options:
-* as a package: `npx @guardian-network/signgen gen -c -s -l`
+* as a package: `npx @guardian-network/signgen gen -c -s -l` *(not implemented)*
 * inside a project:
     * install `pnpm`: `npm add -g pnpm`
-    * `pnpm i && pnpm build && pnpm cli -c -s -l`
+    * `git clone`
+    * `cd signgen`
+    * `pnpm i`
+    * move the `definition.js` file to the root of the project - near `package.json` - for default mode
+    * execute:
+        * for default mode (resulting folder: `output`): `pnpm cli -c -s -l`
+        * for custom mode: `pnpm cli -c -s -l -f "{YOUR_DEFINITION_PATH}" -d "{YOUR_OUTPUT_PATH}"`
 
 ## Useful tips:
 1. Definition must have at least one message (`def#struct.length > 0`)
@@ -150,16 +156,4 @@ When config is ready there are two consumption options:
     * If `salt` is not specified, it won't be included in the domain separator.
     * If `verifyingContract` is not specified, the address of the Signature Verification contract will be used in the domain separator
     as verifying contract's address.
-    * If `chainId` is not specified, the chain ID of the emulator's blockchain will be used (extracted from the hardhat's `signer`). **Change before deploy**.
-
-* Using as a project:
-    1. `git clone`
-    1. `cd signgen`
-    1. `pnpm i`
-    1. create `definition.js` file (and move it to the root of the project - near `package.json` - for default mode)
-    1. execute:
-        * for default mode (resulting folder: `output`): `pnpm cli -c -s -l`
-        * for custom mode: `pnpm cli -c -s -l -f "{YOUR_DEFINITION_PATH}" -d "{YOUR_OUTPUT_PATH}"`
-
-* Using as a package
-    - not implemented
+    * If `chainId` is not specified, the chain ID of the emulator's blockchain will be used (extracted from the hardhat's `signer`). **Change before deploy**
