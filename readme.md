@@ -1,5 +1,7 @@
 # EIP-712 Sigantures & Artifacts Generator
 
+**Notice:** it's a *beta* version, drastic improvement may take place.
+
 ## Options:
 ```
   -f, --file  <path>  Data to sign type definitions file path
