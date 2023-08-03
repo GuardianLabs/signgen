@@ -1,11 +1,8 @@
 import { IDefinition } from "../../types";
-import {
-    buildIndex,
-} from "../constructions/nonterminals";
+import { buildIndex } from "../constructions/nonterminals";
 
 export const composeIndex = (def: IDefinition) => {
-
-    return `
+  return `
     ${buildIndex(def)}
     `;
-}
+};

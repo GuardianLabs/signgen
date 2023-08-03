@@ -40,6 +40,28 @@ function buildDomainSeparatorWithSalt(
         );
 }`;
 
+export const BUILD_DOMAIN_SEPARATOR_PROXY = `
+
+function buildDomainSeparator (
+    string memory domainName,
+    string memory version,
+    address verifyingContract
+) public view returns (bytes32) {
+
+    return Util.buildDomainSeparator(domainName, version, verifyingContract);
+}
+
+function buildDomainSeparatorWithSalt (
+    string memory domainName,
+    string memory version,
+    address verifyingContract,
+    bytes32 salt
+) public view returns (bytes32) {
+
+    return Util.buildDomainSeparatorWithSalt(domainName, version, verifyingContract, salt);
+}
+`;
+
 export const BUILD_DOMAIN_SEPARATOR = `
 
 function buildDomainSeparator(
