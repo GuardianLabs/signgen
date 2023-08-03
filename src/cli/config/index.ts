@@ -1,2 +1,2 @@
-export * from './filenames';
-export * from './extensions.enum';
+export * from "./extensions.enum";
+export * from "./filenames";

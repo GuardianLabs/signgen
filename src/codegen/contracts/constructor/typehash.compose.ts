@@ -1,10 +1,17 @@
 import { IDefinition } from "../../types";
-import { buildStubTypeHash, buildTypeHash } from "../constructions/nonterminals";
-import { UNLICENSED_LICENSE, SOLIDITY_19, DOMAIN_TYPEHASH_WITH_SALT, DOMAIN_TYPEHASH } from "../constructions/terminals";
+import {
+  buildStubTypeHash,
+  buildTypeHash,
+} from "../constructions/nonterminals";
+import {
+  DOMAIN_TYPEHASH,
+  DOMAIN_TYPEHASH_WITH_SALT,
+  SOLIDITY_19,
+  UNLICENSED_LICENSE,
+} from "../constructions/terminals";
 
 export const composeTypehash = (def: IDefinition) => {
-
-    return `
+  return `
     
     ${UNLICENSED_LICENSE}
     ${SOLIDITY_19}
@@ -15,4 +22,4 @@ export const composeTypehash = (def: IDefinition) => {
 
     ${buildStubTypeHash(def)}
     `;
-}
+};

@@ -1,11 +1,20 @@
+import { parse } from "@solidity-parser/parser";
 import { expect } from "chai";
-import { IContractsOutput, IDefinition } from "../../../../../src/codegen/types";
-import { ElementaryTypeName, FunctionDefinition, ParseResult, loadDefinitions, messageCount, selectFunctions } from "../../utils";
 import { build } from "../../../../../src/codegen/contracts";
-import { parse, visit } from '@solidity-parser/parser';
+import {
+  IContractsOutput,
+  IDefinition,
+} from "../../../../../src/codegen/types";
+import {
+  ElementaryTypeName,
+  FunctionDefinition,
+  ParseResult,
+  loadDefinitions,
+  messageCount,
+  selectFunctions,
+} from "../../utils";
 
-describe('Recovery Function', () => {
-
+describe("Recovery Function", () => {
   let definitions: IDefinition[];
   let contracts: IContractsOutput[];
   let sigContracts: string[];
@@ -15,28 +24,34 @@ describe('Recovery Function', () => {
   before(async () => {
     definitions = await loadDefinitions();
 
-    contracts = definitions.map(def => build(def, def.struct.map(el=>el.name).join('_')));
+    contracts = definitions.map((def) =>
+      build(def, def.struct.map((el) => el.name).join("_")),
+    );
 
-    sigContracts = contracts.map(set => set.recoveryLib);
+    sigContracts = contracts.map((set) => set.recoveryLib);
 
-    sigContractsAST = sigContracts.map(src => parse(src, { tolerant: true, loc: true }));
+    sigContractsAST = sigContracts.map((src) =>
+      parse(src, { tolerant: true, loc: true }),
+    );
 
-    encodeParamsFunctionsAST = sigContractsAST.flatMap(ast => selectFunctions(ast, '^encode.*Parameters$'));
-  })
+    encodeParamsFunctionsAST = sigContractsAST.flatMap((ast) =>
+      selectFunctions(ast, "^encode.*Parameters$"),
+    );
+  });
 
   it("All defined messages should have corresponding encode functions", () => {
-
     expect(encodeParamsFunctionsAST.length).to.eql(messageCount(definitions));
-  })
+  });
 
   it("Output type should be memory bytes", () => {
-    encodeParamsFunctionsAST.map(ast => {
-
+    encodeParamsFunctionsAST.map((ast) => {
       expect(ast.returnParameters?.length).to.eql(1);
 
-      expect((ast.returnParameters![0].typeName as ElementaryTypeName).name).to.eq("bytes");
+      expect(
+        (ast.returnParameters![0].typeName as ElementaryTypeName).name,
+      ).to.eq("bytes");
 
       expect(ast.returnParameters![0].storageLocation).to.eq("memory");
-    })
-  })
+    });
+  });
 });
