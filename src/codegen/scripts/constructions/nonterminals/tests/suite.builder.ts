@@ -1,16 +1,24 @@
 import { IDefinition } from "../../../../types";
-import { buildRecoverTestCase, buildVerifyNegativeTestCase, buildVerifyPositiveTestCase } from "./case.bulder";
+import {
+  buildRecoverTestCase,
+  buildVerifyNegativeTestCase,
+  buildVerifyPositiveTestCase,
+} from "./case.bulder";
 
 export const buildTestSuite = (def: IDefinition) => {
-
-    // todo: buildDomainSeparator per name ==> singleton
-    return `
+  return `
     import { ethers } from "hardhat";
     import { expect } from "chai";
 
-    import { ${def.struct.map(el => `prepare${el.name}SignedMessage`).join(', ')}, ${def.struct.map(el => `${el.name}Message`).join(', ')} } from "../src";
+    import { ${def.struct
+      .map((el) => `prepare${el.name}SignedMessage`)
+      .join(", ")}, ${def.struct
+      .map((el) => `${el.name}Message`)
+      .join(", ")} } from "../src";
 
-    describe('${def.struct.map(el => el.name).join(', ')} signatures', () => {
+    describe(\`${def.struct
+      .map((el) => el.name)
+      .join(", ")} signatures\`, () => {
         let Recover: any;
         let recoverInstance: any;
         let domainSeparator: any;
@@ -21,24 +29,35 @@ export const buildTestSuite = (def: IDefinition) => {
         beforeEach(async () => {
             [ signer, intruder ] = await ethers.getSigners();
       
-              Recover = await ethers.getContractFactory("SignatureVerification_${def.struct.map(el=>el.name).join('_')}");
+              Recover = await ethers.getContractFactory("SignatureVerification"); // _${def.struct
+                .map((el) => el.name)
+                .join("_")}
               recoverInstance = await Recover.deploy();
               
               domainSeparator =
-              ${def.domain.salt ?
-                `
-                await recoverInstance.buildDomainSeparator${def.struct[0].name}WithSalt(
+              ${
+                def.domain.salt
+                  ? `
+                await recoverInstance.buildDomainSeparatorWithSalt(
                     "${def.domain.name}",
                     "${def.domain.version}",
-                    ${def.domain.verifyingContract || "recoverInstance.address.toString()"},
+                    ${
+                      def.domain.verifyingContract ||
+                      "recoverInstance.address.toString()"
+                    },
                     ${def.domain.salt}
                 );
-                ` : `
-                await recoverInstance.buildDomainSeparator${def.struct[0].name}(
+                `
+                  : `
+                await recoverInstance.buildDomainSeparator(
                     "${def.domain.name}",
                     "${def.domain.version}",
-                    ${def.domain.verifyingContract || "recoverInstance.address.toString()"}
-                );`}
+                    ${
+                      def.domain.verifyingContract ||
+                      "recoverInstance.address.toString()"
+                    }
+                );`
+              }
         });
 
         ${buildRecoverTestCase(def)}
@@ -47,4 +66,4 @@ export const buildTestSuite = (def: IDefinition) => {
 
         ${buildVerifyNegativeTestCase(def)}
     });`;
-}
+};

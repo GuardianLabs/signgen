@@ -1,10 +1,12 @@
-import { IDefinition, IProperty } from "../../../types";
-import { formatCapitalSnake, formatSolidityParameters, optionalString } from "../../../utils";
-import { BR, SPACE, TAB } from "../terminals";
+import { IDefinition } from "../../../types";
+import { formatSolidityParameters, optionalString } from "../../../utils";
+import { BR } from "../terminals";
 import { composeArgument } from "./substrings";
 
-export const buildVerifyFunctions = (def: IDefinition): string => def.struct
-    .map(el => `
+export const buildVerifyFunctions = (def: IDefinition): string =>
+  def.struct
+    .map(
+      (el) => `
     function verify${el.name} (
         ${el.name} memory message,
         bytes memory signature,
@@ -15,8 +17,12 @@ export const buildVerifyFunctions = (def: IDefinition): string => def.struct
     ) public pure {
 
         require(
-            recover${el.name}(message, signature, ${optionalString(el.external, composeArgument)} domainSeparator) == addr,
+            recover${el.name}(message, signature, ${optionalString(
+              el.external,
+              composeArgument,
+            )} domainSeparator) == addr,
             errMessage
         );
-    }`)
+    }`,
+    )
     .join(BR);

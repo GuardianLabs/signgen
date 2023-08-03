@@ -1,1 +1,1 @@
-export const SOLIDITY_19 = 'pragma solidity ^0.8.19;';
+export const SOLIDITY_19 = "pragma solidity ^0.8.19;";

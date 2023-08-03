@@ -1,13 +1,12 @@
 import { IDefinition } from "../../types";
 import {
-    buildMessageType,
-    buildEIP712MessageTypes
+  buildEIP712MessageTypes,
+  buildMessageType,
 } from "../constructions/nonterminals";
 import { EIP712DomainType, ParamType } from "../constructions/terminals";
 
 export const composeTypes = (def: IDefinition) => {
-
-    return `
+  return `
    
     import { BytesLike, BigNumberish } from 'ethers';
 
@@ -19,4 +18,4 @@ export const composeTypes = (def: IDefinition) => {
 
     ${EIP712DomainType}
     `;
-}
+};
