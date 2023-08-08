@@ -43,22 +43,18 @@ function buildDomainSeparatorWithSalt(
 export const BUILD_DOMAIN_SEPARATOR_PROXY = `
 
 function buildDomainSeparator (
-    string memory domainName,
-    string memory version,
     address verifyingContract
 ) public view returns (bytes32) {
 
-    return Util.buildDomainSeparator(domainName, version, verifyingContract);
+    return Util.buildDomainSeparator(_domainName, _domainVersion, verifyingContract);
 }
 
 function buildDomainSeparatorWithSalt (
-    string memory domainName,
-    string memory version,
     address verifyingContract,
     bytes32 salt
 ) public view returns (bytes32) {
 
-    return Util.buildDomainSeparatorWithSalt(domainName, version, verifyingContract, salt);
+    return Util.buildDomainSeparatorWithSalt(_domainName, _domainVersion, verifyingContract, salt);
 }
 `;
 

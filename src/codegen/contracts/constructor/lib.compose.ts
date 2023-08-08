@@ -28,6 +28,14 @@ export const composeLib = (def: IDefinition, name: string) => {
 
     contract SignatureVerification { // _${name}
 
+        string internal _domainName;
+        string internal _domainVersion;
+
+        constructor(string memory domainName, string memory domainVersion) {
+          _domainName = domainName;
+          _domainVersion = domainVersion;
+        }
+
         ${BUILD_DOMAIN_SEPARATOR_PROXY}
         // For elimination of "Stack too deep" error
 

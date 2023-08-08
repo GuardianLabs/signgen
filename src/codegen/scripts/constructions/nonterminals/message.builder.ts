@@ -40,9 +40,9 @@ export const buildMessage = (def: IDefinition) =>
           return {
             domain: {
               chainId,
-              name: "${def.domain.name}",
+              name: getDomainName(),
               verifyingContract,
-              version: "${def.domain.version}",
+              version: getDomainVersion(),
               ${def.domain.salt ? `salt: ${def.domain.salt}` : ""}
             },
             message,
