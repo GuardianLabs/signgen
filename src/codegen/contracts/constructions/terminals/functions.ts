@@ -16,37 +16,37 @@ function hashTypedDataV4(
     return ECDSA.toTypedDataHash(domainSeparator, structHash);
 }`;
 
-export const BUILD_DOMAIN_SEPARATOR_WITH_SALT = `
-
-function buildDomainSeparatorWithSalt(
-    string memory domainName,
-    string memory version,
-    address verifyingContract,
-    bytes32 salt
-) internal view returns (bytes32) {
-    bytes32 hashedDomainName = keccak256(bytes(domainName));
-    bytes32 hashedVersion = keccak256(bytes(version));
-
-    return
-        keccak256(
-            abi.encode(
-                DOMAIN_TYPE_HASH,
-                hashedDomainName,
-                hashedVersion,
-                block.chainid,
-                verifyingContract,
-                salt
-            )
-        );
-}`;
-
 export const BUILD_DOMAIN_SEPARATOR_PROXY = `
+
+function buildDomainSeparator (
+    string memory domainName,
+    string memory domainVersion,
+    address verifyingContract
+) internal view returns (bytes32) {
+
+    return Util.buildDomainSeparator(domainName, domainVersion, verifyingContract);
+}
 
 function buildDomainSeparator (
     address verifyingContract
 ) public view returns (bytes32) {
 
-    return Util.buildDomainSeparator(_domainName, _domainVersion, verifyingContract);
+    return
+            buildDomainSeparator(
+                _domainName,
+                _domainVersion,
+                verifyingContract
+            );
+}
+
+function buildDomainSeparatorWithSalt (
+    string memory domainName,
+    string memory domainVersion,
+    address verifyingContract,
+    bytes32 salt
+) internal view returns (bytes32) {
+
+    return Util.buildDomainSeparatorWithSalt(domainName, domainVersion, verifyingContract, salt);
 }
 
 function buildDomainSeparatorWithSalt (
@@ -54,7 +54,7 @@ function buildDomainSeparatorWithSalt (
     bytes32 salt
 ) public view returns (bytes32) {
 
-    return Util.buildDomainSeparatorWithSalt(_domainName, _domainVersion, verifyingContract, salt);
+    return buildDomainSeparatorWithSalt(_domainName, _domainVersion, verifyingContract, salt);
 }
 `;
 
@@ -76,6 +76,30 @@ function buildDomainSeparator(
                 hashedVersion,
                 block.chainid,
                 verifyingContract
+            )
+        );
+}`;
+
+export const BUILD_DOMAIN_SEPARATOR_WITH_SALT = `
+
+function buildDomainSeparatorWithSalt(
+    string memory domainName,
+    string memory version,
+    address verifyingContract,
+    bytes32 salt
+) internal view returns (bytes32) {
+    bytes32 hashedDomainName = keccak256(bytes(domainName));
+    bytes32 hashedVersion = keccak256(bytes(version));
+
+    return
+        keccak256(
+            abi.encode(
+                DOMAIN_TYPE_HASH,
+                hashedDomainName,
+                hashedVersion,
+                block.chainid,
+                verifyingContract,
+                salt
             )
         );
 }`;
