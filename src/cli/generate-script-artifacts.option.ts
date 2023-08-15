@@ -2,6 +2,7 @@ import * as path from "path";
 import { build } from "../codegen/scripts";
 import { IDefinition, IScriptsOutput } from "../codegen/types";
 import {
+  DOMAIN_HELPER_FILENAME,
   Extension,
   INDEX_FILENAME,
   SIGNATURE_UTILS_FILENAME,
@@ -47,6 +48,13 @@ export async function generateScriptArtifacts(
     dirPath: targetFolderHelpers,
     content: await prettifyTypescript(output.utils),
     name: SIGNATURE_UTILS_FILENAME,
+    ext: Extension.Typescript,
+  });
+
+  save({
+    dirPath: targetFolderHelpers,
+    content: await prettifyTypescript(output.domain),
+    name: DOMAIN_HELPER_FILENAME,
     ext: Extension.Typescript,
   });
 

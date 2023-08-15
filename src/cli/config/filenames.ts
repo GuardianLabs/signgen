@@ -8,3 +8,7 @@ export const TYPES_FILENAME = "message.types";
 export const SIGNATURE_UTILS_FILENAME = "signature.utils";
 export const INDEX_FILENAME = "index";
 export const TESTS_FILENAME = "recovery.spec";
+<<<<<<< HEAD
+=======
+export const DOMAIN_HELPER_FILENAME = "domain.helper";
+>>>>>>> dev

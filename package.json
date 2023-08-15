@@ -1,6 +1,6 @@
 {
   "name": "@guardian-network/signgen",
-  "version": "1.0.24-beta.1",
+  "version": "1.0.25-beta.1",
   "author": "Priadko",
   "license": "MIT",
   "description": "EIP712 signatures infrastructure tool",

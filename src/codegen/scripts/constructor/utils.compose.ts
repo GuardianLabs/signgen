@@ -1,3 +1,4 @@
+import { DOMAIN_HELPER_FILENAME } from "../../../cli/config";
 import { IDefinition } from "../../types";
 import {
   buildMessage,
@@ -9,6 +10,7 @@ export const composeUtils = (def: IDefinition) => {
    
     import {SignerWithAddress} from "@nomiclabs/hardhat-ethers/signers";
     import { BigNumberish, BytesLike } from "ethers";
+    import { getDomainName, getDomainVersion } from './${DOMAIN_HELPER_FILENAME}';
     import { ${def.struct
       .map((el) => `${el.name}Message, ${el.name}Type`)
       .join(", ")}, EIP712DomainType, ${def.related

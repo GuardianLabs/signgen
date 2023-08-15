@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 # EIP-712 Signatures & Artifacts Generator
+=======
+# EIP-712 Sigantures & Artifacts Generator
+>>>>>>> dev
 
 **Notice:** it's a *beta* version, drastic improvement may take place.
 

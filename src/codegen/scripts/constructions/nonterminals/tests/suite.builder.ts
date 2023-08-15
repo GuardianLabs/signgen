@@ -9,6 +9,7 @@ export const buildTestSuite = (def: IDefinition) => {
   return `
     import { ethers } from "hardhat";
     import { expect } from "chai";
+    import { getDomainName, getDomainVersion } from "../src";
 
     import { ${def.struct
       .map((el) => `prepare${el.name}SignedMessage`)
@@ -32,15 +33,13 @@ export const buildTestSuite = (def: IDefinition) => {
               Recover = await ethers.getContractFactory("SignatureVerification"); // _${def.struct
                 .map((el) => el.name)
                 .join("_")}
-              recoverInstance = await Recover.deploy();
+              recoverInstance = await Recover.deploy(getDomainName(), getDomainVersion());
               
               domainSeparator =
               ${
                 def.domain.salt
                   ? `
                 await recoverInstance.buildDomainSeparatorWithSalt(
-                    "${def.domain.name}",
-                    "${def.domain.version}",
                     ${
                       def.domain.verifyingContract ||
                       "recoverInstance.address.toString()"
@@ -50,8 +49,6 @@ export const buildTestSuite = (def: IDefinition) => {
                 `
                   : `
                 await recoverInstance.buildDomainSeparator(
-                    "${def.domain.name}",
-                    "${def.domain.version}",
                     ${
                       def.domain.verifyingContract ||
                       "recoverInstance.address.toString()"

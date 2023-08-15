@@ -11,4 +11,5 @@ export interface IScriptsOutput {
   utils: string;
   types: string;
   index: string;
+  domain: string;
 }
