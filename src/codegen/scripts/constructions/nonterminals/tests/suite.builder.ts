@@ -39,7 +39,7 @@ export const buildTestSuite = (def: IDefinition) => {
               ${
                 def.domain.salt
                   ? `
-                await recoverInstance.buildDomainSeparatorWithSalt(
+                await recoverInstance["buildDomainSeparatorWithSalt(address,bytes32)"](
                     ${
                       def.domain.verifyingContract ||
                       "recoverInstance.address.toString()"
@@ -48,7 +48,7 @@ export const buildTestSuite = (def: IDefinition) => {
                 );
                 `
                   : `
-                await recoverInstance.buildDomainSeparator(
+                await recoverInstance["buildDomainSeparator(address)"](
                     ${
                       def.domain.verifyingContract ||
                       "recoverInstance.address.toString()"

@@ -22,7 +22,7 @@ function buildDomainSeparator (
     string memory domainName,
     string memory domainVersion,
     address verifyingContract
-) internal view returns (bytes32) {
+) public view returns (bytes32) {
 
     return Util.buildDomainSeparator(domainName, domainVersion, verifyingContract);
 }
@@ -44,7 +44,7 @@ function buildDomainSeparatorWithSalt (
     string memory domainVersion,
     address verifyingContract,
     bytes32 salt
-) internal view returns (bytes32) {
+) public view returns (bytes32) {
 
     return Util.buildDomainSeparatorWithSalt(domainName, domainVersion, verifyingContract, salt);
 }
