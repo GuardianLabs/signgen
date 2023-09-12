@@ -1,4 +1,4 @@
-# EIP-712 Sigantures & Artifacts Generator
+# EIP-712 Signatures & Artifacts Generator
 
 **Notice:** it's a *beta* version, drastic improvement may take place.
 
