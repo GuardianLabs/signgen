@@ -13,7 +13,7 @@ export const buildSignedMessage = (def: IDefinition) =>
         .map((ext) => `${ext.name}: ${inferType(ext.type)},`)
         .join(BR)}
       verifyingContract: string,
-      signer: SignerWithAddress
+      signer: TypedSigner
     ) => {
     
       const chainId = ${def.domain.chainId || "await signer.getChainId()"};
