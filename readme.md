@@ -14,9 +14,9 @@
 ```
 
 ## Configuration file:
-It is required to create config file `definition.js` that exports the needed types with the following structure:
+It is required to create config file `definition.ts` that exports the needed types with the following structure:
 ```
-module.exports = {
+export default {
     domain: {
         name: 'Sample',
         version: '1',
@@ -76,7 +76,7 @@ When config is ready there are two consumption options:
     * `git clone`
     * `cd signgen`
     * `pnpm i`
-    * move the `definition.js` file to the root of the project - near `package.json` - for default mode
+    * move the `definition.ts` file to the root of the project - near `package.json` - for default mode
     * execute:
         * for default mode (resulting folder: `output`): `pnpm cli -c -s -l`
         * for custom mode: `pnpm cli -c -s -l -f "{YOUR_DEFINITION_PATH}" -d "{YOUR_OUTPUT_PATH}"`
