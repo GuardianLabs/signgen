@@ -1,4 +1,6 @@
-module.exports =  {
+import { IDefinition } from "../../src/codegen/types";
+
+const def: IDefinition = {
     domain: {
         name: 'Sample',
         version: '1',
@@ -10,3 +12,5 @@ module.exports =  {
     related: [
     ]
 };
+
+export default def;

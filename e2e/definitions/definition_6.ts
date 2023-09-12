@@ -1,4 +1,6 @@
-module.exports =  {
+import { IDefinition } from "../../src/codegen/types";
+
+const def: IDefinition = {
     domain: {
         name: 'Sample',
         version: '1',
@@ -8,24 +10,16 @@ module.exports =  {
         {
             name: "TypeOne", 
             props: [
-                { name: 'sample', type: 'uint256' },
+                { name: 'struct1', type: 'BStruct', struct: true, omit: true },
+                { name: 'struct2', type: 'CStruct', struct: true, omit: true },
+                { name: 'struct3', type: 'DStruct', struct: true },
             ],
             external: [
-                { name: "operationId", type: "string" },
+                { name: 'struct4', type: 'BStruct', struct: true },
+                { name: 'struct5', type: 'CStruct', struct: true, omit: true },
+                { name: 'struct6', type: 'DStruct', struct: true },
             ]
         },
-        {
-            name: "TypeTwo",
-            props: [
-                { name: 'tests', type: 'string' },
-                { name: 'testEnum', type: 'Operations', enum: true },
-            ],
-            external: [
-                { name: 'struct1', type: 'BStruct', struct: true },
-                { name: 'struct2', type: 'CStruct', struct: true },
-                { name: 'struct3', type: 'DStruct', struct: true },
-            ]
-        }
     ],
     
     related: [
@@ -34,14 +28,16 @@ module.exports =  {
             props: [
                 { name: 'custom', type: 'string' },
             ],
-            external: []
+            external: [
+            ]
         },
         {
             name: "CStruct",
             props: [
                 { name: 'custom', type: 'string' },
             ],
-            external: []
+            external: [
+            ]
         },
         {
             name: "DStruct",
@@ -52,3 +48,5 @@ module.exports =  {
         }
     ]
 };
+
+export default def;

@@ -1,4 +1,6 @@
-module.exports =  {
+import { IDefinition } from "../../../src/codegen/types";
+
+const def: IDefinition = {
     domain: {
         name: 'Sample',
         version: '1',
@@ -10,14 +12,14 @@ module.exports =  {
             props: [
                 { name: 'operation', type: 'uint256' },
                 { name: 'contractAddress', type: 'address' },
-                { name: 'rules', type: 'uint256[]', omit: true },
+                { name: 'rules', type: 'uint256[]' },
                 { name: 'flag', type: 'bool' },
                 // { name: 'approvers', type: 'address[]' },
                 { name: 'approversGiven', type: 'uint8[]' },
                 // { name: 'approvalsRequired', type: 'uint8[]' },
                 { name: 'logicsList', type: 'address[]' },
                 { name: 'constantsList', type: 'bytes' },
-                { name: "structure1", type: "AStruct", struct: true, omit: true },
+                { name: "structure1", type: "AStruct", struct: true },
                 { name: "structure2", type: "BStruct", struct: true },
                 { name: "structure3", type: "TypeTwo", struct: true },
                 { name: 'nonce', type: 'bytes32' }
@@ -47,3 +49,5 @@ module.exports =  {
         }
     ]
 };
+
+export default def;
